@@ -6,6 +6,7 @@ import { useTheme } from "@/shared/hooks/useTheme";
 import { useMounted } from "@/shared/hooks/useMounted";
 import { cn } from "@/shared/lib/utils";
 import type { Theme } from "@/shared/lib/theme";
+import { SEGMENT_CLASS, Segmented } from "@/shared/components/Segmented";
 
 const ICONS = {
   system: SlidersHorizontalIcon,
@@ -13,7 +14,9 @@ const ICONS = {
   light: SunIcon,
 } satisfies Record<Theme, unknown>;
 
-/** Sélecteur Système / Sombre / Clair, en pastilles groupées. */
+const THEMES = Object.keys(ICONS) as Theme[];
+
+/** Sélecteur Système / Sombre / Clair, en contrôle segmenté à curseur de verre. */
 export function ThemeSwitcher({ className }: { className?: string }) {
   const t = useTranslations("theme");
   const { theme, setTheme } = useTheme();
@@ -21,31 +24,28 @@ export function ThemeSwitcher({ className }: { className?: string }) {
   const mounted = useMounted();
 
   return (
-    <div
-      role="group"
-      aria-label={t("label")}
-      className={cn("flex rounded-full bg-muted p-0.5", className)}
+    <Segmented
+      label={t("label")}
+      index={mounted ? THEMES.indexOf(theme) : -1}
+      count={THEMES.length}
+      className={cn("shrink-0", className)}
     >
-      {(Object.keys(ICONS) as Theme[]).map((value) => {
+      {THEMES.map((value) => {
         const Icon = ICONS[value];
-        const active = mounted && theme === value;
         return (
           <button
             key={value}
             type="button"
-            aria-pressed={active}
+            aria-pressed={mounted && theme === value}
             aria-label={t(value)}
             title={t(value)}
             onClick={() => setTheme(value)}
-            className={cn(
-              "grid size-8 place-items-center rounded-full text-muted-foreground outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50",
-              active && "bg-background text-foreground shadow-xs",
-            )}
+            className={cn(SEGMENT_CLASS, "w-11 px-0")}
           >
             <Icon className="size-4" />
           </button>
         );
       })}
-    </div>
+    </Segmented>
   );
 }

@@ -36,7 +36,7 @@ export function CancelEventDialog({
   } = useFormAction<FormState>(action, {});
   return (
     <Dialog>
-      <DialogTrigger render={<Button variant="destructive" />}>
+      <DialogTrigger render={<Button variant="destructive" size="pill" />}>
         <BanIcon /> {t("events.cancel")}
       </DialogTrigger>
       <DialogContent>

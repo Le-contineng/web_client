@@ -39,7 +39,7 @@ export function NotificationBell({
         render={
           <Button
             variant="ghost"
-            size="icon-lg"
+            size="circle"
             aria-label={unread ? `${t("title")} (${unread})` : t("title")}
           />
         }
@@ -51,7 +51,7 @@ export function NotificationBell({
       </PopoverTrigger>
       <PopoverContent
         align="end"
-        className="w-96 max-w-[calc(100vw-2rem)] gap-0 p-0"
+        className="ct-sheet ct-menu w-96 max-w-[calc(100vw-2rem)] gap-0 p-0"
       >
         <p className="px-4 pt-4 pb-3 text-lg font-bold">{t("title")}</p>
         <div className="max-h-[70vh] overflow-y-auto pb-2">

@@ -17,8 +17,9 @@ export default function manifest(): MetadataRoute.Manifest {
     scope: "/",
     display: "standalone",
     orientation: "portrait",
-    background_color: "#ffffff",
-    theme_color: "#171717",
+    // Écran de lancement (splash) : fond encre et icône du logo, sans script.
+    background_color: "#0a0a0a",
+    theme_color: "#0a0a0a",
     categories: ["social", "events"],
     icons: [
       { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },

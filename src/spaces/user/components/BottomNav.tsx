@@ -1,15 +1,13 @@
 import { UserIcon } from "lucide-react";
 import { NavLink } from "@/spaces/user/components/NavLink";
+import { TabBar } from "@/spaces/user/components/TabBar";
 import { getNavigation } from "@/spaces/user/components/navigation";
 
-/** Barre de navigation en bas de l'écran sur téléphone. */
+/** Barre d'onglets flottante en bas de l'écran sur téléphone. */
 export async function BottomNav() {
   const { t, account, links } = await getNavigation();
   return (
-    <nav
-      aria-label={t("nav.main")}
-      className="fixed inset-x-0 bottom-0 z-30 flex border-t bg-background pb-[env(safe-area-inset-bottom)] md:hidden"
-    >
+    <TabBar label={t("nav.main")} count={links.length + 1}>
       {links.map((l) => (
         <NavLink key={l.href} {...l} variant="bottom" />
       ))}
@@ -19,6 +17,6 @@ export async function BottomNav() {
         label={account ? t("nav.profile") : t("nav.register")}
         variant="bottom"
       />
-    </nav>
+    </TabBar>
   );
 }

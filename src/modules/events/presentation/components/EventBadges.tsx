@@ -17,9 +17,9 @@ export function EventBadges({
   return (
     <span className={cn("flex flex-wrap gap-1.5", className)}>
       {period === "ongoing" && status !== "cancelled" && (
-        <Badge className="gap-1.5 bg-succes text-white">
+        <Badge className="gap-1.5 bg-succes text-white dark:text-[#0a0a0a]">
           <span
-            className="size-1.5 animate-pulse rounded-full bg-white"
+            className="size-1.5 animate-pulse rounded-full bg-current"
             aria-hidden
           />
           {t("periods.ongoing")}

@@ -38,7 +38,7 @@ async function AdminSearch({ searchParams }: PageProps<"/search">) {
   });
 
   return (
-    <div className="mx-auto grid max-w-7xl gap-4 px-4 pt-4 md:pt-6">
+    <div className="mx-auto grid max-w-5xl gap-4 px-4 pt-4 md:pt-6">
       <h1 className="sr-only">{t("title")}</h1>
       <div className="mx-auto w-full max-w-2xl">
         <SearchBar value={text} />
@@ -48,10 +48,7 @@ async function AdminSearch({ searchParams }: PageProps<"/search">) {
         {t("results", { n: total })}
       </p>
       {events.length ? (
-        <EventGrid
-          events={events}
-          className="-mx-4 sm:mx-0 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4"
-        />
+        <EventGrid events={events} className="lg:grid-cols-3 xl:grid-cols-3" />
       ) : (
         <div className="flex flex-col items-center gap-3 py-20 text-center text-muted-foreground">
           <SearchXIcon className="size-10" />

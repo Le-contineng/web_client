@@ -1,5 +1,6 @@
 import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { cn } from "@/shared/lib/utils";
 import { buttonVariants } from "@/shared/ui/button";
 
@@ -12,15 +13,16 @@ export function PageTitle({
   returnTo?: string;
   subtitle?: string;
 }) {
+  const t = useTranslations("common");
   return (
-    <div className="mb-6 flex items-start gap-2">
+    <div className="mb-4 flex items-center gap-3">
       {returnTo && (
         <Link
           href={returnTo}
-          aria-label="←"
+          aria-label={t("back")}
           className={cn(
-            buttonVariants({ variant: "ghost", size: "icon" }),
-            "-ml-2 shrink-0",
+            buttonVariants({ variant: "glass", size: "circle" }),
+            "shrink-0",
           )}
         >
           <ArrowLeftIcon />

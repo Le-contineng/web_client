@@ -2,7 +2,7 @@
 
 import { AlertTriangleIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import type { ReactNode } from "react";
+import { type ReactNode, useRef } from "react";
 import { cn } from "@/shared/lib/utils";
 import { eventImage } from "@/modules/events/domain/event-image";
 import { ProgressiveImage } from "@/shared/components/ProgressiveImage";
@@ -12,56 +12,71 @@ import type { TrackedChange } from "@/modules/events/domain/event";
 import { EventBadges } from "@/modules/events/presentation/components/EventBadges";
 import { EventDate } from "@/modules/events/presentation/components/EventDate";
 import {
-  EventAboutAndPlace,
+  EventAbout,
   EventCancellation,
   EventPresenter,
   EventWhenWhere,
+  InfoCard,
 } from "@/modules/events/presentation/components/EventInfo";
+import { CategoryChips } from "@/modules/events/presentation/components/CategoryChips";
+import { EventHeroBar } from "@/modules/events/presentation/components/EventHeroBar";
 
 /**
- * Fiche d'un événement (US-01), sur le modèle d'une page d'événement : à
- * gauche la photo, la page organisatrice et les catégories ; à droite le nom,
- * la date, le lieu, les actions, puis la description et le lieu. Sur
- * téléphone, tout s'empile. Les actions et les vues dépendent des droits.
+ * Fiche d'un événement (US-01). Sur téléphone : photo pleine largeur sous la
+ * barre d'état, avec deux cercles de verre (retour, partage), puis le contenu
+ * en cartes opaques (Présenté par, titre et statut, date et lieu, actions,
+ * À propos). Sur ordinateur : la photo et la page organisatrice à gauche
+ * (330 px), le reste à droite. Les actions et les vues dépendent des droits.
  */
 export function EventDetails({
   event,
   actions,
   views,
+  onShare,
 }: {
   event: EventView;
   actions: ReactNode;
   views?: ReactNode;
+  /** Mesure du clic sur « Partager » (cercle de la photo). */
+  onShare?: () => Promise<void>;
 }) {
   const t = useTranslations();
   const cancelled = event.status === "cancelled";
+  const hero = useRef<HTMLDivElement>(null);
   return (
-    <div className="mx-auto grid max-w-[960px] gap-8 px-4 md:grid-cols-[330px_minmax(0,1fr)] md:gap-10">
-      <aside className="grid content-start gap-6">
-        {/* Toute la largeur, place réservée aux proportions de la photo */}
-        <ProgressiveImage
-          src={eventImage(event)}
-          {...layoutProps(event)}
-          priority
-          className="rounded-xl"
-          imageClassName={cn(cancelled && "grayscale")}
-        />
-        <EventPresenter event={event} />
-        <div className="flex flex-wrap gap-1.5">
-          {event.categories.map((c) => (
-            <span
-              key={c}
-              className="rounded-full border px-2.5 py-0.5 text-sm text-muted-foreground"
-            >
-              # {t(`categories.${c}`)}
-            </span>
-          ))}
+    <div className="mx-auto grid max-w-[960px] gap-3 px-3 md:grid-cols-[330px_minmax(0,1fr)] md:gap-x-10 md:gap-y-6 md:px-4">
+      <EventHeroBar
+        hero={hero}
+        path={`/e/${event.id}`}
+        title={event.name}
+        onShare={onShare}
+      />
+      {/* Sur téléphone, la colonne s'efface : ses blocs s'intercalent (order). */}
+      <aside className="contents md:grid md:content-start md:gap-6">
+        <div
+          ref={hero}
+          className="relative -mx-3 overflow-hidden bg-muted md:mx-0 md:rounded-media"
+        >
+          {/* Toute la largeur, place réservée aux proportions de la photo */}
+          <ProgressiveImage
+            src={eventImage(event)}
+            {...layoutProps(event)}
+            priority
+            imageClassName={cn(cancelled && "grayscale")}
+          />
+          <CategoryChips
+            categories={event.categories}
+            className="absolute inset-x-3 bottom-3 md:top-3 md:bottom-auto"
+          />
         </div>
-        {views}
+        <InfoCard className="order-1 md:order-none">
+          <EventPresenter event={event} />
+        </InfoCard>
+        {views && <div className="order-6 md:order-none">{views}</div>}
       </aside>
 
-      <div className="grid content-start gap-6">
-        <div className="grid gap-3">
+      <div className="contents md:grid md:content-start md:gap-4">
+        <InfoCard className="order-2 gap-3 md:order-none">
           <h1
             className={cn(
               "text-3xl leading-tight font-bold md:text-4xl",
@@ -71,22 +86,30 @@ export function EventDetails({
             {event.name}
           </h1>
           <EventBadges status={event.status} period={event.period} />
+        </InfoCard>
+        <InfoCard className="order-3 md:order-none">
+          <EventWhenWhere event={event} maps />
+        </InfoCard>
+        <div className="order-3 empty:hidden md:order-none">
+          <EventCancellation event={event} />
         </div>
-        <EventWhenWhere event={event} />
-        <EventCancellation event={event} />
         {event.status === "updated" && event.latestUpdate && (
-          <LatestUpdate
-            at={event.latestUpdate.at}
-            changes={event.latestUpdate.changes}
-          />
+          <div className="order-3 md:order-none">
+            <LatestUpdate
+              at={event.latestUpdate.at}
+              changes={event.latestUpdate.changes}
+            />
+          </div>
         )}
-        <section className="overflow-hidden rounded-xl border">
-          <h2 className="bg-muted px-4 py-2 text-sm text-muted-foreground">
+        <InfoCard className="order-4 gap-3 md:order-none">
+          <h2 className="text-sm font-medium text-muted-foreground">
             {t("events.sheet.actions")}
           </h2>
-          <div className="flex flex-wrap gap-2 p-4">{actions}</div>
-        </section>
-        <EventAboutAndPlace event={event} showCategories={false} />
+          <div className="flex flex-wrap items-center gap-2">{actions}</div>
+        </InfoCard>
+        <InfoCard className="order-5 md:order-none">
+          <EventAbout event={event} showCategories={false} />
+        </InfoCard>
       </div>
     </div>
   );
@@ -110,7 +133,7 @@ function LatestUpdate({
       <EventDate iso={v} className="first-letter:uppercase" />
     );
   return (
-    <section className="grid gap-2 rounded-lg border border-avertissement/40 bg-avertissement-fond p-3 text-sm">
+    <section className="grid gap-2 rounded-card border border-avertissement/40 bg-avertissement-fond p-4 text-sm">
       <p className="flex items-center gap-2 font-semibold text-avertissement">
         <AlertTriangleIcon className="size-4" />
         <span>

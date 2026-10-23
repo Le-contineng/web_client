@@ -1,0 +1,222 @@
+/* =====================================================================
+   Le Contineng — Liquid Glass (style iOS 26) pour le web
+   À charger après contineng-tokens.scss. Fonctionne en Angular comme en
+   Next/Tailwind : variables CSS + classes utilitaires .ct-glass-*.
+   Règle d'or : le verre est réservé à la couche de navigation et de
+   contrôle ; cartes, images et textes restent opaques.
+   ===================================================================== */
+
+/* ---------- 1. Tokens ---------- */
+:root {
+  /* Flou */
+  --glass-blur: 22px;            /* barres, champs, boutons */
+  --glass-blur-sm: 12px;         /* pastilles sur image (listes) */
+  --glass-blur-lg: 30px;         /* feuilles modales */
+  --glass-saturate: 180%;
+
+  /* Matériaux */
+  --glass-light: rgb(255 255 255 / .58);
+  --glass-sheet: rgb(246 247 249 / .78);
+  --glass-dark: rgb(24 26 30 / .72);
+  --glass-tint-red: rgb(205 4 4 / .94);      /* action principale, blanc 5,3:1 */
+  --glass-tint-red-press: rgb(170 3 3 / .96);
+  --glass-tint-ink: rgb(10 10 10 / .80);     /* filtre actif */
+  --glass-tint-blue: rgb(47 160 193 / .16);  /* onglet actif (clair) */
+  --glass-tint-blue-dark: rgb(91 192 222 / .20);
+  --glass-track: rgb(118 128 140 / .16);     /* rail segmenté */
+
+  /* Reflets et bords */
+  --glass-specular: linear-gradient(180deg, rgb(255 255 255 / .50), rgb(255 255 255 / 0) 46%);
+  --glass-specular-dark: linear-gradient(180deg, rgb(255 255 255 / .12), rgb(255 255 255 / 0) 46%);
+  --glass-specular-tint: linear-gradient(180deg, rgb(255 255 255 / .22), rgb(255 255 255 / 0) 50%);
+  --glass-edge-light: inset 0 1px 0 rgb(255 255 255 / .90), inset 0 0 0 1px rgb(255 255 255 / .50);
+  --glass-edge-dark: inset 0 1px 0 rgb(255 255 255 / .22), inset 0 0 0 1px rgb(255 255 255 / .10);
+
+  /* Ombres */
+  --glass-shadow: 0 1px 2px rgb(10 10 10 / .06), 0 10px 28px rgb(10 10 10 / .12);
+  --glass-shadow-dark: 0 10px 28px rgb(0 0 0 / .35);
+  --glass-shadow-sheet: 0 -6px 40px rgb(10 10 10 / .18);
+
+  /* Formes */
+  --glass-r-bar: 32px;           /* barre d'onglets 64 px */
+  --glass-r-bar-compact: 27px;   /* barre compacte 54 px */
+  --glass-r-sheet: 34px;
+  --glass-r-menu: 22px;
+  --glass-r-control: 999px;
+
+  /* Mouvement */
+  --glass-spring: cubic-bezier(.34, 1.56, .64, 1);
+  --glass-ease: cubic-bezier(.2, .8, .2, 1);
+  --glass-press: scale(.95, .93);
+  --glass-dur-press: 380ms;
+  --glass-dur-morph: 380ms;
+
+  /* Replis opaques */
+  --glass-fallback-light: #F8F9FB;
+  --glass-fallback-dark: #1C1E22;
+}
+
+/* ---------- 2. Matériaux ---------- */
+.ct-glass {
+  background: var(--glass-specular), var(--glass-light);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+          backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  box-shadow: var(--glass-edge-light), var(--glass-shadow);
+  color: #0A0A0A;
+}
+.ct-glass--dark,
+.dark .ct-glass {
+  background: var(--glass-specular-dark), var(--glass-dark);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+          backdrop-filter: blur(24px) saturate(160%);
+  box-shadow: var(--glass-edge-dark), var(--glass-shadow-dark);
+  color: #F5F6F8;
+}
+.ct-glass--red {
+  background: var(--glass-specular-tint), var(--glass-tint-red);
+  -webkit-backdrop-filter: blur(16px) saturate(var(--glass-saturate));
+          backdrop-filter: blur(16px) saturate(var(--glass-saturate));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .45), inset 0 0 0 1px rgb(255 255 255 / .16), 0 8px 22px rgb(196 3 3 / .32);
+  color: #fff;
+}
+.ct-glass--ink {
+  background: linear-gradient(180deg, rgb(255 255 255 / .16), rgb(255 255 255 / 0) 50%), var(--glass-tint-ink);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+          backdrop-filter: blur(16px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .25), inset 0 0 0 1px rgb(255 255 255 / .08), 0 6px 16px rgb(10 10 10 / .2);
+  color: #fff;
+}
+.dark .ct-glass--ink { background: var(--glass-specular), rgb(255 255 255 / .92); color: #0A0A0A; }
+
+/* Pastille de catégorie sur image : --chip = couleur de la catégorie (token --ct-cat-*) */
+.ct-glass-chip {
+  background: var(--glass-specular-tint), color-mix(in srgb, var(--chip) 90%, transparent);
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm)) saturate(var(--glass-saturate));
+          backdrop-filter: blur(var(--glass-blur-sm)) saturate(var(--glass-saturate));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .4), inset 0 0 0 1px rgb(255 255 255 / .18), 0 2px 8px rgb(0 0 0 / .18);
+  color: #fff;
+  height: 28px; padding: 0 12px; border-radius: var(--glass-r-control);
+  display: inline-flex; align-items: center; font: 600 13px/1 var(--ct-font-body, system-ui);
+}
+@supports not (background: color-mix(in srgb, red 50%, transparent)) {
+  .ct-glass-chip { background: var(--chip); }
+}
+
+/* ---------- 3. Composants ---------- */
+.ct-tabbar {               /* capsule flottante */
+  position: fixed; left: 16px; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom));
+  height: 64px; border-radius: var(--glass-r-bar);
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: center; padding: 0 5px;
+  transition: width var(--glass-dur-morph) var(--glass-ease), height var(--glass-dur-morph) var(--glass-ease), left var(--glass-dur-morph) var(--glass-ease), right var(--glass-dur-morph) var(--glass-ease);
+}
+.ct-tabbar.is-compact { left: calc(50% - 100px); right: calc(50% - 100px); height: 54px; border-radius: var(--glass-r-bar-compact); }
+.ct-tabbar.is-compact .ct-tab__label { display: none; }
+.ct-tab { height: 54px; border-radius: 27px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: #2B313A; font-size: 11px; font-weight: 500; }
+.ct-tab[aria-current="page"] {
+  background: var(--glass-tint-blue);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .75), inset 0 0 0 1px rgb(47 160 193 / .24);
+  color: #1A7A9A; font-weight: 600;
+}
+.dark .ct-tab { color: #D5DAE1; }
+.dark .ct-tab[aria-current="page"] { background: var(--glass-tint-blue-dark); color: #5BC0DE; box-shadow: inset 0 1px 0 rgb(255 255 255 / .18), inset 0 0 0 1px rgb(91 192 222 / .28); }
+
+.ct-navbar { position: sticky; top: 0; z-index: 30; border-radius: 0 0 24px 24px; }
+.ct-navbar.is-over-image { background: transparent; box-shadow: none; backdrop-filter: none; } /* seuls les cercles flottent */
+
+.ct-circle { width: 44px; height: 44px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; }
+
+.ct-search { height: 50px; border-radius: 25px; padding: 0 18px; display: flex; align-items: center; gap: 10px; transition: flex-basis var(--glass-dur-morph) var(--glass-ease); }
+.ct-search:focus-within { box-shadow: inset 0 1px 0 rgb(255 255 255 / .9), inset 0 0 0 1.5px rgb(26 122 154 / .75), 0 0 0 4px rgb(47 160 193 / .25), var(--glass-shadow); }
+
+.ct-btn-group { display: flex; gap: 4px; padding: 4px; border-radius: 999px; }
+
+.ct-segmented { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); padding: 3px; border-radius: 999px; background: var(--glass-track); }
+.ct-segmented [aria-checked="true"] { background: #fff; border-radius: 999px; box-shadow: var(--glass-edge-light), var(--glass-shadow); }
+
+.ct-sheet {
+  position: fixed; left: 8px; right: 8px; bottom: 8px; border-radius: var(--glass-r-sheet);
+  background: linear-gradient(180deg, rgb(255 255 255 / .55), rgb(255 255 255 / 0) 30%), var(--glass-sheet);
+  -webkit-backdrop-filter: blur(var(--glass-blur-lg)) saturate(var(--glass-saturate));
+          backdrop-filter: blur(var(--glass-blur-lg)) saturate(var(--glass-saturate));
+  box-shadow: var(--glass-edge-light), var(--glass-shadow-sheet);
+  height: 52vh; transition: height var(--glass-dur-morph) var(--glass-ease);
+}
+.ct-sheet.is-full { height: calc(100vh - 56px); }
+.ct-sheet__handle { width: 40px; height: 5px; border-radius: 999px; background: rgb(10 10 10 / .22); margin: 8px auto; }
+
+.ct-menu { border-radius: var(--glass-r-menu); padding: 6px; transform-origin: var(--origin, top left); animation: ct-morph-in var(--glass-dur-morph) var(--glass-spring) both; }
+@keyframes ct-morph-in {
+  from { opacity: 0; transform: scale(.35, .25); border-radius: 999px; filter: blur(4px); }
+  to   { opacity: 1; transform: none; border-radius: var(--glass-r-menu); filter: none; }
+}
+
+.ct-switch { width: 64px; height: 30px; border-radius: 999px; background: #D5DAE1; position: relative; }
+.ct-switch[aria-checked="true"] { background: #1E7F3E; }
+.ct-switch__thumb { position: absolute; top: 2px; left: 2px; width: 38px; height: 26px; border-radius: 999px; background: #fff; transition: transform var(--glass-dur-press) var(--glass-spring); }
+.ct-switch[aria-checked="true"] .ct-switch__thumb { transform: translateX(22px); }
+.ct-switch:active .ct-switch__thumb { background: var(--glass-specular), rgb(255 255 255 / .25); transform: scale(1.3, 1.5); }
+
+/* Appui « liquide » */
+.ct-press { transition: transform var(--glass-dur-press) var(--glass-spring); }
+.ct-press:active { transform: var(--glass-press); }
+
+/* ---------- 4. Réfraction (amélioration progressive, Chromium) ---------- */
+/* Dans le DOM, une fois :
+   <svg width="0" height="0" style="position:absolute">
+     <filter id="ct-refract"><feTurbulence type="fractalNoise" baseFrequency=".012" numOctaves="2" seed="3"/>
+       <feDisplacementMap in="SourceGraphic" scale="14" xChannelSelector="R" yChannelSelector="G"/></filter>
+   </svg>
+   À réserver aux barres fixes (onglets, navigation), jamais dans les listes. */
+@supports (backdrop-filter: url(#ct-refract)) {
+  .ct-tabbar.ct-refract, .ct-navbar.ct-refract {
+    backdrop-filter: url(#ct-refract) blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  }
+}
+
+/* ---------- 5. Replis et accessibilité ---------- */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .ct-glass, .ct-sheet { background: var(--glass-fallback-light); }
+  .ct-glass--dark, .dark .ct-glass { background: var(--glass-fallback-dark); }
+  .ct-glass--ink { background: #0A0A0A; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .ct-glass, .ct-sheet { background: var(--glass-fallback-light); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .ct-glass--dark, .dark .ct-glass { background: var(--glass-fallback-dark); }
+  .ct-glass--ink { background: #0A0A0A; }
+  .ct-glass-chip { background: var(--chip); backdrop-filter: none; }
+}
+@media (prefers-contrast: more) {
+  .ct-glass { background: #fff; box-shadow: inset 0 0 0 1.5px #0A0A0A; }
+  .ct-glass--dark { background: #000; box-shadow: inset 0 0 0 1.5px #fff; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ct-press, .ct-tabbar, .ct-sheet, .ct-switch__thumb { transition: opacity 150ms linear; }
+  .ct-press:active { transform: none; }
+  .ct-menu { animation: ct-fade 150ms linear both; }
+  @keyframes ct-fade { from { opacity: 0 } to { opacity: 1 } }
+}
+/* Contenu chargé derrière du texte (photo) : ajouter .ct-glass--scrim */
+.ct-glass--scrim { background: var(--glass-specular), rgb(255 255 255 / .82); }
+
+/* ---------- 6. Performance ----------
+   - 3 surfaces de verre maximum visibles : barre haute, filtres, barre d'onglets.
+   - Aucun backdrop-filter sur les cartes du fil ; pastilles en blur 12 px uniquement.
+   - will-change: transform seulement pendant l'animation (ajouté/retiré en JS).
+   - Compactage de la barre d'onglets : IntersectionObserver / scroll passif, pas de calcul par frame.
+
+   ---------- 7. Tableau des états ----------
+   Composant         | Normal                     | Actif                          | Pressé                 | Désactivé           | Sombre
+   Barre d'onglets   | .ct-glass h64 r32          | onglet : --glass-tint-blue     | .95/.93 + ressort      | —                   | .ct-glass--dark, onglet #5BC0DE
+   Barre compacte    | h54 r27, icônes seules     | idem                           | idem                   | —                   | idem
+   Barre navigation  | transparente sur image     | défilée : .ct-glass            | —                      | —                   | .ct-glass--dark
+   Bouton cercle     | .ct-glass 44×44            | —                              | scale .92              | icône 40 %          | .ct-glass--dark
+   Bouton principal  | .ct-glass--red             | —                              | --glass-tint-red-press | #EBEEF2 / #6B7380   | inchangé
+   Bouton secondaire | .ct-glass                  | —                              | .95/.93                | texte #6B7380       | .ct-glass--dark
+   Recherche         | .ct-glass h50 r25          | focus : anneau #1A7A9A + halo  | —                      | texte #6B7380       | anneau #5BC0DE
+   Filtre            | .ct-glass                  | .ct-glass--ink + compteur      | .95/.93                | —                   | actif blanc 92 %
+   Pastille          | .ct-glass-chip (--chip)    | coche (formulaire)             | .95                    | —                   | identique
+   Feuille modale    | .ct-sheet 52vh             | .is-full                       | poignée glissée        | —                   | .ct-glass--dark
+   Menu / popover    | .ct-glass r22, morph       | ligne cochée                   | ligne rgb(10 10 10/.07)| ligne 40 %          | .ct-glass--dark
+   Interrupteur      | rail #D5DAE1               | rail #1E7F3E                   | curseur verre agrandi  | 50 %                | rail off #3A3F47
+   Segmenté / slider | rail --glass-track         | curseur blanc                  | curseur verre agrandi  | 50 %                | rail rgb(255 255 255/.12)
+*/

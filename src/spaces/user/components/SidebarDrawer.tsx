@@ -68,10 +68,10 @@ export function SidebarDrawer({
       role="dialog"
       aria-label={title}
       className={cn(
-        "fixed inset-y-0 z-30 flex w-[400px] animate-in flex-col border-x bg-background transition-[left] duration-200 ease-out fade-in-0 slide-in-from-left-4",
+        "ct-sheet fixed inset-y-3 z-30 flex w-[400px] animate-in flex-col rounded-[28px] transition-[left] duration-200 ease-out fade-in-0 slide-in-from-left-4",
         collapsed
-          ? "left-[72px] max-w-[calc(100vw-72px)]"
-          : "left-60 max-w-[calc(100vw-15rem)]",
+          ? "left-[96px] max-w-[calc(100vw-108px)]"
+          : "left-[264px] max-w-[calc(100vw-276px)]",
       )}
     >
       <div className="flex items-center justify-between px-4 pt-5 pb-3">
@@ -84,7 +84,7 @@ export function SidebarDrawer({
             trigger.current?.focus();
           }}
           aria-label={t("close")}
-          className="grid size-9 place-items-center rounded-full bg-muted outline-none hover:bg-muted/70 focus-visible:ring-3 focus-visible:ring-ring/50"
+          className="ct-press grid size-11 place-items-center rounded-full bg-foreground/8 outline-none hover:bg-foreground/12 focus-visible:ring-3 focus-visible:ring-ring/50"
         >
           <XIcon className="size-5" />
         </button>
@@ -97,7 +97,8 @@ export function SidebarDrawer({
 /** Classes d'une entrée de la barre qui ouvre un tiroir (active quand il l'est). */
 export function drawerTriggerClass(open: boolean) {
   return cn(
-    "flex h-11 w-full items-center gap-3 rounded-lg px-3 text-base transition-colors outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 [&_svg]:size-6 [&_svg]:shrink-0",
-    open && "font-semibold [&_svg]:fill-current",
+    "flex h-11 w-full items-center gap-3 rounded-full px-3 text-base transition-colors outline-none hover:bg-foreground/5 focus-visible:ring-3 focus-visible:ring-ring/50 [&_svg]:size-6 [&_svg]:shrink-0",
+    open &&
+      "bg-ct-blue-soft font-semibold text-ct-blue-label shadow-[inset_0_0_0_1px_rgb(47_160_193/0.24)] hover:bg-ct-blue-soft [&_svg]:fill-current",
   );
 }

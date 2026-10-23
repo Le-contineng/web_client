@@ -13,7 +13,7 @@ import { useSidebarPanel } from "@/spaces/user/components/sidebar-panel";
  */
 const ACTIVE_ICON = "[&_svg]:fill-current [&_svg_rect~path]:stroke-background";
 
-/** Entrée de navigation : barre latérale (icône + libellé) ou barre basse (icône). */
+/** Entrée de navigation : barre latérale ou barre d'onglets (icône + libellé). */
 export function NavLink({
   href,
   icon,
@@ -37,11 +37,12 @@ export function NavLink({
         aria-label={label}
         aria-current={active ? "page" : undefined}
         className={cn(
-          "grid flex-1 place-items-center py-3 [&_svg]:size-6",
-          active ? cn("text-foreground", ACTIVE_ICON) : "text-foreground/80",
+          "ct-tab ct-press outline-none focus-visible:ring-3 focus-visible:ring-ring/50 [&_svg]:size-6",
+          active && ACTIVE_ICON,
         )}
       >
         {icon}
+        <span className="ct-tab__label max-w-full truncate px-1">{label}</span>
       </Link>
     );
   }
@@ -51,8 +52,12 @@ export function NavLink({
       aria-label={label}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "flex h-11 items-center gap-3 rounded-lg px-3 text-base transition-colors hover:bg-muted [&_svg]:size-6 [&_svg]:shrink-0",
-        active && cn("font-semibold text-foreground", ACTIVE_ICON),
+        "flex h-11 items-center gap-3 rounded-full px-3 text-base transition-colors outline-none hover:bg-foreground/5 focus-visible:ring-3 focus-visible:ring-ring/50 [&_svg]:size-6 [&_svg]:shrink-0",
+        active &&
+          cn(
+            "bg-ct-blue-soft font-semibold text-ct-blue-label shadow-[inset_0_0_0_1px_rgb(47_160_193/0.24)] hover:bg-ct-blue-soft",
+            ACTIVE_ICON,
+          ),
       )}
     >
       {icon}

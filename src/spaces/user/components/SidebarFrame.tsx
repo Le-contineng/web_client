@@ -86,12 +86,13 @@ export function SidebarFrame({
           "min-h-dvh transition-[padding] duration-200",
           // La page suit le choix mémorisé : elle ne bouge pas quand un
           // panneau réduit la barre.
-          stored ? "md:pl-[72px]" : "md:pl-60",
+          stored ? "md:pl-[84px]" : "md:pl-[252px]",
         )}
       >
         <aside
           className={cn(
-            "fixed inset-y-0 left-0 z-40 hidden [scrollbar-width:none] flex-col overflow-x-hidden overflow-y-auto bg-background px-3 pt-5 pb-4 transition-[width] duration-200 ease-out md:flex",
+            // Verre clair flottant, à 12 px des bords de la fenêtre.
+            "ct-glass ct-glass--scrim fixed inset-y-3 left-3 z-40 hidden [scrollbar-width:none] flex-col overflow-x-hidden overflow-y-auto rounded-[28px] px-3 pt-5 pb-4 transition-[width] duration-200 ease-out md:flex",
             collapsed ? "w-[72px]" : "w-60",
           )}
         >
@@ -109,7 +110,7 @@ export function SidebarFrame({
               aria-label={collapsed ? t("expand") : t("collapse")}
               aria-pressed={collapsed}
               className={cn(
-                "grid size-8 shrink-0 place-items-center rounded-md text-muted-foreground outline-none hover:bg-muted hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50",
+                "grid size-9 shrink-0 place-items-center rounded-full text-[#434b57] outline-none hover:bg-foreground/7 hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 dark:text-[#b9c0ca]",
                 // Réduite : le bouton prend la place du logo, visible au survol.
                 collapsed &&
                   "absolute top-1 left-1.5 opacity-0 group-focus-within/header:opacity-100 group-hover/header:opacity-100",

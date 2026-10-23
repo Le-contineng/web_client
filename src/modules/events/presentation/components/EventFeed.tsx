@@ -59,7 +59,7 @@ export function EventFeed({
   }, [next, filters, enCours, load]);
 
   return (
-    <div className="grid gap-0 sm:gap-6">
+    <div className="grid gap-3 px-3 sm:gap-5 sm:px-0">
       {events.map((e, i) => (
         <EventCard
           key={e.id}
@@ -76,7 +76,7 @@ export function EventFeed({
         onSelect={setOpenId}
         onView={onView}
       />
-      {enCours && <Skeleton className="aspect-square w-full sm:rounded-xl" />}
+      {enCours && <Skeleton className="aspect-square w-full rounded-card" />}
       {next === null && events.length > 0 && (
         <p className="flex flex-col items-center gap-2 py-10 text-sm text-muted-foreground">
           <CheckCircle2Icon className="size-8" />

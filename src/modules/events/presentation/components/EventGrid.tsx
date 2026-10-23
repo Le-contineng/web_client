@@ -9,7 +9,7 @@ import {
 import { ProgressiveImage } from "@/shared/components/ProgressiveImage";
 
 /**
- * Grille de vignettes au format portrait 3:4 (comme la grille d'Instagram),
+ * Grille de vignettes (rayon 16) au format portrait 3:4 (comme la grille d'Instagram),
  * comme sur les réseaux sociaux : la photo n'est ni coupée ni déformée, elle
  * est centrée sur un fond noir qui comble l'espace restant.
  */
@@ -24,7 +24,7 @@ export function EventGrid({
   return (
     <ul
       className={cn(
-        "grid grid-cols-3 gap-0.5 sm:gap-1 lg:grid-cols-4 xl:grid-cols-5",
+        "grid grid-cols-3 gap-1.5 sm:gap-2 lg:grid-cols-4 xl:grid-cols-5",
         className,
       )}
     >
@@ -32,7 +32,7 @@ export function EventGrid({
         <li key={e.id}>
           <Link
             href={`/e/${e.id}`}
-            className="group relative block aspect-[3/4] overflow-hidden bg-black"
+            className="group relative block aspect-[3/4] overflow-hidden rounded-media bg-black outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
           >
             <ProgressiveImage
               src={eventImage(e)}
@@ -46,7 +46,8 @@ export function EventGrid({
               <span className="line-clamp-2">{e.name}</span>
             </span>
             {(e.status !== "published" || e.period !== "upcoming") && (
-              <span className="absolute top-1.5 right-1.5 rounded bg-black/60 px-1.5 py-0.5 text-[10px] font-medium text-white">
+              // Verre encre sans flou : pas de backdrop-filter dans une liste.
+              <span className="absolute top-1.5 right-1.5 rounded-full bg-[rgb(10_10_10/0.8)] px-2 py-0.5 text-[11px] font-semibold text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.25),inset_0_0_0_1px_rgb(255_255_255/0.08)] dark:bg-[rgb(255_255_255/0.92)] dark:text-[#0a0a0a]">
                 {e.status === "published"
                   ? t(`periods.${e.period}`)
                   : t(`statuses.${e.status}`)}

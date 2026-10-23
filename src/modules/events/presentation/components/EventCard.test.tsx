@@ -44,7 +44,10 @@ describe("CarteEvenement (US-01)", () => {
     ).toBeInTheDocument();
     expect(screen.getByText("Salle des fêtes")).toBeInTheDocument();
     expect(screen.getByText("BDE")).toBeInTheDocument();
-    expect(screen.getByText("#Soirée/fête")).toBeInTheDocument();
+    // Catégorie en pastille teintée de sa couleur (categoryColor)
+    const chip = screen.getByText("Soirée / fête");
+    expect(chip).toHaveClass("ct-glass-chip");
+    expect(chip.style.getPropertyValue("--chip")).toBe("#B0306B");
     for (const link of screen.getAllByRole("link", {
       name: "Soirée de gala",
     })) {

@@ -48,73 +48,128 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/*
+ * Tokens du relooking « Liquid Glass » (design/contineng-tokens.scss).
+ * Les couleurs du logo officiel forment la base de la palette.
+ */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Neutres */
+  --ct-ink: #0a0a0a;
+  --ct-bg: #f3f5f8;
+  --ct-surface: #ffffff;
+  --ct-field: #f1f3f7;
+  --ct-border: #e2e6ec;
+  --ct-text: #0a0a0a;
+  --ct-text-2: #5b6472;
+
+  /* Action principale, réservée aux boutons principaux */
+  --ct-red: #eb0405;
+  --ct-red-press: #c40303;
+  --ct-red-soft: #fde6e6;
+  /* Texte d'erreur : le rouge du logo n'atteint que 4,2:1 sur le fond. */
+  --ct-red-ink: #b0102c;
+
+  /* Couleurs du logo */
+  --ct-blue: #2fa0c1;
+  --ct-blue-ink: #1a7a9a;
+  /* Libellé d'onglet actif : #1A7A9A n'atteint que 4,3:1 sur sa pilule. */
+  --ct-blue-label: #15647f;
+  --ct-blue-soft: #e3f3f8;
+  --ct-green: #6ac73c;
+  --ct-orange: #f7850d;
+  --ct-violet: #6c3fd1;
+
+  /*
+   * Catégories : mêmes valeurs que CATEGORY_COLORS
+   * (src/modules/events/domain/category-color.ts, vérifié par un test).
+   * Texte blanc ≥ 4,5:1 sur la pastille pleine.
+   */
+  --ct-cat-match: #b94f08;
+  --ct-cat-inter-club: #6c3fd1;
+  --ct-cat-orientation: #0f7c86;
+  --ct-cat-party: #b0306b;
+  --ct-cat-culture: #8a6a00;
+  --ct-cat-conference: #1e6fe0;
+  --ct-cat-campus-life: #1e7f3e;
+  --ct-cat-other: #4b5563;
+
+  /* Rayons */
+  --ct-radius-field: 14px;
+  --ct-radius-media: 16px;
+  --ct-radius-card: 22px;
+
+  /* Ombres */
+  --ct-shadow-card:
+    0 1px 2px rgb(10 10 10 / 0.04), 0 8px 24px rgb(10 10 10 / 0.06);
+  --ct-shadow-pop:
+    0 2px 6px rgb(10 10 10 / 0.06), 0 16px 40px rgb(10 10 10 / 0.14);
+  --ct-focus-ring: 0 0 0 4px rgb(47 160 193 / 0.25);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  /* L'« actif » s'inverse : pilule blanche, texte noir. */
+  --ct-ink: #f5f6f8;
+  --ct-bg: #0a0a0a;
+  --ct-surface: #15171b;
+  --ct-field: #1f2228;
+  --ct-border: #2a2e35;
+  --ct-text: #f5f6f8;
+  --ct-text-2: #a3aab5;
+  --ct-blue: #5bc0de;
+  --ct-blue-ink: #5bc0de;
+  --ct-blue-label: #5bc0de;
+  --ct-blue-soft: #1e3640;
+  --ct-red-soft: rgb(235 4 5 / 0.16);
+  --ct-shadow-card: 0 0 0 1px #2a2e35;
+  --ct-shadow-pop: 0 0 0 1px #2a2e35, 0 16px 40px rgb(0 0 0 / 0.5);
+  --ct-focus-ring: 0 0 0 4px rgb(91 192 222 / 0.3);
+}
+
+/*
+ * Pont vers les variables shadcn : les composants de src/shared/ui suivent la
+ * palette. Redéclaré sur .dark pour qu'une zone toujours sombre (connexion)
+ * reprenne les valeurs sombres, même quand le reste de la page est clair.
+ */
+:root,
+.dark {
+  --background: var(--ct-bg);
+  --foreground: var(--ct-text);
+  --card: var(--ct-surface);
+  --card-foreground: var(--ct-text);
+  --popover: var(--ct-surface);
+  --popover-foreground: var(--ct-text);
+  --primary: var(--ct-red);
+  --primary-foreground: #ffffff;
+  --secondary: var(--ct-field);
+  --secondary-foreground: var(--ct-text);
+  --muted: var(--ct-field);
+  --muted-foreground: var(--ct-text-2);
+  --accent: var(--ct-field);
+  --accent-foreground: var(--ct-text);
+  --destructive: var(--ct-red-ink);
+  --border: var(--ct-border);
+  --input: var(--ct-border);
+  --ring: var(--ct-blue-ink);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.922 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* 16 px : rounded-xl ≈ 22 px, rounded-2xl ≈ 29 px */
+  --radius: 1rem;
+  --sidebar: var(--ct-surface);
+  --sidebar-foreground: var(--ct-text);
+  --sidebar-primary: var(--ct-red);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--ct-field);
+  --sidebar-accent-foreground: var(--ct-text);
+  --sidebar-border: var(--ct-border);
+  --sidebar-ring: var(--ct-blue-ink);
+}
+
+/* En sombre, le rouge du logo n'atteint pas 4,5:1 en texte : on garde un rouge plus clair. */
+.dark {
+  --destructive: oklch(0.704 0.191 22.216);
 }
 
 @layer base {
@@ -135,6 +190,10 @@
   }
   html {
     @apply font-sans;
+  }
+  h1,
+  h2 {
+    font-weight: 700;
   }
 }
 
@@ -174,4 +233,534 @@
   --color-avertissement-fond: var(--avertissement-fond);
   --color-danger-fond: var(--danger-fond);
   --color-danger: var(--danger);
+
+  /* Palette du logo et catégories : bg-ct-blue, text-ct-blue-ink, bg-cat-match… */
+  --color-ct-ink: var(--ct-ink);
+  --color-ct-red: var(--ct-red);
+  --color-ct-red-press: var(--ct-red-press);
+  --color-ct-blue: var(--ct-blue);
+  --color-ct-blue-ink: var(--ct-blue-ink);
+  --color-ct-blue-label: var(--ct-blue-label);
+  --color-ct-blue-soft: var(--ct-blue-soft);
+  --color-ct-green: var(--ct-green);
+  --color-ct-orange: var(--ct-orange);
+  --color-cat-match: var(--ct-cat-match);
+  --color-cat-inter-club: var(--ct-cat-inter-club);
+  --color-cat-orientation: var(--ct-cat-orientation);
+  --color-cat-party: var(--ct-cat-party);
+  --color-cat-culture: var(--ct-cat-culture);
+  --color-cat-conference: var(--ct-cat-conference);
+  --color-cat-campus-life: var(--ct-cat-campus-life);
+  --color-cat-other: var(--ct-cat-other);
+
+  --radius-card: var(--ct-radius-card);
+  --radius-media: var(--ct-radius-media);
+  --radius-field: var(--ct-radius-field);
+  --shadow-card: var(--ct-shadow-card);
+  --shadow-pop: var(--ct-shadow-pop);
+
+  /* Menus et popovers : « morphing » depuis le bouton qui les ouvre. */
+  --animate-morph-in: ct-morph-in var(--glass-dur-morph) var(--glass-spring)
+    both;
+  --animate-morph-out: ct-morph-out 180ms var(--glass-ease) both;
+  --animate-fade-in: ct-fade-in 150ms linear both;
+}
+
+/* =====================================================================
+   Liquid Glass (design/contineng-glass.css)
+   Le verre est réservé à la couche de navigation et de contrôle : barres,
+   filtres, boutons flottants, feuilles, menus, pastilles sur image. Cartes,
+   images et textes restent opaques. 3 surfaces de verre visibles au plus.
+
+   Ces règles sont volontairement hors des couches Tailwind : un matériau
+   l'emporte ainsi sur les fonds des composants shadcn (bg-popover…) qu'il
+   habille, sans les modifier.
+   ===================================================================== */
+:root {
+  --glass-blur: 22px;
+  --glass-blur-sm: 12px;
+  --glass-blur-lg: 30px;
+  --glass-saturate: 180%;
+
+  --glass-light: rgb(255 255 255 / 0.58);
+  /* Texte posé sur un contenu chargé (photos) : verre plus opaque. */
+  --glass-scrim: rgb(255 255 255 / 0.82);
+  --glass-sheet: rgb(246 247 249 / 0.86);
+  --glass-dark: rgb(24 26 30 / 0.72);
+  --glass-dark-scrim: rgb(24 26 30 / 0.88);
+  --glass-tint-red: rgb(205 4 4 / 0.94);
+  --glass-tint-red-press: rgb(170 3 3 / 0.96);
+  --glass-tint-ink: rgb(10 10 10 / 0.8);
+  --glass-track: rgb(118 128 140 / 0.16);
+
+  --glass-specular: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 0.5),
+    rgb(255 255 255 / 0) 46%
+  );
+  --glass-specular-dark: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 0.12),
+    rgb(255 255 255 / 0) 46%
+  );
+  --glass-specular-tint: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 0.22),
+    rgb(255 255 255 / 0) 50%
+  );
+  --glass-edge-light:
+    inset 0 1px 0 rgb(255 255 255 / 0.9), inset 0 0 0 1px rgb(255 255 255 / 0.5);
+  --glass-edge-dark:
+    inset 0 1px 0 rgb(255 255 255 / 0.22),
+    inset 0 0 0 1px rgb(255 255 255 / 0.1);
+
+  --glass-shadow:
+    0 1px 2px rgb(10 10 10 / 0.06), 0 10px 28px rgb(10 10 10 / 0.12);
+  --glass-shadow-dark: 0 10px 28px rgb(0 0 0 / 0.35);
+  --glass-shadow-sheet: 0 -6px 40px rgb(10 10 10 / 0.18);
+
+  --glass-r-bar: 32px;
+  --glass-r-bar-compact: 27px;
+  --glass-r-sheet: 34px;
+  --glass-r-menu: 22px;
+
+  --glass-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --glass-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --glass-dur-press: 380ms;
+  --glass-dur-morph: 380ms;
+
+  --glass-fallback-light: #f8f9fb;
+  --glass-fallback-dark: #1c1e22;
+}
+
+/* ---------- Matériaux ---------- */
+.ct-glass {
+  background: var(--glass-specular), var(--glass-light);
+  -webkit-backdrop-filter: blur(var(--glass-blur))
+    saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  box-shadow: var(--glass-edge-light), var(--glass-shadow);
+  color: #0a0a0a;
+}
+.ct-glass.ct-glass--scrim {
+  background: var(--glass-specular), var(--glass-scrim);
+}
+/* Posé sur une image d'une liste : flou réduit (performance). */
+.ct-glass.ct-glass--sm {
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm))
+    saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur-sm)) saturate(var(--glass-saturate));
+}
+.ct-glass--dark,
+.dark .ct-glass {
+  background: var(--glass-specular-dark), var(--glass-dark);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
+  box-shadow: var(--glass-edge-dark), var(--glass-shadow-dark);
+  color: #f5f6f8;
+}
+.dark .ct-glass.ct-glass--scrim {
+  background: var(--glass-specular-dark), var(--glass-dark-scrim);
+}
+.dark .ct-glass.ct-glass--sm {
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm)) saturate(160%);
+  backdrop-filter: blur(var(--glass-blur-sm)) saturate(160%);
+}
+.ct-glass--red {
+  background: var(--glass-specular-tint), var(--glass-tint-red);
+  -webkit-backdrop-filter: blur(16px) saturate(var(--glass-saturate));
+  backdrop-filter: blur(16px) saturate(var(--glass-saturate));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.45),
+    inset 0 0 0 1px rgb(255 255 255 / 0.16),
+    0 8px 22px rgb(196 3 3 / 0.32);
+  color: #fff;
+}
+.ct-glass--red:active:not(:disabled) {
+  background: var(--glass-specular-tint), var(--glass-tint-red-press);
+}
+.ct-glass--red:disabled,
+.ct-glass--red[aria-disabled="true"] {
+  background: #ebeef2;
+  box-shadow: none;
+  color: #6b7380;
+}
+.ct-glass--ink {
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.16), rgb(255 255 255 / 0) 50%),
+    var(--glass-tint-ink);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  backdrop-filter: blur(16px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.25),
+    inset 0 0 0 1px rgb(255 255 255 / 0.08),
+    0 6px 16px rgb(10 10 10 / 0.2);
+  color: #fff;
+}
+.dark .ct-glass--ink {
+  background: var(--glass-specular), rgb(255 255 255 / 0.92);
+  color: #0a0a0a;
+}
+
+/*
+ * Pastille de catégorie sur image : --chip = couleur de la catégorie.
+ * 97 % sans reflet (et non 90 % avec) : le texte blanc garde 4,5:1 même
+ * sur une photo blanche.
+ */
+.ct-glass-chip {
+  background: color-mix(in srgb, var(--chip) 97%, transparent);
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm))
+    saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur-sm)) saturate(var(--glass-saturate));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.4),
+    inset 0 0 0 1px rgb(255 255 255 / 0.18),
+    0 2px 8px rgb(0 0 0 / 0.18);
+  color: #fff;
+}
+@supports not (background: color-mix(in srgb, red 50%, transparent)) {
+  .ct-glass-chip {
+    background: var(--chip);
+  }
+}
+
+/* ---------- Composants ----------
+   Mise en page en couche « components » : les utilitaires Tailwind
+   (md:hidden, rounded-*…) peuvent la surcharger ; les matériaux, eux,
+   restent hors couche. */
+@layer components {
+  .ct-glass-chip {
+    height: 28px;
+    padding: 0 12px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  /* Barre d'onglets : capsule flottante, compacte (icônes seules) au défilement. */
+  .ct-tabbar {
+    position: fixed;
+    z-index: 30;
+    left: 16px;
+    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    height: 64px;
+    border-radius: var(--glass-r-bar);
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 0 5px;
+    transition:
+      height var(--glass-dur-morph) var(--glass-ease),
+      left var(--glass-dur-morph) var(--glass-ease),
+      right var(--glass-dur-morph) var(--glass-ease),
+      border-radius var(--glass-dur-morph) var(--glass-ease);
+  }
+  .ct-tabbar.is-compact {
+    /* 48 px par onglet (zone tactile ≥ 44 px), centrée. */
+    left: calc(50% - var(--tabs, 4) * 24px - 5px);
+    right: calc(50% - var(--tabs, 4) * 24px - 5px);
+    height: 54px;
+    border-radius: var(--glass-r-bar-compact);
+  }
+  .ct-tabbar.is-compact .ct-tab {
+    height: 46px;
+  }
+  .ct-tabbar.is-compact .ct-tab__label {
+    display: none;
+  }
+  .ct-tab {
+    flex: 1 1 0;
+    min-width: 44px;
+    height: 54px;
+    border-radius: 27px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    color: #2b313a;
+    font-size: 11px;
+    font-weight: 500;
+    transition: height var(--glass-dur-morph) var(--glass-ease);
+  }
+  .ct-tab[aria-current="page"] {
+    background: var(--ct-blue-soft);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.75),
+      inset 0 0 0 1px rgb(47 160 193 / 0.24);
+    color: var(--ct-blue-ink);
+    font-weight: 600;
+  }
+  .ct-tab[aria-current="page"] .ct-tab__label {
+    color: var(--ct-blue-label);
+  }
+  .dark .ct-tab {
+    color: #d5dae1;
+  }
+  .dark .ct-tab[aria-current="page"] {
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.18),
+      inset 0 0 0 1px rgb(91 192 222 / 0.28);
+  }
+
+  /* Barre de navigation collante : coins bas arrondis. */
+  .ct-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    border-radius: 0 0 24px 24px;
+  }
+
+  .ct-search {
+    height: 50px;
+    border-radius: 25px;
+  }
+  .ct-btn-group {
+    display: inline-flex;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 999px;
+  }
+
+  /* Contrôle segmenté : rail et curseur qui glisse sous le segment actif. */
+  .ct-segmented {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    padding: 3px;
+    border-radius: 999px;
+    background: var(--glass-track);
+  }
+  .dark .ct-segmented {
+    background: rgb(255 255 255 / 0.12);
+  }
+  .ct-segmented__thumb {
+    position: absolute;
+    z-index: -1;
+    top: 3px;
+    bottom: 3px;
+    left: 3px;
+    width: calc((100% - 6px) / var(--count));
+    transform: translateX(calc(var(--index) * 100%));
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: var(--glass-edge-light), var(--glass-shadow);
+    transition:
+      transform var(--glass-dur-press) var(--glass-spring),
+      scale var(--glass-dur-press) var(--glass-spring);
+  }
+  .ct-segmented:active .ct-segmented__thumb {
+    scale: 1.06 1.12;
+  }
+  .dark .ct-segmented__thumb {
+    background: rgb(255 255 255 / 0.2);
+    box-shadow: var(--glass-edge-dark);
+  }
+
+  .ct-sheet__handle {
+    width: 40px;
+    height: 5px;
+    border-radius: 999px;
+    background: rgb(10 10 10 / 0.22);
+    margin: 8px auto;
+  }
+  .dark .ct-sheet__handle {
+    background: rgb(255 255 255 / 0.3);
+  }
+}
+
+/* Anneau de focus de la recherche, par-dessus l'ombre du verre */
+.ct-search:focus-within {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.9),
+    inset 0 0 0 1.5px rgb(26 122 154 / 0.75),
+    0 0 0 4px rgb(47 160 193 / 0.25),
+    var(--glass-shadow);
+}
+.dark .ct-search:focus-within {
+  box-shadow:
+    inset 0 0 0 1.5px #5bc0de,
+    0 0 0 4px rgb(91 192 222 / 0.3),
+    var(--glass-shadow-dark);
+}
+
+/* Feuille modale (téléphone) */
+.ct-sheet {
+  --muted-foreground: #434b57;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.55), rgb(255 255 255 / 0) 30%),
+    var(--glass-sheet);
+  -webkit-backdrop-filter: blur(var(--glass-blur-lg))
+    saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur-lg)) saturate(var(--glass-saturate));
+  box-shadow: var(--glass-edge-light), var(--glass-shadow-sheet);
+  border-radius: var(--glass-r-sheet);
+  color: #0a0a0a;
+}
+.dark .ct-sheet {
+  --muted-foreground: #b9c0ca;
+  background: var(--glass-specular-dark), var(--glass-dark-scrim);
+  box-shadow: var(--glass-edge-dark), var(--glass-shadow-dark);
+  color: #f5f6f8;
+}
+/* Menus et popovers de verre : morphing depuis le déclencheur (transform-origin de base-ui). */
+.ct-menu {
+  border-radius: var(--glass-r-menu);
+  transform-origin: var(--transform-origin, top left);
+  animation: var(--animate-morph-in);
+}
+.ct-menu[data-closed] {
+  animation: var(--animate-morph-out);
+}
+/* Sans border-radius : le dépassement du ressort le ferait passer sous zéro. */
+@keyframes ct-morph-in {
+  from {
+    opacity: 0;
+    transform: scale(0.35, 0.25);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+@keyframes ct-morph-out {
+  to {
+    opacity: 0;
+    transform: scale(0.6, 0.5);
+  }
+}
+@keyframes ct-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Appui « liquide » */
+.ct-press {
+  transition: transform var(--glass-dur-press) var(--glass-spring);
+}
+.ct-press:active:not(:disabled) {
+  transform: scale(0.95, 0.93);
+}
+
+/* ---------- Replis et accessibilité ---------- */
+@supports not (
+  (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+) {
+  .ct-glass,
+  .ct-glass.ct-glass--scrim,
+  .ct-sheet {
+    background: var(--glass-fallback-light);
+  }
+  .ct-glass--dark,
+  .dark .ct-glass,
+  .dark .ct-glass.ct-glass--scrim,
+  .dark .ct-sheet {
+    background: var(--glass-fallback-dark);
+  }
+  .ct-glass--ink {
+    background: #0a0a0a;
+  }
+  .ct-glass-chip {
+    background: var(--chip);
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .ct-glass,
+  .ct-glass.ct-glass--scrim,
+  .ct-sheet,
+  .ct-glass--dark,
+  .dark .ct-glass,
+  .dark .ct-glass.ct-glass--scrim,
+  .dark .ct-sheet,
+  .ct-glass--red,
+  .ct-glass--ink,
+  .ct-glass-chip {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .ct-glass,
+  .ct-glass.ct-glass--scrim,
+  .ct-sheet {
+    background: var(--glass-fallback-light);
+  }
+  .ct-glass--dark,
+  .dark .ct-glass,
+  .dark .ct-glass.ct-glass--scrim,
+  .dark .ct-sheet {
+    background: var(--glass-fallback-dark);
+  }
+  .ct-glass--red:not(:disabled) {
+    background: #cd0404;
+  }
+  .ct-glass--ink {
+    background: #0a0a0a;
+  }
+  .dark .ct-glass--ink {
+    background: #fff;
+  }
+  .ct-glass-chip {
+    background: var(--chip);
+  }
+}
+@media (prefers-contrast: more) {
+  .ct-glass,
+  .ct-glass.ct-glass--scrim,
+  .ct-sheet {
+    background: #fff;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: inset 0 0 0 1.5px #0a0a0a;
+  }
+  .ct-glass--dark,
+  .dark .ct-glass,
+  .dark .ct-glass.ct-glass--scrim,
+  .dark .ct-sheet {
+    background: #000;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: inset 0 0 0 1.5px #fff;
+  }
+  .ct-glass-chip {
+    background: var(--chip);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ct-press,
+  .ct-tabbar,
+  .ct-tab,
+  .ct-segmented__thumb {
+    transition: opacity 150ms linear;
+  }
+  .ct-press:active:not(:disabled) {
+    transform: none;
+  }
+  .ct-segmented:active .ct-segmented__thumb {
+    scale: none;
+  }
+  .ct-menu,
+  .ct-menu[data-closed] {
+    animation: var(--animate-fade-in);
+  }
+}
+
+/*
+ * Barre posée sur une photo : seuls les cercles flottent. En dernier et plus
+ * spécifique, pour l'emporter sur le thème sombre et sur les replis.
+ */
+.ct-glass.ct-navbar.is-over-image,
+.dark .ct-glass.ct-navbar.is-over-image {
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }

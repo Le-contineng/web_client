@@ -11,7 +11,7 @@ const ACCOUNTS = [
 export function DemoAccounts() {
   const t = useTranslations("auth");
   return (
-    <div className="rounded-lg border border-dashed bg-muted/50 p-3 text-xs text-muted-foreground">
+    <div className="rounded-2xl border border-dashed border-foreground/20 bg-foreground/5 p-3 text-xs text-muted-foreground">
       <p className="mb-2 font-medium">{t("demoAccounts")}</p>
       <ul className="grid gap-1">
         {ACCOUNTS.map(([email, role]) => (

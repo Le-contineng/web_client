@@ -7,6 +7,7 @@ import { useErrorMessages } from "@/shared/i18n/errors";
 import type { FormAction, FormState } from "@/shared/lib/form";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
+import { AUTH_FIELD_CLASS } from "@/modules/auth/presentation/components/AuthCard";
 
 export function LoginForm({
   action,
@@ -27,10 +28,17 @@ export function LoginForm({
     <form action={send} onSubmit={onSubmit} className="grid gap-4" noValidate>
       <input type="hidden" name="returnTo" value={returnTo} />
       <FormField id="email" label={t("email")}>
-        <Input id="email" name="email" type="email" autoComplete="email" />
+        <Input
+          className={AUTH_FIELD_CLASS}
+          id="email"
+          name="email"
+          type="email"
+          autoComplete="email"
+        />
       </FormField>
       <FormField id="password" label={t("password")}>
         <Input
+          className={AUTH_FIELD_CLASS}
           id="password"
           name="password"
           type="password"
@@ -42,7 +50,13 @@ export function LoginForm({
           {errors(state.error)}
         </p>
       )}
-      <Button type="submit" size="lg" disabled={enCours} className="w-full">
+      <Button
+        type="submit"
+        variant="glass-primary"
+        size="pill"
+        disabled={enCours}
+        className="mt-1 h-[52px] w-full text-base"
+      >
         {t("login")}
       </Button>
     </form>

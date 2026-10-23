@@ -7,7 +7,6 @@ import { getPageEvents } from "@/modules/events/server";
 import { PageProfileHeader } from "@/modules/pages";
 import { getPageBySlug } from "@/modules/pages/server";
 import { buttonVariants } from "@/shared/ui/button";
-import { Separator } from "@/shared/ui/separator";
 import { Suspense } from "react";
 import { ContentSkeleton } from "@/shared/components/layout/ContentSkeleton";
 
@@ -38,14 +37,13 @@ async function PublicPage({ params }: PageProps<"/p/[slug]">) {
   const { page, memberCount } = detail;
   const events = await getPageEvents(page.slug);
   return (
-    <div className="mx-auto max-w-4xl sm:px-6 md:pt-6">
+    <div className="mx-auto grid max-w-4xl gap-3 px-3 pt-3 sm:px-6 md:pt-6">
       <PageProfileHeader
         page={page}
         eventCount={events.length}
         memberCount={memberCount}
       />
-      <Separator />
-      <h2 className="flex items-center justify-center gap-2 py-3 text-xs font-semibold tracking-widest uppercase">
+      <h2 className="flex items-center justify-center gap-2 pt-3 text-xs font-bold tracking-widest uppercase">
         <Grid3x3Icon className="size-3.5" /> {t("events.listTitle")}
       </h2>
       {events.length ? (

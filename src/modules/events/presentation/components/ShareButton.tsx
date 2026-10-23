@@ -1,6 +1,6 @@
 "use client";
 
-import { SendIcon } from "lucide-react";
+import { CopyIcon, SendIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { cn } from "@/shared/lib/utils";
@@ -45,8 +45,37 @@ export function ShareButton({
   const t = useTranslations("share");
   const shareEvent = useShare(share);
   return (
-    <Button onClick={shareEvent} className={className}>
+    <Button
+      variant="glass-primary"
+      size="pill"
+      onClick={shareEvent}
+      className={className}
+    >
       <SendIcon /> {t("share")}
+    </Button>
+  );
+}
+
+/** « Copier le lien » de la fiche, voisin de « Partager » dans un même groupe de verre. */
+export function CopyLinkButton({
+  path,
+  className,
+}: {
+  path: string;
+  className?: string;
+}) {
+  const t = useTranslations("events.sheet");
+  return (
+    <Button
+      variant="ghost"
+      size="pill"
+      onClick={async () => {
+        await navigator.clipboard.writeText(`${window.location.origin}${path}`);
+        toast.success(t("linkCopied"));
+      }}
+      className={cn("hover:bg-foreground/7", className)}
+    >
+      <CopyIcon /> {t("copyLink")}
     </Button>
   );
 }
@@ -65,7 +94,7 @@ export function ShareIconButton({
       aria-label={t("share")}
       title={t("share")}
       className={cn(
-        "grid size-10 place-items-center rounded-full outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 [&_svg]:size-6",
+        "ct-press grid size-11 place-items-center rounded-full outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 [&_svg]:size-6",
         className,
       )}
     >

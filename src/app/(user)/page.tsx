@@ -27,9 +27,10 @@ async function Home({ searchParams }: PageProps<"/">) {
   // Sur ordinateur, le fil est décalé vers la gauche du centre (10rem),
   // sans coller à la barre latérale.
   return (
-    <div className="mx-auto grid max-w-[470px] gap-4 pt-4 sm:px-4 md:pt-8 lg:mr-auto lg:ml-[max(2rem,calc(50%-235px-10rem))]">
+    <div className="mx-auto grid max-w-[470px] gap-3 pt-3 sm:px-4 md:pt-6 lg:mr-auto lg:ml-[max(2rem,calc(50%-235px-10rem))]">
       <h1 className="sr-only">{t("listTitle")}</h1>
-      <div className="grid gap-4 px-4 sm:px-0">
+      {/* Filtres flottants : ils restent sous l'en-tête pendant le défilement. */}
+      <div className="sticky top-[62px] z-20 grid px-4 sm:px-0 md:top-3">
         <FilterBar filters={filters} pages={pages} />
       </div>
       {events.length === 0 ? (

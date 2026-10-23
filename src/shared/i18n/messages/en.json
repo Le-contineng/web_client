@@ -23,7 +23,9 @@
     "photoFormats": "JPEG, PNG or WebP, 5 MB max.",
     "optional": "optional",
     "characters": "{n}/{max}",
-    "photoUploading": "Uploading photo…"
+    "photoUploading": "Uploading photo…",
+    "expand": "Expand",
+    "collapse": "Collapse"
   },
   "errors": {
     "required": "This field is required",

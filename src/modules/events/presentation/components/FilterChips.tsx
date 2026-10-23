@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import type { ReactNode } from "react";
+import { SEGMENT_CLASS, Segmented } from "@/shared/components/Segmented";
 import { cn } from "@/shared/lib/utils";
 import {
   CATEGORIES,
@@ -11,11 +11,16 @@ import {
   PERIODS,
   type Period,
 } from "@/modules/events/domain/event";
+import {
+  CAPSULE_CLASS,
+  CapsuleMark,
+  chipStyle,
+} from "@/modules/events/presentation/components/CategoryChips";
 
 /**
- * Filtres en pastilles, façon notifications TikTok : une ligne pour la
- * période (choix unique, « Tous » par défaut), une ligne pour les catégories
- * (choix multiple). Chaque pastille est un lien : l'état vit dans l'adresse.
+ * Filtres de la recherche : la période en contrôle segmenté (choix unique,
+ * « Tous » par défaut), les catégories en capsules (choix multiple). Chaque
+ * choix est un lien : l'état vit dans l'adresse.
  */
 export function FilterChips({
   period,
@@ -47,64 +52,50 @@ export function FilterChips({
       else s.delete("category");
     });
 
-  return (
-    <div className="grid gap-2">
-      <ChipRow label={t("filters.period")}>
-        <Chip href={toPeriod(null)} active={period === null}>
-          {t("search.all")}
-        </Chip>
-        {PERIODS.map((p) => (
-          <Chip key={p} href={toPeriod(p)} active={period === p}>
-            {t(`periods.${p}`)}
-          </Chip>
-        ))}
-      </ChipRow>
-      <ChipRow label={t("filters.category")}>
-        {CATEGORIES.map((c) => (
-          <Chip key={c} href={toCategory(c)} active={categories.includes(c)}>
-            {t(`categories.${c}`)}
-          </Chip>
-        ))}
-      </ChipRow>
-    </div>
-  );
-}
+  const periods = [null, ...PERIODS] as const;
 
-function ChipRow({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <ul
-      aria-label={label}
-      className="-mx-4 flex [scrollbar-width:none] gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0"
-    >
-      {children}
-    </ul>
-  );
-}
-
-function Chip({
-  href,
-  active,
-  children,
-}: {
-  href: string;
-  active: boolean;
-  children: ReactNode;
-}) {
-  return (
-    <li className="shrink-0">
-      <Link
-        href={href}
-        scroll={false}
-        aria-current={active ? "true" : undefined}
-        className={cn(
-          "inline-flex h-9 items-center rounded-full px-4 text-sm font-semibold whitespace-nowrap transition-colors",
-          active
-            ? "bg-foreground text-background"
-            : "bg-muted text-foreground hover:bg-accent",
-        )}
+    <div className="grid gap-3">
+      <Segmented
+        label={t("filters.period")}
+        index={periods.indexOf(period)}
+        count={periods.length}
+        className="w-full sm:max-w-md"
       >
-        {children}
-      </Link>
-    </li>
+        {periods.map((p) => (
+          <Link
+            key={p ?? "all"}
+            href={toPeriod(p)}
+            scroll={false}
+            aria-current={period === p ? "true" : undefined}
+            className={SEGMENT_CLASS}
+          >
+            {p ? t(`periods.${p}`) : t("search.all")}
+          </Link>
+        ))}
+      </Segmented>
+      <ul
+        aria-label={t("filters.category")}
+        className="-mx-4 flex [scrollbar-width:none] gap-2 overflow-x-auto px-4 py-1 sm:mx-0 sm:flex-wrap sm:px-0"
+      >
+        {CATEGORIES.map((c) => (
+          <li key={c} className="shrink-0">
+            <Link
+              href={toCategory(c)}
+              scroll={false}
+              aria-current={categories.includes(c) ? "true" : undefined}
+              className={cn(
+                CAPSULE_CLASS,
+                "outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+              )}
+              style={chipStyle(c)}
+            >
+              <CapsuleMark />
+              {t(`categories.${c}`)}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

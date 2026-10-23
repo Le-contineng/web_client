@@ -2,6 +2,10 @@ import type { ReactNode } from "react";
 import { cn } from "@/shared/lib/utils";
 import { Label } from "@/shared/ui/label";
 
+/** Champ de saisie du relooking : 50 px, rayon 14, fond « champ » (à passer à <Input>). */
+export const FIELD_CLASS =
+  "h-[50px] rounded-field border-transparent bg-muted px-4 text-base md:text-base dark:bg-muted focus-visible:border-ring focus-visible:bg-card";
+
 /** Libellé + contrôle + aide + erreur affichée sous le champ (US-11). */
 export function FormField({
   id,

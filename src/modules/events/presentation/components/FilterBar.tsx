@@ -63,7 +63,7 @@ export function FilterBar({
   return (
     <div
       className={cn(
-        "-mx-4 flex [scrollbar-width:none] gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0",
+        "-mx-4 flex [scrollbar-width:none] gap-2 overflow-x-auto px-4 py-1.5 sm:mx-0 sm:px-0",
         enCours && "opacity-70",
       )}
       aria-busy={enCours}
@@ -116,9 +116,9 @@ export function FilterBar({
       </Filter>
       {!isDefault(filters) && (
         <Button
-          variant="ghost"
-          size="sm"
-          className="shrink-0 rounded-full"
+          variant="glass"
+          size="pill"
+          className="shrink-0 px-4 text-sm"
           onClick={() =>
             apply({
               categories: [],
@@ -150,21 +150,24 @@ function Filter({
       <PopoverTrigger
         render={
           <Button
-            variant={active ? "default" : "outline"}
-            size="sm"
-            className="shrink-0 rounded-full"
+            variant={active ? "glass-ink" : "glass"}
+            size="pill"
+            className="shrink-0 gap-1.5 pr-3.5 pl-4 text-sm"
           />
         }
       >
         {label}
         {active && count > 0 && (
-          <span className="rounded-full bg-primary-foreground/20 px-1.5 text-xs">
+          <span className="grid h-5 min-w-5 place-items-center rounded-full bg-current/20 px-1.5 text-xs tabular-nums">
             {count}
           </span>
         )}
         <ChevronDownIcon />
       </PopoverTrigger>
-      <PopoverContent align="start" className="w-64 gap-0 p-1">
+      <PopoverContent
+        align="start"
+        className="ct-glass ct-menu w-64 gap-0 p-1.5"
+      >
         <ul className="grid">{children}</ul>
       </PopoverContent>
     </Popover>
@@ -182,7 +185,7 @@ function Option({
 }) {
   return (
     <li>
-      <label className="flex cursor-pointer items-center gap-2.5 rounded-md px-2 py-2 text-sm hover:bg-muted">
+      <label className="flex min-h-11 cursor-pointer items-center gap-2.5 rounded-xl px-2.5 text-sm font-medium hover:bg-foreground/7">
         <Checkbox checked={checked} onCheckedChange={onChange} />
         {children}
       </label>

@@ -1,41 +1,48 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import type { ReactNode } from "react";
+import { useState } from "react";
+import { GlassSheet } from "@/shared/components/GlassSheet";
 import { ProfileAvatar } from "@/shared/components/ProfileAvatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuTrigger,
-} from "@/shared/ui/dropdown-menu";
+import { MoreMenuContent } from "@/spaces/user/components/MoreMenuContent";
 
 /**
- * Menu du compte dans l'en-tête mobile : avatar de la personne connectée et,
- * au clic, ses entrées (profil, pages, administration, déconnexion). Il n'y a
- * qu'un seul compte : on ne bascule plus d'un profil à l'autre.
+ * Menu du compte dans l'en-tête mobile : l'avatar de la personne connectée
+ * ouvre la feuille « Plus » (réglages, profil, page, administration,
+ * déconnexion), la même que sur ordinateur.
  */
 export function AccountMenu({
   name,
   photo,
-  children,
+  isAdmin,
+  logout,
 }: {
   name: string;
   photo: string | null;
-  children: ReactNode;
+  isAdmin: boolean;
+  logout: () => Promise<void>;
 }) {
   const t = useTranslations("nav");
+  const [open, setOpen] = useState(false);
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger
+    <>
+      <button
+        type="button"
         aria-label={t("profile")}
-        className="rounded-full p-1 outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50"
+        aria-haspopup="dialog"
+        onClick={() => setOpen(true)}
+        className="ct-press grid size-11 place-items-center rounded-full outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
       >
         <ProfileAvatar name={name} photo={photo} size="sm" />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-64">
-        <DropdownMenuGroup>{children}</DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </button>
+      <GlassSheet open={open} onOpenChange={setOpen} title={t("more")}>
+        <MoreMenuContent
+          signedIn
+          isAdmin={isAdmin}
+          logout={logout}
+          onNavigate={() => setOpen(false)}
+        />
+      </GlassSheet>
+    </>
   );
 }

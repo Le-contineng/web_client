@@ -7,6 +7,7 @@ import { useErrorMessages } from "@/shared/i18n/errors";
 import type { FormAction, FormState } from "@/shared/lib/form";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
+import { AUTH_FIELD_CLASS } from "@/modules/auth/presentation/components/AuthCard";
 
 export function RegisterForm({
   action,
@@ -29,6 +30,7 @@ export function RegisterForm({
       <input type="hidden" name="returnTo" value={returnTo} />
       <FormField id="name" label={t("name")} error={errors(c.name)}>
         <Input
+          className={AUTH_FIELD_CLASS}
           id="name"
           name="name"
           autoComplete="name"
@@ -37,6 +39,7 @@ export function RegisterForm({
       </FormField>
       <FormField id="email" label={t("email")} error={errors(c.email)}>
         <Input
+          className={AUTH_FIELD_CLASS}
           id="email"
           name="email"
           type="email"
@@ -46,6 +49,7 @@ export function RegisterForm({
       </FormField>
       <FormField id="password" label={t("password")} error={errors(c.password)}>
         <Input
+          className={AUTH_FIELD_CLASS}
           id="password"
           name="password"
           type="password"
@@ -53,7 +57,13 @@ export function RegisterForm({
           aria-invalid={!!c.password}
         />
       </FormField>
-      <Button type="submit" size="lg" disabled={enCours} className="w-full">
+      <Button
+        type="submit"
+        variant="glass-primary"
+        size="pill"
+        disabled={enCours}
+        className="mt-1 h-[52px] w-full text-base"
+      >
         {t("register")}
       </Button>
     </form>

@@ -5,12 +5,14 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { ViewCount, ViewTracker } from "@/modules/audience";
 import { countViews } from "@/modules/audience/server";
 import {
+  CopyLinkButton,
   ShareButton,
   CancelEventDialog,
   isEditable,
   EventDetails,
 } from "@/modules/events";
 import { getEventById } from "@/modules/events/server";
+import { ButtonGroup } from "@/shared/components/ButtonGroup";
 import { UrlToast } from "@/shared/components/UrlToast";
 import { env } from "@/shared/config/env";
 import { clientEnv } from "@/shared/config/env.client";
@@ -91,7 +93,7 @@ async function EventPage({ params }: PageProps<"/e/[id]">) {
   const editable = isEditable(event, new Date());
 
   return (
-    <div className="pb-10 md:px-6 md:pt-8">
+    <div className="pb-6 md:px-6 md:pt-8">
       <UrlToast
         messages={{
           published: t("events.published"),
@@ -102,6 +104,7 @@ async function EventPage({ params }: PageProps<"/e/[id]">) {
       <ViewTracker report={trackEventViewAction.bind(null, event.id)} />
       <EventDetails
         event={event}
+        onShare={trackShareClickAction.bind(null, event.id)}
         views={
           isOrganizer ? (
             <ViewCount
@@ -115,18 +118,27 @@ async function EventPage({ params }: PageProps<"/e/[id]">) {
         }
         actions={
           <>
-            <ShareButton
-              url={`${clientEnv.NEXT_PUBLIC_SITE_URL}/e/${event.id}`}
-              title={event.name}
-              text={event.name}
-              onShare={trackShareClickAction.bind(null, event.id)}
-              className="flex-1 sm:flex-none"
-            />
+            <ButtonGroup className="w-full sm:w-fit">
+              <ShareButton
+                url={`${clientEnv.NEXT_PUBLIC_SITE_URL}/e/${event.id}`}
+                title={event.name}
+                text={event.name}
+                onShare={trackShareClickAction.bind(null, event.id)}
+                className="flex-1 sm:flex-none"
+              />
+              <CopyLinkButton
+                path={`/e/${event.id}`}
+                className="flex-1 sm:flex-none"
+              />
+            </ButtonGroup>
             {isOrganizer && editable && (
               <>
                 <Link
                   href={`/e/${event.id}/edit`}
-                  className={buttonVariants({ variant: "outline" })}
+                  className={buttonVariants({
+                    variant: "outline",
+                    size: "pill",
+                  })}
                 >
                   <PencilIcon /> {t("events.edit")}
                 </Link>

@@ -1,0 +1,188 @@
+// =============================================================
+// Le Contineng — tokens du relooking (clair par défaut + sombre)
+// Utilisable tel quel en CSS (variables --ct-*) ou en SCSS (maps).
+// =============================================================
+
+// ---------- 1. Variables CSS : thème clair (défaut) ----------
+:root {
+  // Neutres
+  --ct-ink: #0A0A0A;          // éléments actifs, tuile logo, texte principal
+  --ct-bg: #F3F5F8;           // fond d'application
+  --ct-surface: #FFFFFF;      // cartes, en-tête, barre basse
+  --ct-field: #F1F3F7;        // champs, boutons secondaires
+  --ct-border: #E2E6EC;
+  --ct-text: #0A0A0A;
+  --ct-text-2: #5B6472;       // sous-textes (6:1 sur blanc)
+
+  // Action principale — réservée aux boutons principaux
+  --ct-red: #EB0405;          // texte blanc 4,5:1
+  --ct-red-press: #C40303;
+  --ct-red-soft: #FDE6E6;
+  --ct-red-ink: #B0102C;      // texte d'erreur
+
+  // Couleurs du logo officiel = base de la palette
+  --ct-blue: #2FA0C1;         // bleu du logo : formes, illustrations
+  --ct-blue-ink: #1A7A9A;     // navigation active, liens, focus (4,9:1 sur blanc)
+  --ct-blue-soft: #E3F3F8;
+  --ct-green: #6AC73C;
+  --ct-orange: #F7850D;
+  --ct-violet: #6C3FD1;
+
+  // Catégories (pastille pleine = texte blanc ≥ 4,5:1)
+  --ct-cat-match: #B94F08;        --ct-cat-match-soft: #FDEEDF;
+  --ct-cat-interclub: #6C3FD1;    --ct-cat-interclub-soft: #EEE8FB;
+  --ct-cat-orientation: #0F7C86;  --ct-cat-orientation-soft: #E2F2F3;
+  --ct-cat-party: #B0306B;        --ct-cat-party-soft: #F8E6EE;
+  --ct-cat-culture: #8A6A00;      --ct-cat-culture-soft: #F6EFD9;
+  --ct-cat-talk: #1E6FE0;         --ct-cat-talk-soft: #E6EFFC;
+  --ct-cat-campus: #1E7F3E;       --ct-cat-campus-soft: #E5F4EA;
+  --ct-cat-other: #4B5563;        --ct-cat-other-soft: #EDEFF2;
+
+  // Rayons
+  --ct-radius-xs: 8px;
+  --ct-radius-sm: 12px;
+  --ct-radius-field: 14px;
+  --ct-radius-md: 16px;
+  --ct-radius-lg: 20px;       // cartes d'événement
+  --ct-radius-xl: 28px;       // feuilles (connexion)
+  --ct-radius-pill: 999px;
+
+  // Ombres
+  --ct-shadow-card: 0 1px 2px rgb(10 10 10 / .04), 0 8px 24px rgb(10 10 10 / .06);
+  --ct-shadow-pop: 0 2px 6px rgb(10 10 10 / .06), 0 16px 40px rgb(10 10 10 / .14);
+  --ct-focus-ring: 0 0 0 4px rgb(47 160 193 / .25);
+
+  // Espacements (base 4)
+  --ct-space-1: 4px;  --ct-space-2: 8px;  --ct-space-3: 12px; --ct-space-4: 16px;
+  --ct-space-5: 20px; --ct-space-6: 24px; --ct-space-8: 32px; --ct-space-12: 48px;
+
+  // Typographie
+  --ct-font-title: "Poppins", "Inter", system-ui, sans-serif;
+  --ct-font-body: "Inter", system-ui, sans-serif;
+
+  // Tailles de contrôle
+  --ct-control-h: 44px;       // zone tactile minimale
+  --ct-button-h: 52px;        // bouton principal
+  --ct-field-h: 50px;
+}
+
+// ---------- 2. Variante sombre ----------
+// Le repo utilise la classe .dark (next-themes) : on garde ce sélecteur.
+.dark,
+[data-theme="dark"] {
+  --ct-ink: #F5F6F8;          // l'« actif » s'inverse : pilule blanche, texte noir
+  --ct-bg: #0A0A0A;
+  --ct-surface: #15171B;
+  --ct-field: #1F2228;
+  --ct-border: #2A2E35;
+  --ct-text: #F5F6F8;
+  --ct-text-2: #A3AAB5;
+  --ct-blue: #5BC0DE;
+  --ct-blue-ink: #5BC0DE;
+  --ct-blue-soft: rgb(91 192 222 / .16);
+  --ct-red-soft: rgb(235 4 5 / .16);
+  --ct-shadow-card: 0 0 0 1px #2A2E35;
+  --ct-shadow-pop: 0 0 0 1px #2A2E35, 0 16px 40px rgb(0 0 0 / .5);
+}
+
+// ---------- 3. Pont avec les variables shadcn existantes (globals.css) ----------
+// Permet d'appliquer le relooking sans toucher aux composants src/shared/ui/*.
+:root,
+.dark {
+  --background: var(--ct-bg);
+  --foreground: var(--ct-text);
+  --card: var(--ct-surface);
+  --card-foreground: var(--ct-text);
+  --popover: var(--ct-surface);
+  --popover-foreground: var(--ct-text);
+  --primary: var(--ct-red);           // bouton par défaut = action principale
+  --primary-foreground: #FFFFFF;
+  --secondary: var(--ct-field);
+  --secondary-foreground: var(--ct-text);
+  --muted: var(--ct-field);
+  --muted-foreground: var(--ct-text-2);
+  --accent: var(--ct-field);
+  --accent-foreground: var(--ct-text);
+  --destructive: var(--ct-red);
+  --border: var(--ct-border);
+  --input: var(--ct-border);
+  --ring: var(--ct-blue-ink);
+  --radius: 1rem;                     // 16px → rounded-xl ≈ 22px, rounded-2xl ≈ 29px
+}
+
+// ---------- 4. Maps SCSS (pour mixins, boucles, Angular/Material) ----------
+$ct-categories: (
+  match:       (solid: #B94F08, soft: #FDEEDF, ink: #8F3D06, dot: #F7850D),
+  interClub:   (solid: #6C3FD1, soft: #EEE8FB, ink: #5530A8, dot: #6C3FD1),
+  orientation: (solid: #0F7C86, soft: #E2F2F3, ink: #0B5F67, dot: #0F7C86),
+  party:       (solid: #B0306B, soft: #F8E6EE, ink: #8E2556, dot: #B0306B),
+  culture:     (solid: #8A6A00, soft: #F6EFD9, ink: #6E5500, dot: #8A6A00),
+  conference:  (solid: #1E6FE0, soft: #E6EFFC, ink: #1755AD, dot: #1E6FE0),
+  campusLife:  (solid: #1E7F3E, soft: #E5F4EA, ink: #17652F, dot: #6AC73C),
+  other:       (solid: #4B5563, soft: #EDEFF2, ink: #374151, dot: #4B5563),
+);
+
+// Clés identiques à celles de messages/*.json → categories.*
+@each $key, $c in $ct-categories {
+  .ct-chip--#{$key}       { background: map-get($c, solid); color: #fff; }
+  .ct-chip--#{$key}.is-soft { background: map-get($c, soft); color: map-get($c, ink); }
+  .ct-dot--#{$key}        { background: map-get($c, dot); }
+}
+
+// ---------- 5. Composants de base ----------
+.ct-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 28px; padding: 0 12px;
+  border-radius: var(--ct-radius-pill);
+  font: 600 13px/1 var(--ct-font-body);
+}
+
+.ct-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  height: var(--ct-button-h); padding: 0 24px;
+  border: 0; border-radius: var(--ct-radius-pill);
+  font: 600 16px/1 var(--ct-font-body);
+  &--primary   { background: var(--ct-red); color: #fff; &:active { background: var(--ct-red-press); } }
+  &--secondary { background: var(--ct-field); color: var(--ct-text); }
+  &--outline   { background: transparent; color: var(--ct-text); box-shadow: inset 0 0 0 1.5px var(--ct-border); }
+  &--ink       { background: var(--ct-ink); color: var(--ct-bg); height: 40px; font-size: 14px; }
+  &:focus-visible { outline: none; box-shadow: var(--ct-focus-ring); }
+}
+
+.ct-filter {
+  height: 40px; padding: 0 14px;
+  border: 0; border-radius: var(--ct-radius-pill);
+  background: var(--ct-surface); color: var(--ct-text);
+  box-shadow: inset 0 0 0 1px var(--ct-border);
+  font: 600 14px/1 var(--ct-font-body);
+  &[aria-pressed="true"], &.is-active { background: var(--ct-ink); color: var(--ct-bg); box-shadow: none; }
+}
+
+.ct-field {
+  height: var(--ct-field-h); padding: 0 16px;
+  border: 1.5px solid transparent; border-radius: var(--ct-radius-field);
+  background: var(--ct-field); color: var(--ct-text);
+  font: 400 16px/1.4 var(--ct-font-body);
+  &:focus { border-color: var(--ct-text); background: var(--ct-surface); box-shadow: var(--ct-focus-ring); outline: none; }
+  &[aria-invalid="true"] { border-color: var(--ct-red); background: var(--ct-red-soft); }
+}
+
+.ct-search {
+  @extend .ct-field;
+  border-radius: var(--ct-radius-pill);
+  padding-left: 46px; // place pour l'icône loupe
+}
+
+.ct-card {
+  background: var(--ct-surface);
+  border-radius: var(--ct-radius-lg);
+  box-shadow: var(--ct-shadow-card);
+  padding: 12px;
+  &__media { border-radius: var(--ct-radius-md); overflow: hidden; position: relative; }
+}
+
+.ct-bottom-nav a {
+  color: var(--ct-text-2); font: 500 12px/1 var(--ct-font-body);
+  &[aria-current="page"] { color: var(--ct-blue-ink); font-weight: 600; }
+  &[aria-current="page"] .ct-bottom-nav__icon { background: var(--ct-blue-soft); border-radius: var(--ct-radius-pill); }
+}

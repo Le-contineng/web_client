@@ -17,6 +17,11 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
+        // Liquid Glass (src/app/globals.css) : contrôles flottants, appui « ressort ».
+        glass: "ct-glass ct-press rounded-full font-semibold",
+        "glass-primary": "ct-glass--red ct-press rounded-full font-semibold",
+        "glass-dark": "ct-glass--dark ct-press rounded-full font-semibold",
+        "glass-ink": "ct-glass--ink ct-press rounded-full font-semibold",
       },
       size: {
         default:
@@ -30,6 +35,9 @@ const buttonVariants = cva(
         "icon-sm":
           "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
         "icon-lg": "size-9",
+        // Zone tactile de 44 px (boutons de verre)
+        pill: "h-11 gap-2 rounded-full px-5 text-[15px] has-data-[icon=inline-start]:pl-4",
+        circle: "size-11 rounded-full [&_svg:not([class*='size-'])]:size-5",
       },
     },
     defaultVariants: {

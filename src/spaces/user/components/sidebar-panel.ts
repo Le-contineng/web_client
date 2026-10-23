@@ -2,8 +2,8 @@
 
 import { createContext, useContext } from "react";
 
-/** Tiroirs qui s'ouvrent contre la barre latérale (un seul à la fois). */
-export type SidebarPanel = "notifications" | "more";
+/** Tiroir qui s'ouvre contre la barre latérale (« Plus » est un popover). */
+export type SidebarPanel = "notifications";
 
 /**
  * Tiroir ouvert à côté de la barre latérale, collé à son bord : il suit la

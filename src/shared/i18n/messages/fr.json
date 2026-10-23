@@ -23,7 +23,9 @@
     "photoFormats": "JPEG, PNG ou WebP, 5 Mo max.",
     "optional": "facultatif",
     "characters": "{n}/{max}",
-    "photoUploading": "Envoi de la photo…"
+    "photoUploading": "Envoi de la photo…",
+    "expand": "Agrandir",
+    "collapse": "Réduire"
   },
   "errors": {
     "required": "Ce champ est obligatoire",

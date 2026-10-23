@@ -25,7 +25,9 @@ export function UserLayout({ children }: { children: ReactNode }) {
       }
     >
       <MobileHeader />
-      <main className="pb-20 md:pb-10">{children}</main>
+      <main className="pb-[calc(6.5rem+env(safe-area-inset-bottom))] md:pb-10">
+        {children}
+      </main>
       <Suspense>
         <BottomNav />
       </Suspense>
