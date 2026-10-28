@@ -17,10 +17,11 @@ vi.mock("@/modules/pages/application/follow.actions", () => ({
 const toastError = vi.fn();
 vi.mock("sonner", () => ({ toast: { error: (m: string) => toastError(m) } }));
 
-function renderButton(following: boolean | null) {
+// L'état connu de chaque page est partagé dans l'onglet : une page par test
+function renderButton(following: boolean | null, slug = "bde") {
   render(
     <NextIntlClientProvider locale="fr" messages={messages}>
-      <FollowButton slug="bde" following={following} />
+      <FollowButton slug={slug} following={following} />
     </NextIntlClientProvider>,
   );
 }
@@ -55,7 +56,7 @@ describe("FollowButton (ADR 0019)", () => {
       ok: false,
       error: "emailNotVerified",
     });
-    renderButton(false);
+    renderButton(false, "club-photo");
     fireEvent.click(screen.getByRole("button", { name: "Suivre" }));
     await waitFor(() =>
       expect(toastError).toHaveBeenCalledWith(messages.errors.emailNotVerified),
