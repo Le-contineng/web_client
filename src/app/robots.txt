@@ -1,0 +1,30 @@
+# Le Contineng — consignes aux robots.
+
+# Robots qui collectent des données pour entraîner des modèles d'IA : refusés
+# partout. Le contenu du site ne doit pas servir à entraîner une IA.
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+User-agent: Bytespider
+User-agent: meta-externalagent
+User-agent: cohere-training-data-crawler
+User-agent: Diffbot
+User-agent: omgili
+Disallow: /
+
+# Tous les autres (moteurs de recherche, recherche des assistants IA, aperçus
+# de liens) : pages publiques seulement. La recherche est exclue : ses filtres
+# forment une infinité d'adresses qui piège les robots.
+User-agent: *
+Allow: /
+Disallow: /search
+Disallow: /admin
+Disallow: /my-pages
+Disallow: /profile
+Disallow: /settings
+Disallow: /events/new
+Disallow: /page-request
+Disallow: /api/
