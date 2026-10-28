@@ -15,7 +15,8 @@ import { ContentSkeleton } from "@/shared/components/layout/ContentSkeleton";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("search");
-  return { title: t("title") };
+  // Pages de recherche hors des résultats des moteurs (piège à robots)
+  return { title: t("title"), robots: { index: false, follow: false } };
 }
 
 /**

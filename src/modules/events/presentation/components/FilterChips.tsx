@@ -95,6 +95,8 @@ function Chip({
       <Link
         href={href}
         scroll={false}
+        // Chaque filtre est une nouvelle adresse : les robots ne les suivent pas
+        rel="nofollow"
         aria-current={active ? "true" : undefined}
         className={cn(
           "inline-flex h-9 items-center rounded-full px-4 text-sm font-semibold whitespace-nowrap transition-colors",
