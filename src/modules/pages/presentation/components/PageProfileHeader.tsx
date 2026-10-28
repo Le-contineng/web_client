@@ -6,27 +6,36 @@ import type { Page } from "@/modules/pages/domain/page.types";
 
 /**
  * En-tête d'une page façon profil Instagram : avatar, compteurs, nom, type,
- * bio et boutons (« Modifier la page » pour le propriétaire). Sur mobile,
+ * bio et boutons (« Suivre », « Modifier la page » pour le propriétaire). Sur mobile,
  * l'avatar et les compteurs partagent la première ligne, les boutons
  * prennent toute la largeur sous la bio.
  */
 export function PageProfileHeader({
   page,
   eventCount,
+  followerCount,
   memberCount,
   viewCount,
   actions,
 }: {
   page: Page;
   eventCount: number;
+  /** Nombre d'abonnés, public (ADR 0019) ; absent là où il n'est pas lu. */
+  followerCount?: number;
   memberCount: number;
   /** Total des vues, montré à ses membres seulement. */
   viewCount?: number;
   actions?: ReactNode;
 }) {
   const t = useTranslations("pages");
-  const stats: { key: "events" | "members" | "views"; value: number }[] = [
+  const stats: {
+    key: "events" | "followers" | "members" | "views";
+    value: number;
+  }[] = [
     { key: "events", value: eventCount },
+    ...(followerCount === undefined
+      ? []
+      : [{ key: "followers" as const, value: followerCount }]),
     { key: "members", value: memberCount },
     ...(viewCount === undefined
       ? []

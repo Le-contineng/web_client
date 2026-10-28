@@ -1,0 +1,30 @@
+# 0019 — Suivre une page
+
+Statut : Acceptée
+Date : 2026-10-28
+Complète : ADR 0024 du backend (suivre une page)
+
+## Contexte
+
+L'API permet de suivre une page organisatrice : nombre d'abonnés public, liste des abonnés jamais exposée, onglet « Abonnements » à côté du fil général, notifications des nouveaux événements principaux. Le front doit l'afficher sans jamais mettre un état personnel dans un cache partagé (ADR 0004).
+
+## Décision
+
+- **Dans le module `pages`** : Server Action `setFollowAction` (état voulu, jamais une bascule ; entrées validées par Zod, compte obligatoire), composant `FollowButton` dans `presentation/components/`, lecture de mes abonnements. Les autres modules et les espaces l'utilisent par `index.ts` ou `server.ts`.
+- **L'état personnel n'entre jamais dans un cache partagé** : `/p/[slug]` est aujourd'hui rendue à chaque requête (elle lit déjà la session pour « Gérer la page »), si bien que « Suivre / Abonné » vient avec la lecture de la page (`viewer.following`, absent sans session). Le jour où la page sera mise en cache, cet état devra être lu à part.
+- **Où apparaît le bouton** : sur `/p/[slug]`, puis à côté du nom de l'organisateur sur la fiche et la carte d'un événement. Il s'affiche aussi pour les membres de la page. Une personne non connectée qui clique est envoyée vers la connexion, puis ramenée à la page. À côté de l'organisateur d'un événement, c'est un simple lien « Suivre », absent si la personne suit déjà la page (`viewer.followingOrganizer`, ADR 0024 du backend) ; le dernier état choisi est partagé par tous les boutons de la même page dans l'onglet, sans recharger le fil.
+- **« Pages suivies »** dans `/profile`. La liste des abonnés d'une page n'est affichée nulle part, pas même dans l'espace de gestion de la page.
+- **Fil** : un onglet « Abonnements » à côté du fil général, réservé aux personnes connectées ; le fil général ne change pas. C'est une adresse à part, `/following` (une personne non connectée passe par la connexion), qui partage l'écran de l'accueil (`FeedView`, espace `user`) et ses filtres ; elle demande `followed=true` à l'API, y compris pour les tranches suivantes. L'onglet n'est jamais écrit dans les paramètres d'adresse. Sans événement (et sans autre filtre), il dit pourquoi (aucun abonnement, ou rien de prévu) et propose des pages à suivre (`/me/page-suggestions`), chacune avec « Suivre ». Les onglets « Tout / Abonnements » ne s'affichent qu'avec une session ; l'icône Accueil reste allumée sur les deux.
+- **`robots.txt`** : `/following` rejoint les zones interdites, et la page porte `noindex`.
+
+## Alternatives
+
+- **Fil général réordonné selon les pages suivies** : écarté avec l'API (ADR 0024 du backend) ; il rendrait le fil propre à chacun.
+- **État « Abonné » lu à part dès maintenant** : inutile tant que la page n'est pas mise en cache, et coûterait un appel de plus.
+
+## Conséquences
+
+- Après « Suivre », le bouton change aussitôt (mise à jour optimiste) ; la page est relue pour mettre à jour le nombre d'abonnés.
+- Suivre exige une adresse confirmée : sinon, un message invite à la confirmer.
+- Notifications : la cloche connaît le type `newEvent` (« {page} a publié un nouvel événement : {event} », lien vers la fiche), rangé dans une catégorie « Événements », en tête des filtres. L'API en envoie au plus 2 par page sur 24 h (ADR 0024 du backend).
+- Pas de réglage des notifications page par page : on cesse de suivre la page, ou on coupe les notifications de l'appareil.

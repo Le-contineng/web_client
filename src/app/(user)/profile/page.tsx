@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import Link from "next/link";
 import { getCurrentAccount } from "@/modules/authentication/server";
+import { FollowedPageList } from "@/modules/pages";
+import { getMyFollows } from "@/modules/pages/server";
 import { ProfileForm } from "@/modules/profiles";
 import { updateProfileAction } from "@/modules/profiles/application/profiles.actions";
 import { ListIcon } from "@/shared/components/icons";
@@ -11,14 +13,14 @@ import { PageTitle } from "@/shared/components/layout/PageTitle";
 import { ContentSkeleton } from "@/shared/components/layout/ContentSkeleton";
 
 /**
- * Profil personnel : nom et photo. Sur téléphone, le bouton menu en haut
+ * Profil personnel : nom et photo, puis les pages suivies (ADR 0019). Sur téléphone, le bouton menu en haut
  * ouvre « Plus » (réglages, notifications, appareils connectés, déconnexion),
  * l'équivalent du tiroir « Plus » de la barre latérale sur ordinateur.
  */
 async function Profile() {
   const account = await getCurrentAccount();
   if (!account) redirect("/login?returnTo=/profile");
-  const t = await getTranslations();
+  const [t, follows] = await Promise.all([getTranslations(), getMyFollows()]);
   return (
     <div className="mx-auto grid max-w-xl gap-8 px-4 pt-6 md:pt-10">
       <UrlToast
@@ -47,6 +49,10 @@ async function Profile() {
         name={account.name}
         photo={account.photoUrl}
       />
+      <section className="grid gap-3">
+        <h2 className="font-semibold">{t("pages.follow.followedPages")}</h2>
+        <FollowedPageList pages={follows} />
+      </section>
     </div>
   );
 }
