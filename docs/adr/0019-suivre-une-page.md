@@ -26,4 +26,5 @@ L'API permet de suivre une page organisatrice : nombre d'abonnés public, liste 
 
 - Après « Suivre », le bouton change aussitôt (mise à jour optimiste) ; la page est relue pour mettre à jour le nombre d'abonnés.
 - Suivre exige une adresse confirmée : sinon, un message invite à la confirmer.
+- Notifications : la cloche connaît le type `newEvent` (« {page} a publié un nouvel événement : {event} », lien vers la fiche), rangé dans une catégorie « Événements », en tête des filtres. L'API en envoie au plus 2 par page sur 24 h (ADR 0024 du backend).
 - Pas de réglage des notifications page par page : on cesse de suivre la page, ou on coupe les notifications de l'appareil.

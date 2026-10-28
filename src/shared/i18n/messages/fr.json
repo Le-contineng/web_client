@@ -376,19 +376,21 @@
     "accessGranted": "Vous avez maintenant accès à la page {name}",
     "accessRevoked": "Votre accès à la page {name} a été retiré",
     "newRequest": "Nouvelle demande de page : {name}",
+    "newEvent": "{page} a publié un nouvel événement : {event}",
     "close": "Fermer",
     "filter": "Filtrer les notifications",
     "thisMonth": "Ce mois",
     "earlier": "Précédent",
     "categories": {
       "all": "Toutes les activités",
+      "events": "Événements",
       "pages": "Pages",
       "access": "Accès",
       "requests": "Demandes"
     },
     "push": {
       "title": "Notifications sur cet appareil",
-      "off": "Recevez une alerte quand votre page est créée, qu'une demande est traitée ou qu'on vous donne accès à une page, même le site fermé.",
+      "off": "Recevez une alerte quand une page que vous suivez publie un événement, quand votre page est créée, qu'une demande est traitée ou qu'on vous donne accès à une page, même le site fermé.",
       "on": "Cet appareil reçoit vos notifications.",
       "blocked": "Les notifications sont bloquées pour ce site. Autorisez-les dans les réglages du navigateur.",
       "unavailable": "Ce navigateur ne reçoit pas de notifications. Sur iPhone, ajoutez d'abord le site à l'écran d'accueil (Partager → Sur l'écran d'accueil).",
