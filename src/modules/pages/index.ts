@@ -2,6 +2,8 @@ export {
   type PageRequest,
   type Member,
   type Page,
+  type PageDetail,
+  type FollowState,
   type MemberPage,
   type Role,
   ORGANIZATION_TYPES,
@@ -11,6 +13,8 @@ export { PageRequestDecision } from "@/modules/pages/presentation/components/Pag
 export { PendingPageRequest } from "@/modules/pages/presentation/components/PendingPageRequest";
 export { PageProfileHeader } from "@/modules/pages/presentation/components/PageProfileHeader";
 export { PageRequestForm } from "@/modules/pages/presentation/components/PageRequestForm";
+export { FollowButton } from "@/modules/pages/presentation/components/FollowButton";
+export { FollowedPageList } from "@/modules/pages/presentation/components/FollowedPageList";
 export { MemberPageList } from "@/modules/pages/presentation/components/MemberPageList";
 export { MyPageTabs } from "@/modules/pages/presentation/components/MyPageTabs";
 export { PageEditForm } from "@/modules/pages/presentation/components/PageEditForm";

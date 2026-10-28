@@ -226,8 +226,15 @@
     },
     "stats": {
       "events": "{n, plural, one {post} other {posts}}",
+      "followers": "{n, plural, one {follower} other {followers}}",
       "members": "{n, plural, one {member} other {members}}",
       "views": "{n, plural, one {view} other {views}}"
+    },
+    "follow": {
+      "follow": "Follow",
+      "following": "Following",
+      "followedPages": "Followed pages",
+      "none": "You don't follow any page yet. Follow the clubs and associations you like to find their events."
     }
   },
   "events": {

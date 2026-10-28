@@ -2,8 +2,10 @@ import "server-only";
 import { api, apiOrNull } from "@/shared/api/client";
 import { withTranslatedErrors } from "@/modules/pages/infrastructure/errors";
 import type {
+  FollowState,
   Member,
   Page,
+  PageDetail,
   PageRequest,
   PageProfileBody,
   PageRequestBody,
@@ -18,10 +20,21 @@ export const pagesApi = {
   list: () => withTranslatedErrors(() => api<Page[]>("/api/v1/pages")),
   getBySlug: (slug: string) =>
     withTranslatedErrors(() =>
-      apiOrNull<{ page: Page; memberCount: number }>(
-        `/api/v1/pages/${encodeURIComponent(slug)}`,
-      ),
+      apiOrNull<PageDetail>(`/api/v1/pages/${encodeURIComponent(slug)}`),
     ),
+  /**
+   * Suivre ou ne plus suivre une page (ADR 0024 du backend). L'état voulu est
+   * envoyé, jamais une bascule, si bien qu'un renvoi ne compte pas deux fois.
+   */
+  setFollow: (slug: string, following: boolean) =>
+    withTranslatedErrors(() =>
+      api<FollowState>(`/api/v1/pages/${encodeURIComponent(slug)}/follow`, {
+        method: following ? "PUT" : "DELETE",
+      }),
+    ),
+  /** Pages suivies par le compte connecté, par nom. */
+  myFollows: () =>
+    withTranslatedErrors(() => api<Page[]>("/api/v1/me/follows")),
   myPages: () =>
     withTranslatedErrors(() =>
       api<{ page: Page; role: Role }[]>("/api/v1/me/pages"),

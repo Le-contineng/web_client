@@ -19,6 +19,20 @@ export type Page = {
   createdAt: string;
 };
 
+/**
+ * Page publique avec ses compteurs (ADR 0019). `viewer` n'existe qu'avec une
+ * session : il dit si la personne connectée suit la page.
+ */
+export type PageDetail = {
+  page: Page;
+  memberCount: number;
+  followerCount: number;
+  viewer: { following: boolean } | null;
+};
+
+/** État après « Suivre » ou « Ne plus suivre », renvoyé par l'API. */
+export type FollowState = { following: boolean; followerCount: number };
+
 export type Role = "owner" | "contributor";
 
 /**

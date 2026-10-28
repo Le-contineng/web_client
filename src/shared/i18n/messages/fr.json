@@ -226,8 +226,15 @@
     },
     "stats": {
       "events": "{n, plural, one {publication} other {publications}}",
+      "followers": "{n, plural, one {abonné} other {abonnés}}",
       "members": "{n, plural, one {membre} other {membres}}",
       "views": "{n, plural, one {vue} other {vues}}"
+    },
+    "follow": {
+      "follow": "Suivre",
+      "following": "Abonné",
+      "followedPages": "Pages suivies",
+      "none": "Vous ne suivez encore aucune page. Suivez les clubs et associations qui vous intéressent pour retrouver leurs événements."
     }
   },
   "events": {
