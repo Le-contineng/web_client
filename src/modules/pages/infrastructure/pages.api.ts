@@ -6,6 +6,7 @@ import type {
   Member,
   Page,
   PageDetail,
+  PageSuggestion,
   PageRequest,
   PageProfileBody,
   PageRequestBody,
@@ -31,6 +32,11 @@ export const pagesApi = {
       api<FollowState>(`/api/v1/pages/${encodeURIComponent(slug)}/follow`, {
         method: following ? "PUT" : "DELETE",
       }),
+    ),
+  /** Pages à suivre : les plus actives que le compte ne suit pas encore. */
+  suggestions: (limit = 6) =>
+    withTranslatedErrors(() =>
+      api<PageSuggestion[]>(`/api/v1/me/page-suggestions?limit=${limit}`),
     ),
   /** Pages suivies par le compte connecté, par nom. */
   myFollows: () =>

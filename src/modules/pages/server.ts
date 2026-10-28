@@ -7,6 +7,7 @@ export type {
   Member,
   Page,
   PageDetail,
+  PageSuggestion,
   PageRequest,
   PageProfileBody,
   PageRequestBody,
@@ -28,6 +29,7 @@ export {
 // ——— Suivre une page (ADR 0019), pour tout compte connecté ———
 export const setFollow = pagesApi.setFollow;
 export const getMyFollows = cache(() => pagesApi.myFollows());
+export const getPageSuggestions = () => pagesApi.suggestions();
 
 // ——— Modifier la page, réservé au propriétaire ———
 export const updatePage = pagesApi.update;

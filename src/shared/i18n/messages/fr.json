@@ -234,7 +234,11 @@
       "follow": "Suivre",
       "following": "Abonné",
       "followedPages": "Pages suivies",
-      "none": "Vous ne suivez encore aucune page. Suivez les clubs et associations qui vous intéressent pour retrouver leurs événements."
+      "none": "Vous ne suivez encore aucune page. Suivez les clubs et associations qui vous intéressent pour retrouver leurs événements.",
+      "suggestionsTitle": "Pages à suivre",
+      "upcomingEvents": "{n, plural, =0 {aucun événement à venir} one {# événement à venir} other {# événements à venir}}",
+      "noneYet": "Suivez des pages pour retrouver ici leurs événements.",
+      "nothingPlanned": "Les pages que vous suivez n'ont pas d'événement à venir."
     }
   },
   "events": {
@@ -323,7 +327,11 @@
       "leaveCancel": "Continuer la saisie",
       "previewUnavailable": "Aperçu indisponible pour ce format. Préférez une photo JPEG, PNG ou WebP."
     },
-    "interest": "Intéressé"
+    "interest": "Intéressé",
+    "feedTabs": {
+      "all": "Tout",
+      "following": "Abonnements"
+    }
   },
   "categories": {
     "match": "Match / compétition",

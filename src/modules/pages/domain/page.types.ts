@@ -30,6 +30,15 @@ export type PageDetail = {
   viewer: { following: boolean } | null;
 };
 
+/**
+ * Page à suivre, proposée quand l'onglet « Abonnements » est vide : les plus
+ * actives que la personne ne suit pas encore (ADR 0024 du backend).
+ */
+export type PageSuggestion = Pick<Page, "id" | "slug" | "name" | "photoUrl"> & {
+  /** Événements en cours ou à venir, non annulés. */
+  upcomingEventCount: number;
+};
+
 /** État après « Suivre » ou « Ne plus suivre », renvoyé par l'API. */
 export type FollowState = { following: boolean; followerCount: number };
 
