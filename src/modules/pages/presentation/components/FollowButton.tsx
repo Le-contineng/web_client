@@ -33,8 +33,10 @@ function remember(slug: string, following: boolean) {
  *
  * - `button` (page publique) : bouton « Suivre » / « Abonné » ; la page est
  *   relue après coup pour mettre à jour le nombre d'abonnés ;
- * - `inline` (à côté de l'organisateur d'un événement) : simple lien
- *   « Suivre », absent si la personne suit déjà la page.
+ * - `inline` (à côté de l'organisateur, sur la fiche) : simple lien
+ *   « Suivre », absent si la personne suit déjà la page ;
+ * - `card` (à droite de l'en-tête d'une carte du fil) : petit bouton gris,
+ *   façon Instagram, absent si la personne suit déjà la page.
  */
 export function FollowButton({
   slug,
@@ -45,7 +47,7 @@ export function FollowButton({
   slug: string;
   /** Si la personne connectée suit la page ; null sans session. */
   following: boolean | null;
-  variant?: "button" | "inline";
+  variant?: "button" | "inline" | "card";
   className?: string;
 }) {
   const t = useTranslations("pages.follow");
@@ -78,9 +80,26 @@ export function FollowButton({
     });
   }
 
+  // Déjà abonné au chargement (et toujours) : rien à proposer
+  if (variant !== "button" && following && state) return null;
+
+  if (variant === "card") {
+    return (
+      <button
+        type="button"
+        aria-pressed={shown}
+        onClick={toggle}
+        className={cn(
+          "shrink-0 rounded-lg bg-muted px-3 py-1.5 text-sm font-semibold text-foreground transition-colors outline-none hover:bg-accent focus-visible:ring-3 focus-visible:ring-ring/50",
+          className,
+        )}
+      >
+        {shown ? t("following") : t("follow")}
+      </button>
+    );
+  }
+
   if (variant === "inline") {
-    // Déjà abonné au chargement (et toujours) : rien à proposer à côté du nom
-    if (following && state) return null;
     return (
       <button
         type="button"

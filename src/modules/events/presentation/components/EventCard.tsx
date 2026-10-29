@@ -88,17 +88,19 @@ export function EventCard({
             >
               {event.organizer.name}
             </Link>
-            <FollowButton
-              slug={event.organizer.slug}
-              following={followingOrganizer(event)}
-              variant="inline"
-            />
           </span>
           <PublicationDate
             iso={event.createdAt}
             className="truncate text-xs text-muted-foreground"
           />
         </div>
+        {/* « Suivre » à l'extrême droite, en gris, façon Instagram */}
+        <FollowButton
+          slug={event.organizer.slug}
+          following={followingOrganizer(event)}
+          variant="card"
+          className="ml-auto"
+        />
       </header>
 
       <Link
