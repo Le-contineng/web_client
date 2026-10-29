@@ -46,7 +46,7 @@ export function FilterBar({
       router.push(query ? `${path}?${query}` : path, { scroll: false });
     });
 
-  function toggle<K extends "categories" | "periods" | "pages">(
+  function toggle<K extends keyof UrlFilters>(
     key: K,
     value: UrlFilters[K][number],
   ) {
