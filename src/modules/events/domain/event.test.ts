@@ -122,12 +122,6 @@ describe("filtres (US-17)", () => {
     const url = "period=past&page=bde,club-foot";
     expect(writeUrlFilters(readUrlFilters(new URLSearchParams(url)))).toBe(url);
   });
-
-  it("ne mettent jamais l'onglet « Abonnements » dans l'adresse (ADR 0019)", () => {
-    expect(readUrlFilters({ followed: "true" }).followed).toBeUndefined();
-    const f = { ...readUrlFilters({ category: "party" }), followed: true };
-    expect(writeUrlFilters(f)).toBe("category=party");
-  });
 });
 
 describe("formulaire (US-11, US-15)", () => {

@@ -12,8 +12,6 @@ import { ProfileAvatar } from "@/shared/components/ProfileAvatar";
 import { useMounted } from "@/shared/hooks/useMounted";
 import { cn } from "@/shared/lib/utils";
 import type { EventView } from "@/modules/events/domain/event-view.types";
-import { followingOrganizer } from "@/modules/events/presentation/components/EventCard";
-import { FollowButton } from "@/modules/pages";
 import { ExpandableText } from "@/shared/components/ExpandableText";
 
 /**
@@ -22,33 +20,26 @@ import { ExpandableText } from "@/shared/components/ExpandableText";
  * seulement une fois dans le navigateur (D7).
  */
 
-/** L'organisateur sur une ligne, sous le titre, avec « Suivre » s'il y a lieu. */
+/** L'organisateur sur une ligne, sous le titre. */
 export function EventOrganizerLine({ event }: { event: EventView }) {
   const t = useTranslations("events.sheet");
   return (
-    <div className="flex min-w-0 items-center gap-3">
-      <Link
-        href={`/p/${event.organizer.slug}`}
-        className="flex w-fit items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
-      >
-        <ProfileAvatar
-          name={event.organizer.name}
-          photo={event.organizer.photoUrl}
-          size="xs"
-        />
-        <span>
-          {t("by")}{" "}
-          <span className="font-semibold text-foreground">
-            {event.organizer.name}
-          </span>
-        </span>
-      </Link>
-      <FollowButton
-        slug={event.organizer.slug}
-        following={followingOrganizer(event)}
-        variant="inline"
+    <Link
+      href={`/p/${event.organizer.slug}`}
+      className="flex w-fit items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+    >
+      <ProfileAvatar
+        name={event.organizer.name}
+        photo={event.organizer.photoUrl}
+        size="xs"
       />
-    </div>
+      <span>
+        {t("by")}{" "}
+        <span className="font-semibold text-foreground">
+          {event.organizer.name}
+        </span>
+      </span>
+    </Link>
   );
 }
 

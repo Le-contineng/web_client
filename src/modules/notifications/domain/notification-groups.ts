@@ -4,8 +4,7 @@ import type {
 } from "@/modules/notifications/domain/notification.types";
 
 /** Filtres du panneau : « Toutes », puis une catégorie par famille de types. */
-export type NotificationCategory =
-  "all" | "events" | "pages" | "access" | "requests";
+export type NotificationCategory = "all" | "pages" | "access" | "requests";
 
 const CATEGORY_OF: Record<
   NotificationType,
@@ -16,11 +15,9 @@ const CATEGORY_OF: Record<
   accessGranted: "access",
   accessRevoked: "access",
   newRequest: "requests",
-  newEvent: "events",
 };
 
 const ORDER: Exclude<NotificationCategory, "all">[] = [
-  "events",
   "pages",
   "access",
   "requests",

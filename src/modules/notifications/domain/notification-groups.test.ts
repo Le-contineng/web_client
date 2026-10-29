@@ -53,18 +53,3 @@ describe("groupByPeriod", () => {
     expect(earlier.map((n) => n.id)).toEqual(["3"]);
   });
 });
-
-describe("newEvent (ADR 0019)", () => {
-  it("range les nouveaux événements des pages suivies dans « Événements », en tête", () => {
-    const withEvent = [...list, notif("4", "newEvent", "2026-10-28T09:00:00")];
-    expect(availableCategories(withEvent)).toEqual([
-      "all",
-      "events",
-      "pages",
-      "access",
-    ]);
-    expect(filterByCategory(withEvent, "events").map((n) => n.id)).toEqual([
-      "4",
-    ]);
-  });
-});

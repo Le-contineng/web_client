@@ -24,7 +24,6 @@ Disallow: /search
 Disallow: /admin
 Disallow: /my-pages
 Disallow: /profile
-Disallow: /following
 Disallow: /settings
 Disallow: /events/new
 Disallow: /page-request

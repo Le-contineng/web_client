@@ -3,11 +3,8 @@ import { cache } from "react";
 import { pagesApi } from "@/modules/pages/infrastructure/pages.api";
 
 export type {
-  FollowState,
   Member,
   Page,
-  PageDetail,
-  PageSuggestion,
   PageRequest,
   PageProfileBody,
   PageRequestBody,
@@ -25,11 +22,6 @@ export {
   getMyPageById,
   getMyPages,
 } from "@/modules/pages/infrastructure/my-pages";
-
-// ——— Suivre une page (ADR 0019), pour tout compte connecté ———
-export const setFollow = pagesApi.setFollow;
-export const getMyFollows = cache(() => pagesApi.myFollows());
-export const getPageSuggestions = () => pagesApi.suggestions();
 
 // ——— Modifier la page, réservé au propriétaire ———
 export const updatePage = pagesApi.update;

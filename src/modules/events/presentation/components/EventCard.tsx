@@ -8,7 +8,6 @@ import {
   feedImageRatio,
 } from "@/modules/events/domain/event-image";
 import type { EventView } from "@/modules/events/domain/event-view.types";
-import { FollowButton } from "@/modules/pages";
 import { EventBadges } from "@/modules/events/presentation/components/EventBadges";
 import { InterestButton } from "@/modules/events/presentation/components/InterestButton";
 import { DateTile } from "@/modules/events/presentation/components/DateTile";
@@ -22,8 +21,7 @@ import { cn } from "@/shared/lib/utils";
 export const DEFAULT_IMAGE = "/demo/defaut.svg";
 
 /**
- * Carte d'événement du fil (US-01), sobre : qui publie (avec « Suivre » si la
- * personne ne suit pas encore la page) et quand, l'affiche,
+ * Carte d'événement du fil (US-01), sobre : qui publie et quand, l'affiche,
  * puis une ligne d'actions façon réseau social : la petite tuile de date
  * posée sur le coin de l'affiche (la signature du site) et, à droite, les
  * actions (Partager). Dessous, le nom, puis l'heure et le lieu, chacun avec
@@ -81,19 +79,12 @@ export function EventCard({
           />
         </Link>
         <div className="grid min-w-0 leading-tight">
-          <span className="flex min-w-0 items-baseline gap-1.5">
-            <Link
-              href={`/p/${event.organizer.slug}`}
-              className="truncate text-sm font-semibold hover:underline"
-            >
-              {event.organizer.name}
-            </Link>
-            <FollowButton
-              slug={event.organizer.slug}
-              following={followingOrganizer(event)}
-              variant="inline"
-            />
-          </span>
+          <Link
+            href={`/p/${event.organizer.slug}`}
+            className="truncate text-sm font-semibold hover:underline"
+          >
+            {event.organizer.name}
+          </Link>
           <PublicationDate
             iso={event.createdAt}
             className="truncate text-xs text-muted-foreground"
@@ -192,11 +183,6 @@ export function EventCard({
       </div>
     </article>
   );
-}
-
-/** Si la personne connectée suit l'organisateur ; null sans session. */
-export function followingOrganizer(event: EventView): boolean | null {
-  return event.viewer ? (event.viewer.followingOrganizer ?? false) : null;
 }
 
 /**

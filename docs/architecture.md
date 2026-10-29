@@ -9,7 +9,7 @@ src/
 ├── app/                         Routage uniquement
 │   ├── (auth)/                      /login, /register, /forgot-password, /reset-password, /verify-email,
 │   │                                /auth/google et /auth/google/callback (connexion Google)
-│   ├── (user)/                      Espace utilisateur : /, /following, /search, /e/{id}, /e/{id}/edit,
+│   ├── (user)/                      Espace utilisateur : /, /search, /e/{id}, /e/{id}/edit,
 │   │                                /events/new, /p/{slug}, /my-pages…, /page-request, /profile
 │   ├── @auth/                       Mêmes écrans en modal (plein écran sur mobile) quand ils sont
 │   │                                ouverts depuis l'application : routes interceptées (.)login…

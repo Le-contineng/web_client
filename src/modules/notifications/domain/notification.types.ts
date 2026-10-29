@@ -5,19 +5,15 @@ export const NOTIFICATION_TYPES = [
   "accessGranted",
   "accessRevoked",
   "newRequest",
-  "newEvent",
 ] as const;
 
 export type NotificationType = (typeof NOTIFICATION_TYPES)[number];
 
-/** Notification dans l'application, produite par l'API (US-03, US-06, ADR 0019). */
+/** Notification dans l'application, produite par l'API (US-03, US-06). */
 export type Notification = {
   id: string;
   type: NotificationType;
-  /**
-   * Variables du message : `name`, et `reason` pour un refus ; `page` et
-   * `event` pour un nouvel événement d'une page suivie (ADR 0019).
-   */
+  /** Variables du message : `name`, et `reason` pour un refus. */
   params: Record<string, string>;
   /** Lien ouvert au clic. */
   link: string | null;
