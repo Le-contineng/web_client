@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { NextIntlClientProvider } from "next-intl";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import messages from "@/shared/i18n/messages/fr.json";
@@ -12,6 +12,9 @@ vi.mock("next/navigation", () => ({
 }));
 vi.mock("@/modules/events/application/interest.actions", () => ({
   setInterestAction: vi.fn(),
+}));
+vi.mock("@/modules/pages/application/follow.actions", () => ({
+  setFollowAction: vi.fn(),
 }));
 
 const event: EventView = {
@@ -155,5 +158,21 @@ describe("Carte du fil : ouverture", () => {
     expect(flame).toHaveAttribute("aria-pressed", "false");
     fireEvent.click(flame);
     expect(push).toHaveBeenCalledWith("/login?returnTo=%2F");
+  });
+
+  it("propose de suivre l'organisateur, sauf à qui le suit déjà (ADR 0019)", () => {
+    const published = { ...event, status: "published" as const };
+    renderCard({
+      ...published,
+      viewer: { interested: false, followingOrganizer: false },
+    });
+    expect(screen.getByRole("button", { name: "Suivre" })).toBeInTheDocument();
+    cleanup();
+    renderCard({
+      ...published,
+      id: "autre",
+      viewer: { interested: false, followingOrganizer: true },
+    });
+    expect(screen.queryByRole("button", { name: "Suivre" })).toBeNull();
   });
 });

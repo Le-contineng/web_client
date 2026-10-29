@@ -167,6 +167,7 @@ const filtersSchema = z.object({
   categories: z.array(z.enum(CATEGORIES)).max(CATEGORIES.length),
   periods: z.array(z.enum(PERIODS)).max(PERIODS.length),
   pages: z.array(z.string().max(100)).max(100),
+  followed: z.boolean().optional(),
 });
 
 /** Chargement progressif du fil, 20 par 20 (US-16). */
