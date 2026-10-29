@@ -94,7 +94,9 @@ npx shadcn@latest add dialog
 
 ### Cache
 
-`cacheComponents` est activé (ADR 0004) : rien n'est mis en cache par défaut. Une fonction ou un composant n'est mis en cache que s'il porte `"use cache"`, dans `src/modules/<module>/server.ts`. Les données propres à un utilisateur ne vont jamais dans un cache partagé.
+`cacheComponents` est activé (ADR 0004) : rien n'est mis en cache par défaut. Une fonction ou un composant n'est mis en cache que s'il porte `"use cache"`, dans `src/modules/<module>/server.ts` ou l'infrastructure du module. Les données propres à un utilisateur ne vont jamais dans un cache partagé.
+
+Sont mis en cache, avec le profil `publicList` (30 s, servi au plus 2 min pendant le renouvellement, défini dans `next.config.ts`) : la liste des pages (`getAllPages`), les campagnes en cours et le fil des visiteurs sans compte. Le fil d'une personne connectée n'est jamais mis en cache : il dit ce qu'elle a fait (`viewer`).
 
 ### Sécurité
 

@@ -15,7 +15,11 @@ import type {
  * exactement le contrat de l'API : les réponses sont utilisées telles quelles.
  */
 export const pagesApi = {
-  list: () => withTranslatedErrors(() => api<Page[]>("/api/v1/pages")),
+  /** Liste publique, la même pour tous : demandée sans compte. */
+  list: () =>
+    withTranslatedErrors(() =>
+      api<Page[]>("/api/v1/pages", { anonymous: true }),
+    ),
   getBySlug: (slug: string) =>
     withTranslatedErrors(() =>
       apiOrNull<{ page: Page; memberCount: number }>(

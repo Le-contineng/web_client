@@ -1,4 +1,5 @@
 import "server-only";
+import { cacheLife, cacheTag } from "next/cache";
 import { cache } from "react";
 import { pagesApi } from "@/modules/pages/infrastructure/pages.api";
 
@@ -12,7 +13,16 @@ export type {
 } from "@/modules/pages/domain/page.types";
 
 // ——— Lecture publique ———
-export const getAllPages = cache(() => pagesApi.list());
+/** Tag de la liste publique des pages mise en cache. */
+export const PAGES_CACHE_TAG = "pages";
+
+/** Toutes les pages, les mêmes pour tous : mises en cache (ADR 0004). */
+export async function getAllPages() {
+  "use cache";
+  cacheLife("publicList");
+  cacheTag(PAGES_CACHE_TAG);
+  return pagesApi.list();
+}
 export const getPageBySlug = cache((slug: string) => pagesApi.getBySlug(slug));
 
 // ——— Personne connectée et ses pages (« Mes pages », choix avant de publier) ———

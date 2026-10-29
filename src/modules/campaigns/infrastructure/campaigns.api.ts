@@ -1,4 +1,5 @@
 import "server-only";
+import { cacheLife, cacheTag } from "next/cache";
 import { connection } from "next/server";
 import {
   type ActiveCampaigns,
@@ -73,6 +74,28 @@ function toCampaign(p: CampaignPayload): Campaign | null {
   };
 }
 
+/** Tag des campagnes en cours mises en cache. */
+const CAMPAIGNS_CACHE_TAG = "campaigns";
+
+/** Campagnes en cours, les mêmes pour tous : mises en cache (ADR 0004). */
+async function activeFromApi(): Promise<ActiveCampaigns> {
+  "use cache";
+  cacheLife("publicList");
+  cacheTag(CAMPAIGNS_CACHE_TAG);
+  // Une campagne absente ne doit jamais casser l'application.
+  const payload = await api<Partial<Record<string, CampaignPayload>>>(
+    "/api/v1/campaigns/active",
+    { anonymous: true },
+  ).catch(() => ({}) as Partial<Record<string, CampaignPayload>>);
+  const result: ActiveCampaigns = {};
+  for (const placement of CAMPAIGN_PLACEMENTS) {
+    const p = payload[placement];
+    const campaign = p && toCampaign(p);
+    if (campaign) result[placement] = campaign;
+  }
+  return result;
+}
+
 /**
  * Client des campagnes (GET /api/v1/campaigns/active). CAMPAIGNS_DEMO
  * remplace l'API par un scénario de démonstration, pour essayer un design.
@@ -84,17 +107,7 @@ export const campaignsApi = {
       await connection();
       return selectActive(DEMO_SCENARIOS[env.CAMPAIGNS_DEMO], new Date());
     }
-    // Une campagne absente ne doit jamais casser l'application.
-    const payload = await api<Partial<Record<string, CampaignPayload>>>(
-      "/api/v1/campaigns/active",
-    ).catch(() => ({}) as Partial<Record<string, CampaignPayload>>);
-    const result: ActiveCampaigns = {};
-    for (const placement of CAMPAIGN_PLACEMENTS) {
-      const p = payload[placement];
-      const campaign = p && toCampaign(p);
-      if (campaign) result[placement] = campaign;
-    }
-    return result;
+    return activeFromApi();
   },
   /** Campagne publiée, pour sa page de partage ; `null` si absente ou non publiée. */
   async get(id: string): Promise<Campaign | null> {

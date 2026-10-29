@@ -51,6 +51,12 @@ const enTetesDeSecurite = [
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
+  // Listes publiques (fil, pages, campagnes), les mêmes pour tous les
+  // visiteurs : gardées 30 s, servies au plus 2 min pendant leur
+  // renouvellement (ADR 0004). Moins de 5 min : jamais figées au build.
+  cacheLife: {
+    publicList: { stale: 30, revalidate: 30, expire: 120 },
+  },
   poweredByHeader: false,
   // Le sélecteur de profil occupe le coin bas gauche (US-37).
   devIndicators: { position: "bottom-right" },

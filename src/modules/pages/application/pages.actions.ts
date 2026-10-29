@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { getCurrentAccount } from "@/modules/authentication/server";
@@ -9,6 +9,7 @@ import type { SearchResult } from "@/modules/pages";
 import {
   getMyPageById,
   getPageBySlug,
+  PAGES_CACHE_TAG,
   updatePage,
   submitPageRequest,
   grantAccess,
@@ -83,6 +84,8 @@ export async function updatePageAction(
     }),
   );
   if (!result.ok) return result.state;
+  // Nom ou photo changés : le filtre et le carrousel de l'accueil aussi.
+  updateTag(PAGES_CACHE_TAG);
   revalidatePath("/my-pages", "layout");
   revalidatePath(`/p/${page.slug}`);
   redirect(`/my-pages/${page.slug}?msg=pageUpdated`);

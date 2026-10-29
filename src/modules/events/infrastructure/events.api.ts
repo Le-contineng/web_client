@@ -34,6 +34,11 @@ export type EventSlice = {
 export const eventsApi = {
   list: (params: URLSearchParams) =>
     withTranslatedErrors(() => api<EventSlice>(`/api/v1/events?${params}`)),
+  /** Le fil tel qu'un visiteur sans compte le voit, sans `viewer`. */
+  listAnonymous: (params: URLSearchParams) =>
+    withTranslatedErrors(() =>
+      api<EventSlice>(`/api/v1/events?${params}`, { anonymous: true }),
+    ),
   getById: (id: string) =>
     withTranslatedErrors(() =>
       apiOrNull<EventView>(`/api/v1/events/${encodeURIComponent(id)}`),
