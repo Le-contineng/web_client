@@ -2,6 +2,7 @@
 
 import {
   CalendarDotsIcon,
+  ClockIcon as AlarmClockIcon,
   FlagIcon,
   type Icon,
   KeyIcon,
@@ -29,6 +30,7 @@ const ICONS: Record<NotificationType, Icon> = {
   requestRejected: XCircleIcon,
   accessGranted: KeyIcon,
   accessRevoked: LockIcon,
+  eventReminder: AlarmClockIcon,
   newRequest: TrayIcon,
   newEvent: CalendarDotsIcon,
 };

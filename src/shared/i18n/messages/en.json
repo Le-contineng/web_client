@@ -396,7 +396,8 @@
       "unavailable": "This browser cannot receive notifications. On iPhone, first add the site to your Home Screen (Share → Add to Home Screen).",
       "enable": "Turn on",
       "disable": "Turn off"
-    }
+    },
+    "eventReminder": "{day, select, today {Today} tomorrow {Tomorrow} other {On}} at {time}: {event} · {location}"
   },
   "dates": {
     "today": "Today, {time}",

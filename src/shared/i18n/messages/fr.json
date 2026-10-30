@@ -396,7 +396,8 @@
       "unavailable": "Ce navigateur ne reçoit pas de notifications. Sur iPhone, ajoutez d'abord le site à l'écran d'accueil (Partager → Sur l'écran d'accueil).",
       "enable": "Activer",
       "disable": "Désactiver"
-    }
+    },
+    "eventReminder": "{day, select, today {Aujourd’hui} tomorrow {Demain} other {Le}} à {time} : {event} · {location}"
   },
   "dates": {
     "today": "Aujourd'hui, {time}",

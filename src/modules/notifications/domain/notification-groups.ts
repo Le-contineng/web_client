@@ -17,6 +17,7 @@ const CATEGORY_OF: Record<
   accessRevoked: "access",
   newRequest: "requests",
   newEvent: "events",
+  eventReminder: "events",
 };
 
 const ORDER: Exclude<NotificationCategory, "all">[] = [
