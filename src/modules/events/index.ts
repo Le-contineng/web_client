@@ -25,7 +25,6 @@ export {
   matchesSearch,
   SEARCH_MAX_LENGTH,
 } from "@/modules/events/domain/search";
-export { FilterBar } from "@/modules/events/presentation/components/FilterBar";
 export { SearchBar } from "@/modules/events/presentation/components/SearchBar";
 export { FilterChips } from "@/modules/events/presentation/components/FilterChips";
 export {

@@ -342,11 +342,7 @@
       "leaveCancel": "Continuer la saisie",
       "previewUnavailable": "Aperçu indisponible pour ce format. Préférez une photo JPEG, PNG ou WebP."
     },
-    "interest": "Intéressé",
-    "feedTabs": {
-      "all": "Tout",
-      "following": "Abonnements"
-    }
+    "interest": "Intéressé"
   },
   "categories": {
     "match": "Match / compétition",
