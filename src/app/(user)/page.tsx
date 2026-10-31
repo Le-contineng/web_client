@@ -14,7 +14,7 @@ async function Home({ searchParams }: PageProps<"/">) {
     if (value) filters.set(key, Array.isArray(value) ? value.join(",") : value);
   }
   if (filters.size) redirect(`/search?${filters}`);
-  return <FeedView searchParams={params} />;
+  return <FeedView />;
 }
 
 const FILTER_KEYS = ["q", "period", "category", "page"] as const;

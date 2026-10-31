@@ -12,7 +12,6 @@ export type {
 export { listEvents } from "@/modules/events/infrastructure/list-events";
 export {
   listEventsFromUrl,
-  getFilterPages,
   searchEvents,
 } from "@/modules/events/infrastructure/event-queries";
 

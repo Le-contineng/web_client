@@ -342,11 +342,7 @@
       "leaveCancel": "Keep editing",
       "previewUnavailable": "Preview unavailable for this format. Prefer a JPEG, PNG or WebP photo."
     },
-    "interest": "Interested",
-    "feedTabs": {
-      "all": "All",
-      "following": "Following"
-    }
+    "interest": "Interested"
   },
   "categories": {
     "match": "Match / competition",

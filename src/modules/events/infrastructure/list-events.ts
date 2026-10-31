@@ -21,7 +21,6 @@ export function listEvents(
   if (filters.periods.length) p.set("period", filters.periods.join(","));
   if (filters.pages.length) p.set("page", filters.pages.join(","));
   if (filters.search) p.set("q", filters.search);
-  if (filters.followed) p.set("followed", "true");
   p.set("offset", String(offset));
   p.set("limit", String(limit));
   if (asOf) p.set("asOf", asOf);
