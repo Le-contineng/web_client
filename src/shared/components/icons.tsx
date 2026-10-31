@@ -89,6 +89,7 @@ export const UploadSimpleIcon = icon(P.UploadSimpleIcon);
 export const UserIcon = icon(P.UserIcon);
 export const UserPlusIcon = icon(P.UserPlusIcon);
 export const UsersIcon = icon(P.UsersIcon);
+export const ChartLineUpIcon = icon(P.ChartLineUpIcon);
 export const WarningIcon = icon(P.WarningIcon);
 export const XCircleIcon = icon(P.XCircleIcon);
 export const XIcon = icon(P.XIcon);

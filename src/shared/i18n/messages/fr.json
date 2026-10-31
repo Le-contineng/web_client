@@ -213,7 +213,8 @@
       "notFound": "Cette page ne fait pas partie de vos pages.",
       "back": "Mes pages",
       "manage": "Gérer la page",
-      "viewPublic": "Voir la page publique"
+      "viewPublic": "Voir la page publique",
+      "followers": "Abonnés"
     },
     "edit": {
       "title": "Modifier la page",
@@ -239,6 +240,20 @@
       "upcomingEvents": "{n, plural, =0 {aucun événement à venir} one {# événement à venir} other {# événements à venir}}",
       "noneYet": "Suivez des pages pour retrouver ici leurs événements.",
       "nothingPlanned": "Les pages que vous suivez n'ont pas d'événement à venir."
+    },
+    "followerStats": {
+      "intro": "L'évolution des personnes qui suivent la page. Les chiffres ne disent jamais qui suit la page.",
+      "period": "Période",
+      "days": "{count} jours",
+      "year": "1 an",
+      "total": "Abonnés",
+      "gained": "Abonnements",
+      "lost": "Désabonnements",
+      "chartLabel": "Abonnés de la page sur {count} jours : {first} au début, {last} aujourd'hui.",
+      "empty": "Aucun abonnement ni désabonnement sur cette période. Les mouvements sont comptés depuis la mise en service des statistiques.",
+      "details": "Détail par jour",
+      "date": "Jour",
+      "unavailable": "Les statistiques d'abonnés ne sont pas disponibles pour le moment."
     }
   },
   "events": {

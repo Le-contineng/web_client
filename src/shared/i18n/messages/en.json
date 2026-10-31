@@ -213,7 +213,8 @@
       "notFound": "This page is not one of your pages.",
       "back": "My pages",
       "manage": "Manage page",
-      "viewPublic": "View public page"
+      "viewPublic": "View public page",
+      "followers": "Followers"
     },
     "edit": {
       "title": "Edit page",
@@ -239,6 +240,20 @@
       "upcomingEvents": "{n, plural, =0 {no upcoming event} one {# upcoming event} other {# upcoming events}}",
       "noneYet": "Follow pages to find their events here.",
       "nothingPlanned": "The pages you follow have no upcoming event."
+    },
+    "followerStats": {
+      "intro": "How the number of people following the page changes. The figures never show who follows the page.",
+      "period": "Period",
+      "days": "{count} days",
+      "year": "1 year",
+      "total": "Followers",
+      "gained": "Follows",
+      "lost": "Unfollows",
+      "chartLabel": "Page followers over {count} days: {first} at the start, {last} today.",
+      "empty": "No follows or unfollows in this period. Changes are counted since follower statistics were introduced.",
+      "details": "Day by day",
+      "date": "Day",
+      "unavailable": "Follower statistics are not available right now."
     }
   },
   "events": {

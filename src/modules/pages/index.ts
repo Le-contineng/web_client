@@ -25,3 +25,4 @@ export {
   type MemberRow,
   type SearchResult,
 } from "@/modules/pages/presentation/components/AccessManager";
+export { FollowerStatsView } from "@/modules/pages/presentation/components/FollowerStatsView";
