@@ -60,14 +60,14 @@ export function CampaignCard({
             <ProfileAvatar
               name={sponsor.name}
               photo={sponsor.photoUrl}
-              size="md"
+              size="sm"
             />
           </Link>
         ) : (
           <ProfileAvatar
             name={sponsor.name}
             photo={sponsor.photoUrl}
-            size="md"
+            size="sm"
           />
         )}
         <div className="grid min-w-0 flex-1 leading-tight">

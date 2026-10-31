@@ -77,7 +77,7 @@ export function EventCard({
           <ProfileAvatar
             name={event.organizer.name}
             photo={event.organizer.photoUrl}
-            size="md"
+            size="sm"
           />
         </Link>
         <div className="grid min-w-0 leading-tight">
