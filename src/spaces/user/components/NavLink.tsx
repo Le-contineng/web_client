@@ -24,7 +24,11 @@ export function NavLink({
 }) {
   const path = usePathname();
   const { panel } = useSidebarPanel();
-  const onPage = href === "/" ? path === "/" : path.startsWith(href);
+  // L'accueil reste allumé sur son onglet « Abonnements »
+  const onPage =
+    href === "/"
+      ? path === "/" || path === "/following"
+      : path.startsWith(href);
   // Un tiroir ouvert (notifications, « Plus ») devient l'onglet actif.
   const active = onPage && !(variant === "sidebar" && panel);
   const shownIcon = active && activeIcon ? activeIcon : icon;

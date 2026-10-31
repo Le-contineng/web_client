@@ -15,19 +15,23 @@ test("un visiteur voit les événements à venir sans compte (US-01, US-16)", as
   await expect(
     page.getByRole("heading", { level: 2, name: "Soirée de rentrée" }),
   ).toHaveCount(0);
-  await expect(page.getByRole("button", { name: "Période" })).toBeVisible();
+  // Les filtres sont sur la recherche, ouverte par la loupe.
+  await expect(
+    page.getByRole("link", { name: "Rechercher" }).first(),
+  ).toBeVisible();
 });
 
-test("le filtre Période = Passé est repris dans l'adresse (US-17)", async ({
+test("un lien filtré mène à la recherche avec le même filtre (US-17)", async ({
   page,
 }) => {
   await page.goto("/?period=past");
 
+  await expect(page).toHaveURL(/\/search\?period=past$/);
   await expect(
-    page.getByRole("heading", { level: 2, name: "Soirée de rentrée" }),
-  ).toBeVisible();
+    page.getByRole("link", { name: "Passé", exact: true }),
+  ).toHaveAttribute("aria-current", "true");
   await expect(
-    page.getByRole("button", { name: "Réinitialiser" }),
+    page.getByRole("link", { name: /Soirée de rentrée/ }).first(),
   ).toBeVisible();
 });
 

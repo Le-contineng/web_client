@@ -1,6 +1,11 @@
 "use client";
 
-import { GridNineIcon, type Icon, UsersIcon } from "@/shared/components/icons";
+import {
+  ChartLineUpIcon,
+  GridNineIcon,
+  type Icon,
+  UsersIcon,
+} from "@/shared/components/icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -8,14 +13,15 @@ import { cn } from "@/shared/lib/utils";
 import type { Role } from "@/modules/pages/domain/page.types";
 
 type Tab = {
-  key: "events" | "access";
+  key: "events" | "followers" | "access";
   href: string;
   Icon: Icon;
 };
 
 /**
  * Onglets d'une de mes pages, sous l'en-tête : ses publications et, pour le
- * propriétaire seulement, les accès (US-06). L'onglet
+ * propriétaire seulement, les accès (US-06) ; les abonnés pour tous les
+ * membres (ADR 0020). L'onglet
  * actif est souligné, au-dessus de la ligne de séparation.
  */
 export function MyPageTabs({ slug, role }: { slug: string; role: Role }) {
@@ -24,6 +30,7 @@ export function MyPageTabs({ slug, role }: { slug: string; role: Role }) {
   const base = `/my-pages/${slug}`;
   const tabs: Tab[] = [
     { key: "events", href: base, Icon: GridNineIcon },
+    { key: "followers", href: `${base}/followers`, Icon: ChartLineUpIcon },
     ...(role === "owner"
       ? [{ key: "access" as const, href: `${base}/access`, Icon: UsersIcon }]
       : []),

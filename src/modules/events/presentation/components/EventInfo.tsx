@@ -12,6 +12,8 @@ import { ProfileAvatar } from "@/shared/components/ProfileAvatar";
 import { useMounted } from "@/shared/hooks/useMounted";
 import { cn } from "@/shared/lib/utils";
 import type { EventView } from "@/modules/events/domain/event-view.types";
+import { followingOrganizer } from "@/modules/events/presentation/components/EventCard";
+import { FollowButton } from "@/modules/pages";
 import { ExpandableText } from "@/shared/components/ExpandableText";
 
 /**
@@ -20,26 +22,33 @@ import { ExpandableText } from "@/shared/components/ExpandableText";
  * seulement une fois dans le navigateur (D7).
  */
 
-/** L'organisateur sur une ligne, sous le titre. */
+/** L'organisateur sur une ligne, sous le titre, avec « Suivre » s'il y a lieu. */
 export function EventOrganizerLine({ event }: { event: EventView }) {
   const t = useTranslations("events.sheet");
   return (
-    <Link
-      href={`/p/${event.organizer.slug}`}
-      className="flex w-fit items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
-    >
-      <ProfileAvatar
-        name={event.organizer.name}
-        photo={event.organizer.photoUrl}
-        size="xs"
-      />
-      <span>
-        {t("by")}{" "}
-        <span className="font-semibold text-foreground">
-          {event.organizer.name}
+    <div className="flex min-w-0 items-center gap-3">
+      <Link
+        href={`/p/${event.organizer.slug}`}
+        className="flex w-fit items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+      >
+        <ProfileAvatar
+          name={event.organizer.name}
+          photo={event.organizer.photoUrl}
+          size="xs"
+        />
+        <span>
+          {t("by")}{" "}
+          <span className="font-semibold text-foreground">
+            {event.organizer.name}
+          </span>
         </span>
-      </span>
-    </Link>
+      </Link>
+      <FollowButton
+        slug={event.organizer.slug}
+        following={followingOrganizer(event)}
+        variant="inline"
+      />
+    </div>
   );
 }
 
@@ -156,7 +165,7 @@ export function EventAbout({ event }: { event: EventView }) {
           {event.categories.map((c) => (
             <Link
               key={c}
-              href={`/?category=${c}`}
+              href={`/search?category=${c}`}
               className={cn(
                 "rounded-[4px] px-2 py-0.5 text-sm hover:underline",
                 TONES.tag,

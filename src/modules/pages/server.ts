@@ -1,10 +1,14 @@
 import "server-only";
 import { cache } from "react";
 import { pagesApi } from "@/modules/pages/infrastructure/pages.api";
+import { fetchFollowerStats } from "@/modules/pages/infrastructure/follower-stats.api";
 
 export type {
+  FollowState,
   Member,
   Page,
+  PageDetail,
+  PageSuggestion,
   PageRequest,
   PageProfileBody,
   PageRequestBody,
@@ -23,6 +27,11 @@ export {
   getMyPages,
 } from "@/modules/pages/infrastructure/my-pages";
 
+// ——— Suivre une page (ADR 0019), pour tout compte connecté ———
+export const setFollow = pagesApi.setFollow;
+export const getMyFollows = cache(() => pagesApi.myFollows());
+export const getPageSuggestions = () => pagesApi.suggestions();
+
 // ——— Modifier la page, réservé au propriétaire ———
 export const updatePage = pagesApi.update;
 
@@ -30,6 +39,14 @@ export const updatePage = pagesApi.update;
 export const getMembers = (pageId: string) => pagesApi.members(pageId);
 export const grantAccess = pagesApi.grantAccess;
 export const revokeAccess = pagesApi.revokeAccess;
+
+// ——— Statistiques d'abonnés (ADR 0020), réservées aux membres de la page ———
+export type {
+  FollowerStats,
+  FollowerStatsPeriod,
+} from "@/modules/pages/domain/follower-stats";
+export { readFollowerStatsPeriod } from "@/modules/pages/domain/follower-stats";
+export const getFollowerStats = fetchFollowerStats;
 
 // ——— Demande de page (US-03) ———
 export const getLatestPageRequest = () => pagesApi.latestRequest();

@@ -213,7 +213,8 @@
       "notFound": "Cette page ne fait pas partie de vos pages.",
       "back": "Mes pages",
       "manage": "Gérer la page",
-      "viewPublic": "Voir la page publique"
+      "viewPublic": "Voir la page publique",
+      "followers": "Abonnés"
     },
     "edit": {
       "title": "Modifier la page",
@@ -226,8 +227,33 @@
     },
     "stats": {
       "events": "{n, plural, one {publication} other {publications}}",
+      "followers": "{n, plural, one {abonné} other {abonnés}}",
       "members": "{n, plural, one {membre} other {membres}}",
       "views": "{n, plural, one {vue} other {vues}}"
+    },
+    "follow": {
+      "follow": "Suivre",
+      "following": "Abonné",
+      "followedPages": "Pages suivies",
+      "none": "Vous ne suivez encore aucune page. Suivez les clubs et associations qui vous intéressent pour retrouver leurs événements.",
+      "suggestionsTitle": "Pages à suivre",
+      "upcomingEvents": "{n, plural, =0 {aucun événement à venir} one {# événement à venir} other {# événements à venir}}",
+      "noneYet": "Suivez des pages pour retrouver ici leurs événements.",
+      "nothingPlanned": "Les pages que vous suivez n'ont pas d'événement à venir."
+    },
+    "followerStats": {
+      "intro": "L'évolution des personnes qui suivent la page. Les chiffres ne disent jamais qui suit la page.",
+      "period": "Période",
+      "days": "{count} jours",
+      "year": "1 an",
+      "total": "Abonnés",
+      "gained": "Abonnements",
+      "lost": "Désabonnements",
+      "chartLabel": "Abonnés de la page sur {count} jours : {first} au début, {last} aujourd'hui.",
+      "empty": "Aucun abonnement ni désabonnement sur cette période. Les mouvements sont comptés depuis la mise en service des statistiques.",
+      "details": "Détail par jour",
+      "date": "Jour",
+      "unavailable": "Les statistiques d'abonnés ne sont pas disponibles pour le moment."
     }
   },
   "events": {
@@ -316,7 +342,11 @@
       "leaveCancel": "Continuer la saisie",
       "previewUnavailable": "Aperçu indisponible pour ce format. Préférez une photo JPEG, PNG ou WebP."
     },
-    "interest": "Intéressé"
+    "interest": "Intéressé",
+    "feedTabs": {
+      "all": "Tout",
+      "following": "Abonnements"
+    }
   },
   "categories": {
     "match": "Match / compétition",
@@ -361,25 +391,28 @@
     "accessGranted": "Vous avez maintenant accès à la page {name}",
     "accessRevoked": "Votre accès à la page {name} a été retiré",
     "newRequest": "Nouvelle demande de page : {name}",
+    "newEvent": "{page} a publié un nouvel événement : {event}",
     "close": "Fermer",
     "filter": "Filtrer les notifications",
     "thisMonth": "Ce mois",
     "earlier": "Précédent",
     "categories": {
       "all": "Toutes les activités",
+      "events": "Événements",
       "pages": "Pages",
       "access": "Accès",
       "requests": "Demandes"
     },
     "push": {
       "title": "Notifications sur cet appareil",
-      "off": "Recevez une alerte quand votre page est créée, qu'une demande est traitée ou qu'on vous donne accès à une page, même le site fermé.",
+      "off": "Recevez une alerte quand une page que vous suivez publie un événement, quand votre page est créée, qu'une demande est traitée ou qu'on vous donne accès à une page, même le site fermé.",
       "on": "Cet appareil reçoit vos notifications.",
       "blocked": "Les notifications sont bloquées pour ce site. Autorisez-les dans les réglages du navigateur.",
       "unavailable": "Ce navigateur ne reçoit pas de notifications. Sur iPhone, ajoutez d'abord le site à l'écran d'accueil (Partager → Sur l'écran d'accueil).",
       "enable": "Activer",
       "disable": "Désactiver"
-    }
+    },
+    "eventReminder": "{day, select, today {Aujourd’hui} tomorrow {Demain} other {Le}} à {time} : {event} · {location}"
   },
   "dates": {
     "today": "Aujourd'hui, {time}",
