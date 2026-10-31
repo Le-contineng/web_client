@@ -15,6 +15,11 @@ export type UrlFilters = {
   categories: Category[];
   periods: Period[];
   pages: string[];
+  /**
+   * Onglet « Abonnements » (ADR 0019) : seulement les pages suivies. Fixé par
+   * la route (/following), jamais lu ni écrit dans les paramètres d'adresse.
+   */
+  followed?: boolean;
 };
 
 type Params = Record<string, string | string[] | undefined> | URLSearchParams;

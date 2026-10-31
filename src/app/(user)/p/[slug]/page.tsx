@@ -4,7 +4,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { EventGrid } from "@/modules/events";
 import { getPageEvents } from "@/modules/events/server";
-import { PageProfileHeader } from "@/modules/pages";
+import { FollowButton, PageProfileHeader } from "@/modules/pages";
 import { getMyPage, getPageBySlug } from "@/modules/pages/server";
 import { buttonVariants } from "@/shared/ui/button";
 import { Separator } from "@/shared/ui/separator";
@@ -36,7 +36,7 @@ async function PublicPage({ params }: PageProps<"/p/[slug]">) {
       </div>
     );
   }
-  const { page, memberCount } = detail;
+  const { page, memberCount, followerCount, viewer } = detail;
   const events = await getPageEvents(page.slug);
   // Ses membres retrouvent ici « Modifier la page » (propriétaire) et la gestion
   const membership = await getMyPage(page.slug);
@@ -47,23 +47,31 @@ async function PublicPage({ params }: PageProps<"/p/[slug]">) {
       <PageProfileHeader
         page={page}
         eventCount={events.length}
+        followerCount={followerCount}
         memberCount={memberCount}
         actions={
-          membership && (
-            <>
-              {membership.role === "owner" && (
-                <Link
-                  href={`/my-pages/${page.slug}/edit`}
-                  className={secondary}
-                >
-                  {t("pages.edit.action")}
+          <>
+            {/* Ouvert à tous, membres compris ; sans session, mène à la connexion */}
+            <FollowButton
+              slug={page.slug}
+              following={viewer?.following ?? null}
+            />
+            {membership && (
+              <>
+                {membership.role === "owner" && (
+                  <Link
+                    href={`/my-pages/${page.slug}/edit`}
+                    className={secondary}
+                  >
+                    {t("pages.edit.action")}
+                  </Link>
+                )}
+                <Link href={`/my-pages/${page.slug}`} className={secondary}>
+                  {t("pages.myPages.manage")}
                 </Link>
-              )}
-              <Link href={`/my-pages/${page.slug}`} className={secondary}>
-                {t("pages.myPages.manage")}
-              </Link>
-            </>
-          )
+              </>
+            )}
+          </>
         }
       />
       <Separator />

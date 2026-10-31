@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  CalendarDotsIcon,
   FlagIcon,
   type Icon,
   KeyIcon,
@@ -29,6 +30,7 @@ const ICONS: Record<NotificationType, Icon> = {
   accessGranted: KeyIcon,
   accessRevoked: LockIcon,
   newRequest: TrayIcon,
+  newEvent: CalendarDotsIcon,
 };
 
 /**

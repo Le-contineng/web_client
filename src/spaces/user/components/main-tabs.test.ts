@@ -3,7 +3,7 @@ import { isMainTab } from "@/spaces/user/components/main-tabs";
 
 describe("isMainTab", () => {
   it("reconnaît les onglets de la barre du bas", () => {
-    for (const path of ["/", "/search", "/my-pages", "/profile"])
+    for (const path of ["/", "/following", "/search", "/my-pages", "/profile"])
       expect(isMainTab(path)).toBe(true);
   });
 
