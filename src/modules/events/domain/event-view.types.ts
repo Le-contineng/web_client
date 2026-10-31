@@ -23,11 +23,8 @@ export type EventView = Event & {
   photo?: PhotoLayout | null;
   /** Nombre de comptes intéressés, public (ADR 0022 du backend). */
   interestCount?: number;
-  /**
-   * Ce qu'a fait la personne connectée ; absent sans compte. `followingOrganizer` :
-   * elle suit la page organisatrice (ADR 0024 du backend).
-   */
-  viewer?: { interested: boolean; followingOrganizer?: boolean } | null;
+  /** Ce qu'a fait la personne connectée ; absent sans compte. */
+  viewer?: { interested: boolean } | null;
 };
 
 /** Intérêt pour un événement, tel que renvoyé après l'avoir changé. */

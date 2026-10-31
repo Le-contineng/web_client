@@ -226,19 +226,8 @@
     },
     "stats": {
       "events": "{n, plural, one {post} other {posts}}",
-      "followers": "{n, plural, one {follower} other {followers}}",
       "members": "{n, plural, one {member} other {members}}",
       "views": "{n, plural, one {view} other {views}}"
-    },
-    "follow": {
-      "follow": "Follow",
-      "following": "Following",
-      "followedPages": "Followed pages",
-      "none": "You don't follow any page yet. Follow the clubs and associations you like to find their events.",
-      "suggestionsTitle": "Pages to follow",
-      "upcomingEvents": "{n, plural, =0 {no upcoming event} one {# upcoming event} other {# upcoming events}}",
-      "noneYet": "Follow pages to find their events here.",
-      "nothingPlanned": "The pages you follow have no upcoming event."
     }
   },
   "events": {
@@ -327,11 +316,7 @@
       "leaveCancel": "Keep editing",
       "previewUnavailable": "Preview unavailable for this format. Prefer a JPEG, PNG or WebP photo."
     },
-    "interest": "Interested",
-    "feedTabs": {
-      "all": "All",
-      "following": "Following"
-    }
+    "interest": "Interested"
   },
   "categories": {
     "match": "Match / competition",
@@ -376,21 +361,19 @@
     "accessGranted": "You now have access to the page {name}",
     "accessRevoked": "Your access to the page {name} has been removed",
     "newRequest": "New page request: {name}",
-    "newEvent": "{page} has published a new event: {event}",
     "close": "Close",
     "filter": "Filter notifications",
     "thisMonth": "This month",
     "earlier": "Earlier",
     "categories": {
       "all": "All activity",
-      "events": "Events",
       "pages": "Pages",
       "access": "Access",
       "requests": "Requests"
     },
     "push": {
       "title": "Notifications on this device",
-      "off": "Get an alert when a page you follow publishes an event, your page is created, a request is reviewed or you are given access to a page, even with the site closed.",
+      "off": "Get an alert when your page is created, a request is reviewed or you are given access to a page, even with the site closed.",
       "on": "This device receives your notifications.",
       "blocked": "Notifications are blocked for this site. Allow them in your browser settings.",
       "unavailable": "This browser cannot receive notifications. On iPhone, first add the site to your Home Screen (Share → Add to Home Screen).",
