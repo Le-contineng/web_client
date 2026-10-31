@@ -165,7 +165,7 @@ export function EventAbout({ event }: { event: EventView }) {
           {event.categories.map((c) => (
             <Link
               key={c}
-              href={`/?category=${c}`}
+              href={`/search?category=${c}`}
               className={cn(
                 "rounded-[4px] px-2 py-0.5 text-sm hover:underline",
                 TONES.tag,
