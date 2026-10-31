@@ -33,7 +33,7 @@ export function UserLayout({ children }: { children: ReactNode }) {
         </Suspense>
       }
     >
-      {/* En-tête sur l'accueil seulement (voir AutoHideHeader) */}
+      {/* En-tête sur le fil seulement (voir AutoHideHeader) */}
       <MobileHeader />
       <Suspense>
         <EmailVerificationForAccount />

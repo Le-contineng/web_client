@@ -1,26 +1,20 @@
 import { CalendarXIcon } from "@/shared/components/icons";
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 import { getCurrentAccount } from "@/modules/authentication/server";
-import {
-  FilterBar,
-  isDefault,
-  EventFeed,
-  readUrlFilters,
-} from "@/modules/events";
+import { isDefault, EventFeed, readUrlFilters } from "@/modules/events";
 import {
   trackEventViewAction,
   trackShareClickAction,
 } from "@/modules/audience/application/audience.actions";
 import { loadEventsAction } from "@/modules/events/application/events.actions";
-import { listEventsFromUrl, getFilterPages } from "@/modules/events/server";
+import { listEventsFromUrl } from "@/modules/events/server";
 import { CampaignCard } from "@/modules/campaigns";
 import { trackCampaignAction } from "@/modules/campaigns/application/campaigns.actions";
 import { getActiveCampaigns } from "@/modules/campaigns/server";
 import { PageSuggestions } from "@/modules/pages";
 import { getMyFollows, getPageSuggestions } from "@/modules/pages/server";
-import { cn } from "@/shared/lib/utils";
+import { FeedTabs } from "@/spaces/user/components/FeedTabs";
 
 type SearchParams = Record<string, string | string[] | undefined>;
 
@@ -42,9 +36,8 @@ export async function FeedView({
   if (followed && !account) redirect("/login?returnTo=%2Ffollowing");
   const t = await getTranslations();
   const filters = { ...readUrlFilters(searchParams), followed };
-  const [{ events, nextOffset, asOf }, pages, campaigns] = await Promise.all([
+  const [{ events, nextOffset, asOf }, campaigns] = await Promise.all([
     listEventsFromUrl(filters),
-    getFilterPages(),
     followed ? null : getActiveCampaigns(),
   ]);
 
@@ -54,25 +47,15 @@ export async function FeedView({
   // Sur ordinateur, le fil est décalé vers la gauche du centre (10rem),
   // sans coller à la barre latérale.
   return (
-    <div className="mx-auto grid max-w-[470px] gap-4 pt-4 sm:px-4 md:pt-8 lg:mr-auto lg:ml-[max(2rem,calc(50%-235px-10rem))]">
+    <div className="mx-auto grid max-w-[470px] gap-4 pt-3 pb-4 sm:px-4 md:pt-0 lg:mr-auto lg:ml-[max(2rem,calc(50%-235px-10rem))]">
       <h1 className="sr-only">
         {followed ? t("events.feedTabs.following") : t("events.listTitle")}
       </h1>
-      <div className="grid gap-4 px-4 sm:px-0">
-        {account && (
-          <nav
-            className="flex gap-6 border-b"
-            aria-label={t("events.listTitle")}
-          >
-            <FeedTab href="/" active={!followed}>
-              {t("events.feedTabs.all")}
-            </FeedTab>
-            <FeedTab href="/following" active={followed}>
-              {t("events.feedTabs.following")}
-            </FeedTab>
-          </nav>
-        )}
-        <FilterBar filters={filters} pages={pages} />
+      {/* Sur téléphone, les onglets sont dans l'en-tête (MobileHeader) ;
+          sur ordinateur, ils restent collés en haut du fil. Les filtres
+          sont sur la page de recherche. */}
+      <div className="sticky top-0 z-20 hidden h-13 border-b bg-background/95 backdrop-blur md:block">
+        <FeedTabs withFollowing={!!account} className="h-full" />
       </div>
       {/* Mise en avant hors du fil, en tête et seulement sans filtre */}
       {topCampaign && (
@@ -106,31 +89,6 @@ export async function FeedView({
         />
       )}
     </div>
-  );
-}
-
-function FeedTab({
-  href,
-  active,
-  children,
-}: {
-  href: string;
-  active: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <Link
-      href={href}
-      aria-current={active ? "page" : undefined}
-      className={cn(
-        "-mb-px border-b-2 pb-2 text-sm font-semibold outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
-        active
-          ? "border-foreground text-foreground"
-          : "border-transparent text-muted-foreground hover:text-foreground",
-      )}
-    >
-      {children}
-    </Link>
   );
 }
 

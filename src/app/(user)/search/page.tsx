@@ -1,4 +1,8 @@
-import { MagnifyingGlassMinusIcon } from "@/shared/components/icons";
+import {
+  ArrowLeftIcon,
+  MagnifyingGlassMinusIcon,
+} from "@/shared/components/icons";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
@@ -11,6 +15,7 @@ import {
   type Period,
 } from "@/modules/events";
 import { searchEvents } from "@/modules/events/server";
+import { buttonVariants } from "@/shared/ui/button";
 import { ContentSkeleton } from "@/shared/components/layout/ContentSkeleton";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -25,6 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
  */
 async function AdminSearch({ searchParams }: PageProps<"/search">) {
   const t = await getTranslations("search");
+  const back = (await getTranslations("common"))("back");
   const params = await searchParams;
   const text = typeof params.q === "string" ? params.q : "";
   const raw = typeof params.period === "string" ? params.period : "";
@@ -41,8 +47,22 @@ async function AdminSearch({ searchParams }: PageProps<"/search">) {
   return (
     <div className="mx-auto grid max-w-7xl gap-4 px-4 pt-4 md:pt-6">
       <h1 className="sr-only">{t("title")}</h1>
-      <div className="mx-auto w-full max-w-2xl">
-        <SearchBar value={text} />
+      {/* On arrive ici par la loupe de l'en-tête : retour au fil */}
+      <div className="mx-auto flex w-full max-w-2xl items-center gap-2">
+        <Link
+          href="/"
+          aria-label={back}
+          className={buttonVariants({
+            variant: "ghost",
+            size: "icon-lg",
+            className: "-ml-2 shrink-0 rounded-full",
+          })}
+        >
+          <ArrowLeftIcon className="size-6" />
+        </Link>
+        <div className="min-w-0 flex-1">
+          <SearchBar value={text} />
+        </div>
       </div>
       <FilterChips period={period} categories={categories} />
       <p role="status" className="text-sm text-muted-foreground">
