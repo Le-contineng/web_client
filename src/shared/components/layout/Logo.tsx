@@ -23,7 +23,7 @@ export function Logo({ compact = false }: { compact?: boolean }) {
         className="h-8 w-auto"
       />
       {!compact && (
-        <span aria-hidden className="text-lg font-medium">
+        <span aria-hidden className="text-xl font-medium">
           Le Conti<span className="text-brand">neng</span>
         </span>
       )}

@@ -1,8 +1,6 @@
 import { Suspense } from "react";
 import { NotificationBell } from "@/modules/notifications";
-import { LanguageSwitcher } from "@/shared/components/LanguageSwitcher";
-import { changeLanguageAction } from "@/modules/profiles/application/profiles.actions";
-import { ThemeSwitcher } from "@/shared/components/ThemeSwitcher";
+import { DotsThreeIcon } from "@/shared/components/icons";
 import { Logo } from "@/shared/components/layout/Logo";
 import { buttonVariants } from "@/shared/ui/button";
 import { Skeleton } from "@/shared/ui/skeleton";
@@ -19,8 +17,15 @@ async function MobileHeaderActions() {
     <NotificationBell initialUnread={unread} actions={notificationActions} />
   ) : (
     <>
-      <ThemeSwitcher />
-      <LanguageSwitcher change={changeLanguageAction} />
+      {/* Thème et langue dans « Plus » : à côté du nom de l'application, ils
+          feraient déborder l'en-tête d'un téléphone */}
+      <a
+        href="/more"
+        aria-label={t("nav.more")}
+        className={buttonVariants({ variant: "ghost", size: "icon" })}
+      >
+        <DotsThreeIcon className="size-6" />
+      </a>
       {/* Lien classique : sur téléphone, la connexion s'ouvre en page entière,
           pas en modal (src/app/@auth) */}
       <a href="/login" className={buttonVariants({ size: "sm" })}>
@@ -31,16 +36,16 @@ async function MobileHeaderActions() {
 }
 
 /**
- * En-tête sur téléphone, sur l'accueil seulement : logo (sans le nom, faute
- * de place), puis notifications (ou thème, langue et connexion pour un
- * visiteur). Sans bordure ; il s'efface au défilement vers le bas.
+ * En-tête sur téléphone, sur l'accueil seulement : logo et nom de
+ * l'application, puis notifications (ou « Plus », avec le thème et la
+ * langue, et la connexion pour un visiteur). Sans bordure ; il s'efface au
+ * défilement vers le bas.
  */
 export function MobileHeader() {
   return (
     <AutoHideHeader>
       <div className="flex h-14 items-center gap-2 px-3 sm:px-4">
-        {/* Logo seul : le nom de l'application ferait déborder l'en-tête. */}
-        <Logo compact />
+        <Logo />
         <div className="ml-auto flex min-w-0 items-center gap-1">
           <Suspense fallback={<Skeleton className="size-8 rounded-full" />}>
             <MobileHeaderActions />
