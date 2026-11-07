@@ -34,6 +34,8 @@ export const getEventPosts = cache((eventId: string) =>
   eventsApi.listPosts(eventId),
 );
 export const listMorePosts = eventsApi.listPosts;
+export const publishPost = eventsApi.publishPost;
+export const deletePost = eventsApi.deletePost;
 
 // ——— Épinglage éditorial (admins, ADR 0020 du backend) ———
 export const pinEvent = eventsApi.pin;

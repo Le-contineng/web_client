@@ -87,7 +87,14 @@
     "targetNotFound": "Target not found",
     "invalidImage": "Image refused: upload it again",
     "campaignNotFound": "Campaign not found",
-    "tooLong": "Text too long"
+    "tooLong": "Text too long",
+    "imagesRequired": "Add at least one photo.",
+    "tooManyImages": "At most 10 photos per post.",
+    "photoNotUploaded": "A photo has not finished uploading: try again.",
+    "duplicatePhoto": "The same photo appears twice.",
+    "captionTooLong": "The caption is longer than 2,200 characters.",
+    "altTooLong": "The text alternative is longer than 500 characters.",
+    "postNotFound": "This post no longer exists."
   },
   "nav": {
     "home": "Home",
@@ -648,6 +655,31 @@
     "previous": "Previous image",
     "next": "Next image",
     "seeMore": "more",
-    "backToEvent": "See the event"
+    "backToEvent": "See the event",
+    "newPost": "New post",
+    "delete": "Delete the post",
+    "deleteTitle": "Delete this post?",
+    "deleteDescription": "The post and its photos will be deleted for everyone. This cannot be undone.",
+    "deleteConfirm": "Delete",
+    "deleted": "Post deleted",
+    "notAllowed": "Only members of the organizing page can post on this event.",
+    "closed": "You can no longer post on a past or cancelled event.",
+    "composer": {
+      "title": "New post",
+      "photos": "Photos ({count}/{max})",
+      "photoAlt": "Photo {index}",
+      "addPhotos": "Add",
+      "uploading": "Uploading…",
+      "retry": "Retry",
+      "remove": "Remove photo {index}",
+      "moveBefore": "Move photo {index} earlier",
+      "moveAfter": "Move photo {index} later",
+      "tooMany": "At most {max} photos per post.",
+      "caption": "Caption (optional)",
+      "captionPlaceholder": "Tell what is happening…",
+      "publish": "Publish",
+      "waitUploads": "Uploading photos…",
+      "published": "Post published"
+    }
   }
 }

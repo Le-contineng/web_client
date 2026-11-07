@@ -20,6 +20,16 @@ export type EventPost = {
   publishedAt: string;
 };
 
+/** Limites d'un post, les mêmes que l'API (ADR 0029 du backend). */
+export const MAX_POST_IMAGES = 10;
+export const MAX_CAPTION = 2200;
+
+/** Corps envoyé à l'API pour publier un post. */
+export type PostPayload = {
+  caption: string | null;
+  images: { url: string; alt: string | null }[];
+};
+
 /** Résumé joint à l'événement, pour la tuile « Posts ». */
 export type EventPostSummary = {
   count: number;

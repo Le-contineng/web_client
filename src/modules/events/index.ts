@@ -32,6 +32,7 @@ export {
   type PostPage,
 } from "@/modules/events/domain/event-post";
 export { EventPostFeed } from "@/modules/events/presentation/components/EventPostFeed";
+export { PostComposer } from "@/modules/events/presentation/components/PostComposer";
 export { MarkPostsSeen } from "@/modules/events/presentation/components/PostTile";
 export { SearchBar } from "@/modules/events/presentation/components/SearchBar";
 export { FilterChips } from "@/modules/events/presentation/components/FilterChips";

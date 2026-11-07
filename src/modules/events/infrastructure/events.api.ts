@@ -6,7 +6,11 @@ import type {
   EventView,
   InterestState,
 } from "@/modules/events/domain/event-view.types";
-import type { PostPage } from "@/modules/events/domain/event-post";
+import type {
+  EventPost,
+  PostPage,
+  PostPayload,
+} from "@/modules/events/domain/event-post";
 
 /** Corps d'un événement envoyé à l'API (publication et modification). */
 export type EventPayload = {
@@ -77,6 +81,21 @@ export const eventsApi = {
         `/api/v1/events/${encodeURIComponent(eventId)}/posts${
           cursor ? `?cursor=${encodeURIComponent(cursor)}` : ""
         }`,
+      ),
+    ),
+  /** Publication d'un post au nom de la page organisatrice (ADR 0029 du backend). */
+  publishPost: (pageId: string, eventId: string, body: PostPayload) =>
+    withTranslatedErrors(() =>
+      api<EventPost>(
+        `/api/v1/pages/${pageId}/events/${encodeURIComponent(eventId)}/posts`,
+        { body },
+      ),
+    ),
+  deletePost: (pageId: string, eventId: string, postId: string) =>
+    withTranslatedErrors(() =>
+      api<void>(
+        `/api/v1/pages/${pageId}/events/${encodeURIComponent(eventId)}/posts/${encodeURIComponent(postId)}`,
+        { method: "DELETE" },
       ),
     ),
   /** Épinglage éditorial en tête du fil, réservé aux admins (ADR 0020 du backend). */

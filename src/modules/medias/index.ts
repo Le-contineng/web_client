@@ -6,4 +6,7 @@ export {
   PHOTO_TYPES,
   type PhotoError,
 } from "@/modules/medias/domain/photo";
-export { usePhotoUpload } from "@/modules/medias/presentation/hooks/usePhotoUpload";
+export {
+  uploadPhoto,
+  usePhotoUpload,
+} from "@/modules/medias/presentation/hooks/usePhotoUpload";

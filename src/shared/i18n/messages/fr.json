@@ -87,7 +87,14 @@
     "targetNotFound": "Cible introuvable",
     "invalidImage": "Image refusée : envoie-la à nouveau",
     "campaignNotFound": "Campagne introuvable",
-    "tooLong": "Texte trop long"
+    "tooLong": "Texte trop long",
+    "imagesRequired": "Ajoutez au moins une photo.",
+    "tooManyImages": "10 photos au plus par post.",
+    "photoNotUploaded": "Une photo n'a pas fini son envoi : réessayez.",
+    "duplicatePhoto": "La même photo apparaît deux fois.",
+    "captionTooLong": "La légende dépasse 2 200 caractères.",
+    "altTooLong": "Le texte alternatif dépasse 500 caractères.",
+    "postNotFound": "Ce post n'existe plus."
   },
   "nav": {
     "home": "Accueil",
@@ -648,6 +655,31 @@
     "previous": "Image précédente",
     "next": "Image suivante",
     "seeMore": "plus",
-    "backToEvent": "Voir l'événement"
+    "backToEvent": "Voir l'événement",
+    "newPost": "Nouveau post",
+    "delete": "Supprimer le post",
+    "deleteTitle": "Supprimer ce post ?",
+    "deleteDescription": "Le post et ses photos seront supprimés pour tout le monde. Cette action est définitive.",
+    "deleteConfirm": "Supprimer",
+    "deleted": "Post supprimé",
+    "notAllowed": "Seuls les membres de la page organisatrice peuvent publier un post sur cet événement.",
+    "closed": "On ne peut plus publier sur un événement passé ou annulé.",
+    "composer": {
+      "title": "Nouveau post",
+      "photos": "Photos ({count}/{max})",
+      "photoAlt": "Photo {index}",
+      "addPhotos": "Ajouter",
+      "uploading": "Envoi…",
+      "retry": "Réessayer",
+      "remove": "Retirer la photo {index}",
+      "moveBefore": "Placer la photo {index} avant",
+      "moveAfter": "Placer la photo {index} après",
+      "tooMany": "{max} photos au plus par post.",
+      "caption": "Légende (facultative)",
+      "captionPlaceholder": "Racontez ce qui se passe…",
+      "publish": "Publier",
+      "waitUploads": "Envoi des photos…",
+      "published": "Post publié"
+    }
   }
 }

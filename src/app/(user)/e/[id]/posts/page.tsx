@@ -1,9 +1,10 @@
-import { CalendarXIcon } from "@/shared/components/icons";
+import { CalendarXIcon, PlusIcon } from "@/shared/components/icons";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
-import { EventPostFeed, MarkPostsSeen } from "@/modules/events";
+import { EventPostFeed, isEditable, MarkPostsSeen } from "@/modules/events";
+import { getMyPageById } from "@/modules/pages/server";
 import { getEventById, getEventPosts } from "@/modules/events/server";
 import { BackBar } from "@/shared/components/layout/BackBar";
 import { ContentSkeleton } from "@/shared/components/layout/ContentSkeleton";
@@ -42,6 +43,10 @@ async function EventPostsPage({ params }: PageProps<"/e/[id]/posts">) {
     );
   }
 
+  // Les membres de la page publient et suppriment ; l'API revérifie chaque action
+  const isOrganizer = (await getMyPageById(event.organizerPageId)) !== null;
+  const canPublish = isOrganizer && isEditable(event, new Date());
+
   return (
     <div className="mx-auto w-full max-w-xl pb-10 md:pt-8">
       <BackBar title={t("posts.title")} fallback={`/e/${event.id}`} />
@@ -51,17 +56,28 @@ async function EventPostsPage({ params }: PageProps<"/e/[id]/posts">) {
       />
       <header className="grid gap-1 px-4 py-4 sm:px-0">
         <h1 className="text-xl leading-tight font-semibold">{event.name}</h1>
-        <Link
-          href={`/e/${event.id}`}
-          className="text-sm text-brand hover:underline"
-        >
-          {t("posts.backToEvent")}
-        </Link>
+        <div className="flex items-center justify-between gap-3">
+          <Link
+            href={`/e/${event.id}`}
+            className="text-sm text-brand hover:underline"
+          >
+            {t("posts.backToEvent")}
+          </Link>
+          {canPublish && (
+            <Link
+              href={`/e/${event.id}/posts/new`}
+              className={buttonVariants({ size: "sm" })}
+            >
+              <PlusIcon /> {t("posts.newPost")}
+            </Link>
+          )}
+        </div>
       </header>
       <EventPostFeed
         eventId={event.id}
         organizer={event.organizer}
         initial={page ?? { posts: [], nextCursor: null }}
+        manage={isOrganizer}
       />
     </div>
   );

@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { loadMorePostsAction } from "@/modules/events/application/posts.actions";
 import type { EventPost, PostPage } from "@/modules/events/domain/event-post";
 import type { PageSummary } from "@/modules/events/domain/event-view.types";
+import { DeletePostButton } from "@/modules/events/presentation/components/DeletePostButton";
 import { PostCarousel } from "@/modules/events/presentation/components/PostCarousel";
 import { PublicationDate } from "@/modules/events/presentation/components/PublicationDate";
 import { ImagesIcon } from "@/shared/components/icons";
@@ -20,10 +21,13 @@ export function EventPostFeed({
   eventId,
   organizer,
   initial,
+  manage = false,
 }: {
   eventId: string;
   organizer: PageSummary;
   initial: PostPage;
+  /** Membre de la page organisatrice : peut supprimer les posts. */
+  manage?: boolean;
 }) {
   const t = useTranslations("posts");
   const errors = useTranslations("errors");
@@ -62,6 +66,13 @@ export function EventPostFeed({
           post={post}
           organizer={organizer}
           priority={i === 0}
+          onDelete={
+            manage
+              ? () =>
+                  setPosts((current) => current.filter((p) => p.id !== post.id))
+              : undefined
+          }
+          eventId={eventId}
         />
       ))}
       {cursor && (
@@ -82,10 +93,15 @@ function PostItem({
   post,
   organizer,
   priority,
+  eventId,
+  onDelete,
 }: {
   post: EventPost;
   organizer: PageSummary;
   priority: boolean;
+  eventId: string;
+  /** Présent pour les membres de la page : bouton de suppression. */
+  onDelete?: () => void;
 }) {
   const t = useTranslations("posts");
   const [expanded, setExpanded] = useState(false);
@@ -107,6 +123,14 @@ function PostItem({
             className="truncate text-xs text-muted-foreground"
           />
         </div>
+        {onDelete && (
+          <DeletePostButton
+            pageId={organizer.id}
+            eventId={eventId}
+            postId={post.id}
+            onDeleted={onDelete}
+          />
+        )}
       </header>
       <PostCarousel images={post.images} priority={priority} />
       {post.caption && (
