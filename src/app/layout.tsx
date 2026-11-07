@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Quicksand } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { clientEnv } from "@/shared/config/env.client";
@@ -11,11 +11,12 @@ import { Providers } from "./providers";
 import "./globals.css";
 
 /**
- * Police de toute l'interface (titres et texte) : Quicksand, arrondie et douce. Next.js ajuste
- * une police de repli du système à ses mesures, pour éviter tout décalage au
- * chargement.
+ * Police de toute l'interface (titres et texte) : Space Grotesk, seule famille
+ * de la charte graphique (SIL OFL), variable de 300 à 700 (la charte n'en va
+ * jamais au-delà). Next.js l'héberge avec le site et ajuste une police de
+ * repli du système à ses mesures, pour éviter tout décalage au chargement.
  */
-const quicksand = Quicksand({
+const spaceGrotesk = Space_Grotesk({
   variable: "--font-sans",
   subsets: ["latin"],
 });
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
   // Application ajoutée à l'écran d'accueil d'un iPhone : plein écran, nom court
   appleWebApp: {
     capable: true,
-    title: "Contineng",
+    title: "Le Contineng",
     statusBarStyle: "default",
   },
 };
@@ -55,7 +56,7 @@ export default function RootLayout({
       lang="fr"
       // La classe `dark` est posée par le script du thème avant React.
       suppressHydrationWarning
-      className={`${quicksand.variable} h-full antialiased`}
+      className={`${spaceGrotesk.variable} h-full antialiased`}
     >
       <head>
         {/* Thème appliqué avant le premier affichage (pas de flash clair). */}

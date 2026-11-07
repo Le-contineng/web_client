@@ -163,6 +163,67 @@ const evenements = [
   ),
 ];
 
+// Posts des événements (ADR 0023 du client) : carrousels de photos publiques
+// au format 4:5, du plus récent au plus ancien, servis par pages de 2.
+const photo = (id) => ({
+  url: `https://images.unsplash.com/photo-${id}?w=1080&h=1350&q=80&auto=format&fit=crop`,
+  width: 1080,
+  height: 1350,
+  placeholder: null,
+  alt: null,
+});
+const ETUDIANTS = "1517486808906-6ca8b3f04846";
+const ATELIER = "1544928147-79a2dbc1f389";
+const FOULE = "1509824227185-9c5a01ceba0d";
+const SALLE = "1574391884720-bbc3740c59d1";
+const BALLON = "1579952363873-27f3bade9f55";
+const FRAPPE = "1560272564-c83b66b1ad12";
+const posts = {
+  integ2026: [
+    {
+      id: "integ-p3",
+      caption: "Les stands sont installés, on vous attend dans la cour !",
+      images: [photo(ETUDIANTS), photo(ATELIER), photo(FOULE)],
+      publishedAt: iso(maintenant - 20 * 60_000),
+    },
+    {
+      id: "integ-p2",
+      caption:
+        "Programme de l'après-midi : parcours des associations à 14 h, quiz du campus à 16 h, puis soirée de clôture au foyer. Pensez à votre carte étudiante, elle sera demandée à l'entrée de chaque atelier et pour la tombola de fin de journée.",
+      images: [photo(SALLE)],
+      publishedAt: iso(maintenant - 3 * HEURE),
+    },
+    {
+      id: "integ-p1",
+      caption: null,
+      images: [photo(ATELIER), photo(ETUDIANTS)],
+      publishedAt: iso(maintenant - JOUR),
+    },
+  ],
+  derby4fc: [
+    {
+      id: "derby-p1",
+      caption: "Dernier entraînement avant le derby.",
+      images: [photo(FRAPPE), photo(BALLON)],
+      publishedAt: iso(maintenant - 2 * HEURE),
+    },
+  ],
+};
+const POSTS_PAR_PAGE = 2;
+function pagePosts(eventId, curseur) {
+  const tous = posts[eventId] ?? [];
+  const debut = Number(curseur ?? 0) || 0;
+  const fin = debut + POSTS_PAR_PAGE;
+  return {
+    posts: tous.slice(debut, fin),
+    nextCursor: fin < tous.length ? String(fin) : null,
+  };
+}
+const resumePosts = (eventId) => {
+  const tous = posts[eventId] ?? [];
+  return { count: tous.length, latestAt: tous[0]?.publishedAt ?? null };
+};
+
 /** Période calculée comme l'API : sans fin, l'événement dure jusqu'à minuit UTC. */
 function periode(e, instant = Date.now()) {
   const debut = Date.parse(e.startsAt);
@@ -179,6 +240,7 @@ const reponse = (e) => {
     ...e,
     period: periode(e),
     organizer: { id: p.id, slug: p.slug, name: p.name, photoUrl: p.photoUrl },
+    posts: resumePosts(e.id),
   };
 };
 
@@ -256,6 +318,15 @@ createServer((req, res) => {
     return e
       ? envoyer(res, 200, reponse(e))
       : probleme(res, 404, "eventNotFound");
+  }
+  if (
+    req.method === "GET" &&
+    (m = chemin.match(/^\/api\/v1\/events\/([^/]+)\/posts$/))
+  ) {
+    const id = decodeURIComponent(m[1]);
+    if (!evenements.some((x) => x.id === id))
+      return probleme(res, 404, "eventNotFound");
+    return envoyer(res, 200, pagePosts(id, url.searchParams.get("cursor")));
   }
   if (req.method === "GET" && chemin === "/api/v1/pages")
     return envoyer(res, 200, pages);

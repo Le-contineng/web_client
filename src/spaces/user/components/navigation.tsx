@@ -54,6 +54,7 @@ export const getNavigation = cache(async () => {
       ? [
           {
             href: "/my-pages",
+            also: ["/studio"],
             icon: <SquaresFourIcon />,
             activeIcon: <SquaresFourIcon weight="fill" />,
             label: t("nav.myPages"),

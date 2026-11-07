@@ -1,4 +1,8 @@
-import { CalendarXIcon, PencilSimpleIcon } from "@/shared/components/icons";
+import {
+  CalendarXIcon,
+  PencilSimpleIcon,
+  PlusIcon,
+} from "@/shared/components/icons";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
@@ -121,7 +125,13 @@ async function EventPage({ params }: PageProps<"/e/[id]">) {
           editable && (
             <>
               <Link
-                href={`/e/${event.id}/edit`}
+                href={`/studio/${event.organizer.slug}/evenements/${event.id}/post`}
+                className={buttonVariants({ variant: "ghost" })}
+              >
+                <PlusIcon /> {t("posts.newPost")}
+              </Link>
+              <Link
+                href={`/studio/${event.organizer.slug}/evenements/${event.id}/modifier`}
                 className={buttonVariants({ variant: "ghost" })}
               >
                 <PencilSimpleIcon /> {t("events.edit")}

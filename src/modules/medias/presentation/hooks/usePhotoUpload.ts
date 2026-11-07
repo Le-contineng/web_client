@@ -38,21 +38,12 @@ export function usePhotoUpload() {
       return;
     }
     setState({ status: "uploading" });
-    try {
-      const photo = await preparePhoto(file);
-      const result = await send(photo);
-      setState(
-        result.ok
-          ? { status: "done", url: result.value }
-          : { status: "error", error: result.error },
-      );
-    } catch (error) {
-      setState({
-        status: "error",
-        error:
-          error instanceof PhotoPreparationError ? error.code : "uploadFailed",
-      });
-    }
+    const result = await uploadPhoto(file);
+    setState(
+      result.ok
+        ? { status: "done", url: result.value }
+        : { status: "error", error: result.error },
+    );
   }
 
   return {
@@ -62,6 +53,26 @@ export function usePhotoUpload() {
     url: state.status === "done" ? state.url : null,
     error: state.status === "error" ? state.error : null,
   };
+}
+
+/**
+ * Le même envoi, hors d'un hook : pour plusieurs photos à la fois (carrousel
+ * d'un post). Renvoie l'adresse de la photo, ou le code de l'échec.
+ */
+export async function uploadPhoto(
+  file: File,
+): Promise<{ ok: true; value: string } | { ok: false; error: string }> {
+  const invalid = checkSource(file);
+  if (invalid) return { ok: false, error: invalid };
+  try {
+    return await send(await preparePhoto(file));
+  } catch (error) {
+    return {
+      ok: false,
+      error:
+        error instanceof PhotoPreparationError ? error.code : "uploadFailed",
+    };
+  }
 }
 
 async function send(

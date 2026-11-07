@@ -11,11 +11,17 @@ import { cn } from "@/shared/lib/utils";
 export function DateTile({
   iso,
   size = "md",
+  tone = "brand",
   className,
 }: {
   iso: string;
   /** « sm » : tuile réduite de la carte du fil. */
   size?: "md" | "sm";
+  /**
+   * « ink » : mois en gris sur papier blanc, pour les listes de gestion où la
+   * bande fuchsia se répéterait à chaque ligne.
+   */
+  tone?: "brand" | "ink";
   className?: string;
 }) {
   const mounted = useMounted();
@@ -39,7 +45,10 @@ export function DateTile({
     >
       <span
         className={cn(
-          "bg-primary font-bold tracking-wider text-primary-foreground",
+          "font-bold tracking-wider",
+          tone === "brand"
+            ? "bg-primary text-primary-foreground"
+            : "border-b bg-muted text-muted-foreground",
           size === "sm" ? "py-1 text-[10px]" : "py-1.5 text-[11px]",
         )}
       >

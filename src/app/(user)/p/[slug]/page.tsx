@@ -60,13 +60,13 @@ async function PublicPage({ params }: PageProps<"/p/[slug]">) {
               <>
                 {membership.role === "owner" && (
                   <Link
-                    href={`/my-pages/${page.slug}/edit`}
+                    href={`/studio/${page.slug}/profil`}
                     className={secondary}
                   >
                     {t("pages.edit.action")}
                   </Link>
                 )}
-                <Link href={`/my-pages/${page.slug}`} className={secondary}>
+                <Link href={`/studio/${page.slug}`} className={secondary}>
                   {t("pages.myPages.manage")}
                 </Link>
               </>

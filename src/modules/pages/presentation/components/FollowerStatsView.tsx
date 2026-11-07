@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useFormatter, useTranslations } from "next-intl";
-import { cn } from "@/shared/lib/utils";
+import { SEGMENT, SEGMENTED } from "@/shared/components/form-kit";
 import {
   FOLLOWER_STATS_PERIODS,
   type FollowerStats,
@@ -31,6 +31,9 @@ export function FollowerStatsView({
   const moved = stats.days.filter((d) => d.gained || d.lost).reverse();
   const first = stats.days[0];
   const last = stats.days.at(-1);
+  // « +3 », mais « 0 » plutôt que « +0 » ou « −0 »
+  const signed = (n: number, sign: string) =>
+    n ? `${sign}${format.number(n)}` : format.number(0);
   const day = (date: string) =>
     format.dateTime(new Date(`${date}T00:00:00Z`), {
       day: "numeric",
@@ -39,20 +42,16 @@ export function FollowerStatsView({
     });
 
   return (
-    <div className="grid gap-5 px-4 pb-4 sm:px-0">
+    <div className="grid gap-5">
       <p className="text-sm text-muted-foreground">{t("intro")}</p>
 
-      <nav aria-label={t("period")} className="flex flex-wrap gap-2">
+      <nav aria-label={t("period")} className={SEGMENTED}>
         {FOLLOWER_STATS_PERIODS.map((p) => (
           <Link
             key={p}
             href={`${basePath}?days=${p}`}
             aria-current={p === period ? "page" : undefined}
-            className={cn(
-              "rounded-full border px-3 py-1 text-xs font-medium text-muted-foreground hover:text-foreground",
-              p === period &&
-                "border-foreground bg-foreground text-background hover:text-background",
-            )}
+            className={SEGMENT}
           >
             {p === 365 ? t("year") : t("days", { count: p })}
           </Link>
@@ -61,11 +60,13 @@ export function FollowerStatsView({
 
       <dl className="grid grid-cols-3 gap-3">
         <Figure label={t("total")} value={format.number(stats.total)} />
-        <Figure label={t("gained")} value={`+${format.number(stats.gained)}`} />
-        <Figure label={t("lost")} value={`−${format.number(stats.lost)}`} />
+        <Figure label={t("gained")} value={signed(stats.gained, "+")} />
+        <Figure label={t("lost")} value={signed(stats.lost, "−")} />
       </dl>
 
-      {first && last && (
+      {/* Courbe seulement s'il s'est passé quelque chose : une ligne plate
+          dans un cadre gris ne dit rien */}
+      {first && last && moved.length > 0 && (
         <figure className="grid gap-1">
           <TotalChart
             days={stats.days}
@@ -83,7 +84,7 @@ export function FollowerStatsView({
       )}
 
       {moved.length ? (
-        <details className="rounded-xl border p-4 text-sm">
+        <details className="rounded-xl bg-muted p-4 text-sm">
           <summary className="cursor-pointer font-medium">
             {t("details")}
           </summary>
@@ -119,9 +120,7 @@ export function FollowerStatsView({
           </table>
         </details>
       ) : (
-        <p className="rounded-xl border bg-muted/40 p-4 text-sm text-muted-foreground">
-          {t("empty")}
-        </p>
+        <p className="text-sm text-muted-foreground">{t("empty")}</p>
       )}
     </div>
   );
@@ -129,7 +128,7 @@ export function FollowerStatsView({
 
 function Figure({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border p-3 text-center">
+    <div className="rounded-xl bg-muted p-3 text-center">
       <dt className="text-xs text-muted-foreground">{label}</dt>
       <dd className="text-xl font-semibold tabular-nums">{value}</dd>
     </div>
@@ -160,7 +159,7 @@ function TotalChart({
       preserveAspectRatio="none"
       role="img"
       aria-label={label}
-      className="h-40 w-full rounded-xl border bg-muted/20"
+      className="h-40 w-full rounded-xl bg-muted"
     >
       <polygon
         points={`0,${HEIGHT} ${line} ${WIDTH},${HEIGHT}`}

@@ -85,7 +85,7 @@ export async function updatePageAction(
   if (!result.ok) return result.state;
   revalidatePath("/my-pages", "layout");
   revalidatePath(`/p/${page.slug}`);
-  redirect(`/my-pages/${page.slug}?msg=pageUpdated`);
+  redirect(`/studio/${page.slug}/profil?msg=pageUpdated`);
 }
 
 export async function withdrawPageRequestAction(

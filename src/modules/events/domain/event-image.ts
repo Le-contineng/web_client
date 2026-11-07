@@ -81,3 +81,14 @@ export function feedImageRatio(layout: PhotoLayout | null): number {
   const ratio = layout.width / layout.height;
   return Math.min(FEED_MAX_RATIO, Math.max(FEED_MIN_RATIO, ratio));
 }
+
+/**
+ * Cadre du carrousel d'un post (ADR 0023) : les proportions de la première
+ * image, bornées comme dans le fil ; les suivantes y sont recadrées.
+ */
+export function carouselRatio(
+  images: { width: number; height: number }[],
+): number {
+  const first = images[0];
+  return feedImageRatio(first ? { ...first, placeholder: null } : null);
+}

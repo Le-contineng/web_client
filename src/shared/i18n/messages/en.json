@@ -87,7 +87,14 @@
     "targetNotFound": "Target not found",
     "invalidImage": "Image refused: upload it again",
     "campaignNotFound": "Campaign not found",
-    "tooLong": "Text too long"
+    "tooLong": "Text too long",
+    "imagesRequired": "Add at least one photo.",
+    "tooManyImages": "At most 10 photos per post.",
+    "photoNotUploaded": "A photo has not finished uploading: try again.",
+    "duplicatePhoto": "The same photo appears twice.",
+    "captionTooLong": "The caption is longer than 2,200 characters.",
+    "altTooLong": "The text alternative is longer than 500 characters.",
+    "postNotFound": "This post no longer exists."
   },
   "nav": {
     "home": "Home",
@@ -223,7 +230,8 @@
       "bio": "Bio",
       "linkKept": "The link /p/{slug} stays the same, even with a new name.",
       "saved": "Page updated",
-      "ownerOnly": "Only the page owner can edit it."
+      "ownerOnly": "Only the page owner can edit it.",
+      "changePhoto": "Change photo"
     },
     "stats": {
       "events": "{n, plural, one {post} other {posts}}",
@@ -340,7 +348,12 @@
       "leaveDescription": "What you entered will be lost.",
       "leaveConfirm": "Discard",
       "leaveCancel": "Keep editing",
-      "previewUnavailable": "Preview unavailable for this format. Prefer a JPEG, PNG or WebP photo."
+      "previewUnavailable": "Preview unavailable for this format. Prefer a JPEG, PNG or WebP photo.",
+      "when": "When",
+      "posterLabel": "Poster (optional)",
+      "descriptionLabel": "Description (optional)",
+      "stepEssentials": "The essentials",
+      "stepDetails": "What makes people come"
     },
     "interest": "Interested"
   },
@@ -635,5 +648,94 @@
     "details": "Details",
     "notFound": "This announcement is no longer available",
     "backToList": "See events"
+  },
+  "posts": {
+    "tile": "Posts",
+    "tileLabel": "{count, plural, one {# post} other {# posts}} from this event",
+    "new": "new",
+    "title": "Posts",
+    "empty": "No posts yet.",
+    "loadMore": "See more posts",
+    "carousel": "{count, plural, one {# image} other {# images}}",
+    "imageOf": "Image {index} of {count}",
+    "previous": "Previous image",
+    "next": "Next image",
+    "seeMore": "more",
+    "backToEvent": "See the event",
+    "newPost": "New post",
+    "delete": "Delete the post",
+    "deleteTitle": "Delete this post?",
+    "deleteDescription": "The post and its photos will be deleted for everyone. This cannot be undone.",
+    "deleteConfirm": "Delete",
+    "deleted": "Post deleted",
+    "notAllowed": "Only members of the organizing page can post on this event.",
+    "closed": "You can no longer post on a past or cancelled event.",
+    "composer": {
+      "title": "New post",
+      "photos": "Photos ({count}/{max})",
+      "photoAlt": "Photo {index}",
+      "addPhotos": "Add",
+      "uploading": "Uploading…",
+      "retry": "Retry",
+      "remove": "Remove photo {index}",
+      "moveBefore": "Move photo {index} earlier",
+      "moveAfter": "Move photo {index} later",
+      "tooMany": "At most {max} photos per post.",
+      "caption": "Caption (optional)",
+      "captionPlaceholder": "Tell what is happening…",
+      "publish": "Publish",
+      "waitUploads": "Uploading photos…",
+      "published": "Post published"
+    }
+  },
+  "studio": {
+    "title": "Manage {name}",
+    "switchPage": "Switch page (currently {name})",
+    "allPages": "All my pages",
+    "publish": "Publish",
+    "viewPublic": "View public page",
+    "sectionsLabel": "Organizer space sections",
+    "tabsLabel": "Events by state",
+    "sections": {
+      "events": "Events",
+      "audience": "Audience",
+      "team": "Team",
+      "page": "Page"
+    },
+    "tabs": {
+      "upcoming": "Upcoming",
+      "ongoing": "Ongoing",
+      "past": "Past",
+      "cancelled": "Cancelled"
+    },
+    "badges": {
+      "ongoing": "Live"
+    },
+    "stats": {
+      "interested": "interested",
+      "views": "{count, plural, one {view} other {views}}",
+      "posts": "{count, plural, one {post} other {posts}}"
+    },
+    "actions": {
+      "menu": "Actions for {name}",
+      "view": "View event",
+      "posts": "View posts",
+      "edit": "Edit",
+      "newPost": "New post",
+      "cancel": "Cancel event"
+    },
+    "empty": {
+      "upcoming": "No upcoming events. Publish the next one: it will show in the whole school's feed.",
+      "ongoing": "Nothing happening right now.",
+      "past": "Finished events will show here, with their numbers.",
+      "cancelled": "No cancelled events.",
+      "publish": "Publish an event"
+    },
+    "taskBack": "{page} · {section}",
+    "task": {
+      "newEvent": "Publish an event",
+      "editEvent": "Edit event"
+    },
+    "ownerOnlyTeam": "Only the page owner manages its team."
   }
 }

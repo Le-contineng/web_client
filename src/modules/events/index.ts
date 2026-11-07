@@ -25,6 +25,15 @@ export {
   matchesSearch,
   SEARCH_MAX_LENGTH,
 } from "@/modules/events/domain/search";
+export {
+  type EventPost,
+  type EventPostSummary,
+  type PostImage,
+  type PostPage,
+} from "@/modules/events/domain/event-post";
+export { EventPostFeed } from "@/modules/events/presentation/components/EventPostFeed";
+export { PostComposer } from "@/modules/events/presentation/components/PostComposer";
+export { MarkPostsSeen } from "@/modules/events/presentation/components/PostTile";
 export { SearchBar } from "@/modules/events/presentation/components/SearchBar";
 export { FilterChips } from "@/modules/events/presentation/components/FilterChips";
 export {
@@ -36,6 +45,15 @@ export {
   DEFAULT_IMAGE,
 } from "@/modules/events/presentation/components/EventCard";
 export { EventDate } from "@/modules/events/presentation/components/EventDate";
+export {
+  countByTab,
+  eventsOfTab,
+  MANAGEMENT_TABS,
+  type ManagementTab,
+  readManagementTab,
+} from "@/modules/events/domain/event-management";
+export { DateTile } from "@/modules/events/presentation/components/DateTile";
+export { EventTime } from "@/modules/events/presentation/components/EventTime";
 export { CancelEventDialog } from "@/modules/events/presentation/components/CancelEventDialog";
 export { EventDetails } from "@/modules/events/presentation/components/EventDetails";
 export {

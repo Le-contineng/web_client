@@ -10,9 +10,14 @@ import { PageTitle } from "@/shared/components/layout/PageTitle";
 import { ContentSkeleton } from "@/shared/components/layout/ContentSkeleton";
 
 /** « Mes pages » : les pages dont on est membre, point d'entrée de leur gestion (US-06, US-39). */
-async function MyPages() {
+async function MyPages({ searchParams }: PageProps<"/my-pages">) {
   const user = await getCurrentUser();
   if (!user) redirect("/login?returnTo=/my-pages");
+  // Une seule page : on va directement à son espace (sauf « Toutes mes pages »)
+  const only = user.pages.length === 1 ? user.pages[0] : undefined;
+  if (only && (await searchParams).all === undefined) {
+    redirect(`/studio/${encodeURIComponent(only.slug)}`);
+  }
   const t = await getTranslations();
   return (
     <div className="mx-auto grid max-w-2xl gap-4 px-4 pt-6 md:pt-10">
@@ -27,7 +32,7 @@ async function MyPages() {
       ) : (
         <MemberPageList
           pages={user.pages}
-          link={(p) => `/my-pages/${encodeURIComponent(p.slug)}`}
+          link={(p) => `/studio/${encodeURIComponent(p.slug)}`}
         />
       )}
       <Link
@@ -44,10 +49,10 @@ async function MyPages() {
 }
 
 /** La session est lue dans MesPages, derrière ce Suspense (Cache Components). */
-export default function Page() {
+export default function Page(props: PageProps<"/my-pages">) {
   return (
     <Suspense fallback={<ContentSkeleton />}>
-      <MyPages />
+      <MyPages {...props} />
     </Suspense>
   );
 }

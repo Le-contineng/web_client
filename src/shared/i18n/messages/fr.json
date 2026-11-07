@@ -87,7 +87,14 @@
     "targetNotFound": "Cible introuvable",
     "invalidImage": "Image refusée : envoie-la à nouveau",
     "campaignNotFound": "Campagne introuvable",
-    "tooLong": "Texte trop long"
+    "tooLong": "Texte trop long",
+    "imagesRequired": "Ajoutez au moins une photo.",
+    "tooManyImages": "10 photos au plus par post.",
+    "photoNotUploaded": "Une photo n'a pas fini son envoi : réessayez.",
+    "duplicatePhoto": "La même photo apparaît deux fois.",
+    "captionTooLong": "La légende dépasse 2 200 caractères.",
+    "altTooLong": "Le texte alternatif dépasse 500 caractères.",
+    "postNotFound": "Ce post n'existe plus."
   },
   "nav": {
     "home": "Accueil",
@@ -223,7 +230,8 @@
       "bio": "Bio",
       "linkKept": "Le lien /p/{slug} ne change pas, même avec un nouveau nom.",
       "saved": "Page modifiée",
-      "ownerOnly": "Seul le propriétaire de la page peut la modifier."
+      "ownerOnly": "Seul le propriétaire de la page peut la modifier.",
+      "changePhoto": "Changer la photo"
     },
     "stats": {
       "events": "{n, plural, one {publication} other {publications}}",
@@ -340,7 +348,12 @@
       "leaveDescription": "Ce que vous avez saisi sera perdu.",
       "leaveConfirm": "Abandonner",
       "leaveCancel": "Continuer la saisie",
-      "previewUnavailable": "Aperçu indisponible pour ce format. Préférez une photo JPEG, PNG ou WebP."
+      "previewUnavailable": "Aperçu indisponible pour ce format. Préférez une photo JPEG, PNG ou WebP.",
+      "when": "Quand",
+      "posterLabel": "Affiche (facultative)",
+      "descriptionLabel": "Description (facultative)",
+      "stepEssentials": "L'essentiel",
+      "stepDetails": "Ce qui donne envie"
     },
     "interest": "Intéressé"
   },
@@ -635,5 +648,94 @@
     "details": "Détails",
     "notFound": "Cette annonce n'est plus disponible",
     "backToList": "Voir les événements"
+  },
+  "posts": {
+    "tile": "Posts",
+    "tileLabel": "{count, plural, one {# post} other {# posts}} de l'événement",
+    "new": "nouveau",
+    "title": "Posts",
+    "empty": "Aucun post pour l'instant.",
+    "loadMore": "Voir plus de posts",
+    "carousel": "{count, plural, one {# image} other {# images}}",
+    "imageOf": "Image {index} sur {count}",
+    "previous": "Image précédente",
+    "next": "Image suivante",
+    "seeMore": "plus",
+    "backToEvent": "Voir l'événement",
+    "newPost": "Nouveau post",
+    "delete": "Supprimer le post",
+    "deleteTitle": "Supprimer ce post ?",
+    "deleteDescription": "Le post et ses photos seront supprimés pour tout le monde. Cette action est définitive.",
+    "deleteConfirm": "Supprimer",
+    "deleted": "Post supprimé",
+    "notAllowed": "Seuls les membres de la page organisatrice peuvent publier un post sur cet événement.",
+    "closed": "On ne peut plus publier sur un événement passé ou annulé.",
+    "composer": {
+      "title": "Nouveau post",
+      "photos": "Photos ({count}/{max})",
+      "photoAlt": "Photo {index}",
+      "addPhotos": "Ajouter",
+      "uploading": "Envoi…",
+      "retry": "Réessayer",
+      "remove": "Retirer la photo {index}",
+      "moveBefore": "Placer la photo {index} avant",
+      "moveAfter": "Placer la photo {index} après",
+      "tooMany": "{max} photos au plus par post.",
+      "caption": "Légende (facultative)",
+      "captionPlaceholder": "Racontez ce qui se passe…",
+      "publish": "Publier",
+      "waitUploads": "Envoi des photos…",
+      "published": "Post publié"
+    }
+  },
+  "studio": {
+    "title": "Gérer {name}",
+    "switchPage": "Changer de page (actuellement {name})",
+    "allPages": "Toutes mes pages",
+    "publish": "Publier",
+    "viewPublic": "Voir la page publique",
+    "sectionsLabel": "Rubriques de l'espace organisateur",
+    "tabsLabel": "Événements par état",
+    "sections": {
+      "events": "Événements",
+      "audience": "Audience",
+      "team": "Équipe",
+      "page": "Page"
+    },
+    "tabs": {
+      "upcoming": "À venir",
+      "ongoing": "En cours",
+      "past": "Passés",
+      "cancelled": "Annulés"
+    },
+    "badges": {
+      "ongoing": "En cours"
+    },
+    "stats": {
+      "interested": "{count, plural, one {intéressé} other {intéressés}}",
+      "views": "{count, plural, one {vue} other {vues}}",
+      "posts": "{count, plural, one {post} other {posts}}"
+    },
+    "actions": {
+      "menu": "Actions pour {name}",
+      "view": "Voir l'événement",
+      "posts": "Voir les posts",
+      "edit": "Modifier",
+      "newPost": "Nouveau post",
+      "cancel": "Annuler l'événement"
+    },
+    "empty": {
+      "upcoming": "Aucun événement à venir. Publiez le prochain : il apparaîtra dans le fil de toute l'école.",
+      "ongoing": "Aucun événement en ce moment.",
+      "past": "Les événements terminés apparaîtront ici, avec leurs chiffres.",
+      "cancelled": "Aucun événement annulé.",
+      "publish": "Publier un événement"
+    },
+    "taskBack": "{page} · {section}",
+    "task": {
+      "newEvent": "Publier un événement",
+      "editEvent": "Modifier l'événement"
+    },
+    "ownerOnlyTeam": "Seul le propriétaire de la page gère son équipe."
   }
 }

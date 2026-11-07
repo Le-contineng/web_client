@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { ActionBar } from "@/shared/components/ActionBar";
 import { cn } from "@/shared/lib/utils";
 
 /**
@@ -33,14 +34,11 @@ export function FormFrame({
         >
           {children}
         </div>
-        {footer && (
+        {footer && !framed && <ActionBar>{footer}</ActionBar>}
+        {footer && framed && (
           <footer
-            className={cn(
-              framed
-                ? // Fondu au-dessus : le contenu glisse sous le pied sans coupure sèche
-                  "sticky bottom-0 bg-popover px-5 pt-2 pb-5 before:pointer-events-none before:absolute before:inset-x-0 before:-top-6 before:h-6 before:bg-gradient-to-t before:from-popover before:to-transparent"
-                : "mt-5",
-            )}
+            // Fondu au-dessus : le contenu glisse sous le pied sans coupure sèche
+            className="sticky bottom-0 bg-popover px-5 pt-2 pb-5 before:pointer-events-none before:absolute before:inset-x-0 before:-top-6 before:h-6 before:bg-gradient-to-t before:from-popover before:to-transparent"
           >
             {footer}
           </footer>
