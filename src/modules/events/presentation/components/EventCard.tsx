@@ -12,7 +12,7 @@ import { FollowButton } from "@/modules/pages";
 import { EventBadges } from "@/modules/events/presentation/components/EventBadges";
 import { InterestButton } from "@/modules/events/presentation/components/InterestButton";
 import { DateTile } from "@/modules/events/presentation/components/DateTile";
-import { StoryTiles } from "@/modules/events/presentation/components/StoryTiles";
+import { PostTile } from "@/modules/events/presentation/components/PostTile";
 import { EventTime } from "@/modules/events/presentation/components/EventTime";
 import { PublicationDate } from "@/modules/events/presentation/components/PublicationDate";
 import { ShareIconButton } from "@/modules/events/presentation/components/ShareButton";
@@ -139,7 +139,7 @@ export function EventCard({
       {/* Ligne d'actions : tuile posée sur le coin de l'affiche, actions à droite,
           alignées sur le bas de la tuile */}
       <div className="flex items-end justify-between gap-3 px-4 sm:px-0">
-        {/* Tuile de date puis tuiles des contenus, posées ensemble sur l'affiche */}
+        {/* Tuile de date puis tuile « Posts », posées ensemble sur l'affiche */}
         <div className="relative -mt-8 flex min-w-0 items-stretch gap-1.5">
           <DateTile
             iso={event.startsAt}
@@ -151,7 +151,7 @@ export function EventCard({
               cancelled && "grayscale",
             )}
           />
-          {!cancelled && <StoryTiles event={event} />}
+          <PostTile event={event} />
         </div>
         <div className="-mr-2 -mb-2 flex items-center">
           {!cancelled && event.period !== "past" && (

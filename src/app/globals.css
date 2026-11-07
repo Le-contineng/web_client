@@ -226,15 +226,26 @@ body:has([data-slot="dialog-content"][data-relay])
   --ease-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
   --animate-rise: rise 320ms var(--ease-soft) both;
   --animate-shake: shake 320ms ease-in-out;
-  /* Remplissage de la barre d'un statut ; la durée est donnée par le composant */
-  --animate-story: story-progress linear forwards;
+  /* Tuile « Posts » avec du nouveau : halo qui respire et léger balancement */
+  --animate-beckon: beckon 2.4s var(--ease-soft) infinite;
 
-  @keyframes story-progress {
-    from {
-      transform: scaleX(0);
+  @keyframes beckon {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 color-mix(in oklab, var(--brand) 55%, transparent);
+      transform: rotate(0);
     }
-    to {
-      transform: scaleX(1);
+    8% {
+      transform: rotate(-6deg);
+    }
+    16% {
+      transform: rotate(5deg);
+    }
+    24% {
+      transform: rotate(0);
+    }
+    60% {
+      box-shadow: 0 0 0 8px transparent;
     }
   }
 

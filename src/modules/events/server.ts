@@ -30,8 +30,10 @@ export const cancelEvent = (pageId: string, id: string, reason: string) =>
 
 // ——— Intérêt d'un compte connecté (ADR 0022 du backend) ———
 export const setInterest = eventsApi.setInterest;
-export const getPoll = eventsApi.getPoll;
-export const votePoll = eventsApi.vote;
+export const getEventPosts = cache((eventId: string) =>
+  eventsApi.listPosts(eventId),
+);
+export const listMorePosts = eventsApi.listPosts;
 
 // ——— Épinglage éditorial (admins, ADR 0020 du backend) ———
 export const pinEvent = eventsApi.pin;

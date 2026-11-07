@@ -25,6 +25,14 @@ export {
   matchesSearch,
   SEARCH_MAX_LENGTH,
 } from "@/modules/events/domain/search";
+export {
+  type EventPost,
+  type EventPostSummary,
+  type PostImage,
+  type PostPage,
+} from "@/modules/events/domain/event-post";
+export { EventPostFeed } from "@/modules/events/presentation/components/EventPostFeed";
+export { MarkPostsSeen } from "@/modules/events/presentation/components/PostTile";
 export { SearchBar } from "@/modules/events/presentation/components/SearchBar";
 export { FilterChips } from "@/modules/events/presentation/components/FilterChips";
 export {

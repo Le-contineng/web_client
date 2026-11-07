@@ -163,62 +163,65 @@ const evenements = [
   ),
 ];
 
-// Contenus de la Journée d'intégration (ADR 0023 du client) : un sondage en
-// direct dont les votes montent à chaque lecture, et quelques statuts simples.
-const sondage = {
-  id: "ecoles",
-  question: "Quelle école partenaire attendez-vous le plus ?",
-  opensAt: null,
-  closesAt: iso(maintenant + 2 * JOUR),
-  options: [
-    ["inp", "INP Toulouse", 1079],
-    ["skema", "SKEMA Business", 1032],
-    ["efrei", "EFREI Paris", 933],
-    ["essca", "ESSCA", 925],
-    ["estp", "ESTP", 907],
-    ["isep", "ISEP", 904],
-  ].map(([id, label, votes]) => ({ id, label, imageUrl: null, votes })),
-};
-const vueSondage = () => ({
-  ...sondage,
-  totalVotes: sondage.options.reduce((n, o) => n + o.votes, 0),
+// Posts des événements (ADR 0023 du client) : carrousels de photos publiques
+// au format 4:5, du plus récent au plus ancien, servis par pages de 2.
+const photo = (id) => ({
+  url: `https://images.unsplash.com/photo-${id}?w=1080&h=1350&q=80&auto=format&fit=crop`,
+  width: 1080,
+  height: 1350,
+  placeholder: null,
+  alt: null,
 });
-/** Quelques votes arrivent entre deux lectures, sur des options au hasard. */
-function voterAuHasard() {
-  for (const o of sondage.options)
-    if (Math.random() < 0.5) o.votes += Math.floor(Math.random() * 9);
-}
-const statuts = {
+const ETUDIANTS = "1517486808906-6ca8b3f04846";
+const ATELIER = "1544928147-79a2dbc1f389";
+const FOULE = "1509824227185-9c5a01ceba0d";
+const SALLE = "1574391884720-bbc3740c59d1";
+const BALLON = "1579952363873-27f3bade9f55";
+const FRAPPE = "1560272564-c83b66b1ad12";
+const posts = {
   integ2026: [
     {
-      id: "integ-annonce",
-      kind: "announcement",
-      title: "Rendez-vous à 14 h dans la cour",
-      detail: "Pensez à votre carte étudiante pour le parcours.",
-      actionUrl: null,
+      id: "integ-p3",
+      caption: "Les stands sont installés, on vous attend dans la cour !",
+      images: [photo(ETUDIANTS), photo(ATELIER), photo(FOULE)],
+      publishedAt: iso(maintenant - 20 * 60_000),
     },
     {
-      id: "integ-sondage",
-      kind: "poll",
-      title: sondage.question,
-      detail: null,
-      actionUrl: null,
+      id: "integ-p2",
+      caption:
+        "Programme de l'après-midi : parcours des associations à 14 h, quiz du campus à 16 h, puis soirée de clôture au foyer. Pensez à votre carte étudiante, elle sera demandée à l'entrée de chaque atelier et pour la tombola de fin de journée.",
+      images: [photo(SALLE)],
+      publishedAt: iso(maintenant - 3 * HEURE),
     },
     {
-      id: "integ-plan",
-      kind: "map",
-      title: "Plan du campus",
-      detail: "Les stands sont autour de la cour principale.",
-      actionUrl: "https://www.openstreetmap.org",
-    },
-    {
-      id: "integ-billets",
-      kind: "ticket",
-      title: "Soirée de clôture",
-      detail: "Places limitées, gratuites pour les nouveaux.",
-      actionUrl: "https://example.org/billets",
+      id: "integ-p1",
+      caption: null,
+      images: [photo(ATELIER), photo(ETUDIANTS)],
+      publishedAt: iso(maintenant - JOUR),
     },
   ],
+  derby4fc: [
+    {
+      id: "derby-p1",
+      caption: "Dernier entraînement avant le derby.",
+      images: [photo(FRAPPE), photo(BALLON)],
+      publishedAt: iso(maintenant - 2 * HEURE),
+    },
+  ],
+};
+const POSTS_PAR_PAGE = 2;
+function pagePosts(eventId, curseur) {
+  const tous = posts[eventId] ?? [];
+  const debut = Number(curseur ?? 0) || 0;
+  const fin = debut + POSTS_PAR_PAGE;
+  return {
+    posts: tous.slice(debut, fin),
+    nextCursor: fin < tous.length ? String(fin) : null,
+  };
+}
+const resumePosts = (eventId) => {
+  const tous = posts[eventId] ?? [];
+  return { count: tous.length, latestAt: tous[0]?.publishedAt ?? null };
 };
 
 /** Période calculée comme l'API : sans fin, l'événement dure jusqu'à minuit UTC. */
@@ -237,9 +240,7 @@ const reponse = (e) => {
     ...e,
     period: periode(e),
     organizer: { id: p.id, slug: p.slug, name: p.name, photoUrl: p.photoUrl },
-    stories: (statuts[e.id] ?? []).map((s) =>
-      s.kind === "poll" ? { ...s, poll: vueSondage() } : s,
-    ),
+    posts: resumePosts(e.id),
   };
 };
 
@@ -320,10 +321,12 @@ createServer((req, res) => {
   }
   if (
     req.method === "GET" &&
-    chemin === `/api/v1/events/integ2026/polls/${sondage.id}`
+    (m = chemin.match(/^\/api\/v1\/events\/([^/]+)\/posts$/))
   ) {
-    voterAuHasard();
-    return envoyer(res, 200, vueSondage());
+    const id = decodeURIComponent(m[1]);
+    if (!evenements.some((x) => x.id === id))
+      return probleme(res, 404, "eventNotFound");
+    return envoyer(res, 200, pagePosts(id, url.searchParams.get("cursor")));
   }
   if (req.method === "GET" && chemin === "/api/v1/pages")
     return envoyer(res, 200, pages);
