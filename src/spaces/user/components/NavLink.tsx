@@ -45,7 +45,7 @@ export function NavLink({
         aria-current={active ? "page" : undefined}
         className={cn(
           "grid flex-1 place-items-center py-3 [&_svg]:size-6",
-          active ? "text-brand" : "text-foreground/80",
+          active ? "text-foreground" : "text-foreground/70",
         )}
       >
         {shownIcon}
@@ -59,7 +59,7 @@ export function NavLink({
       aria-current={active ? "page" : undefined}
       className={cn(
         "flex h-11 items-center gap-3 rounded-lg px-3 text-base transition-colors hover:bg-muted [&_svg]:size-6 [&_svg]:shrink-0",
-        active && "font-semibold text-brand",
+        active && "font-semibold text-foreground",
       )}
     >
       {shownIcon}

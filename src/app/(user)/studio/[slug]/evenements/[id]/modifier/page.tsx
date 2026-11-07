@@ -30,11 +30,15 @@ async function EditEvent({
         page={page}
         back={back}
         title={t("studio.task.editEvent")}
-        subject={event.name}
       />
       <div className="px-4 py-5 sm:px-6">
         {isEditable(event, new Date()) ? (
-          <EventForm page={page} event={event} action={updateEventAction} />
+          <EventForm
+            showPage={false}
+            page={page}
+            event={event}
+            action={updateEventAction}
+          />
         ) : (
           <p className="text-sm text-muted-foreground">
             {t("events.notEditable")}

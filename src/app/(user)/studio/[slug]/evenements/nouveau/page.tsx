@@ -30,7 +30,11 @@ async function NewEvent({
         title={t("studio.task.newEvent")}
       />
       <div className="px-4 py-5 sm:px-6">
-        <EventForm page={page} createAction={createEventAction} />
+        <EventForm
+          showPage={false}
+          page={page}
+          createAction={createEventAction}
+        />
       </div>
     </>
   );

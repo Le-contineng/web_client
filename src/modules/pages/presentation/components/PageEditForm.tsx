@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { ActionBar } from "@/shared/components/ActionBar";
 import { FormField } from "@/shared/components/FormField";
 import {
+  ACTION,
   FILLED_FIELD,
   FILLED_TEXTAREA,
   PRIMARY_ACTION,
@@ -100,6 +101,7 @@ export function PageEditForm({
             <Button
               type="button"
               variant="outline"
+              className={ACTION}
               onClick={() => fileInput.current?.click()}
               aria-invalid={!!(photo.error ?? c.photo)}
             >
@@ -109,6 +111,7 @@ export function PageEditForm({
               <Button
                 type="button"
                 variant="ghost"
+                className={ACTION}
                 onClick={() => {
                   setRemove(true);
                   photo.reset();
@@ -145,7 +148,7 @@ export function PageEditForm({
           <SelectTrigger
             id="type"
             aria-invalid={!!c.type}
-            className={cn(FILLED_FIELD, "w-full pr-3")}
+            className={cn(FILLED_FIELD, "w-full pr-3 data-[size=default]:h-12")}
           >
             <SelectValue />
           </SelectTrigger>

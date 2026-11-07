@@ -348,7 +348,12 @@
       "leaveDescription": "Ce que vous avez saisi sera perdu.",
       "leaveConfirm": "Abandonner",
       "leaveCancel": "Continuer la saisie",
-      "previewUnavailable": "Aperçu indisponible pour ce format. Préférez une photo JPEG, PNG ou WebP."
+      "previewUnavailable": "Aperçu indisponible pour ce format. Préférez une photo JPEG, PNG ou WebP.",
+      "when": "Quand",
+      "posterLabel": "Affiche (facultative)",
+      "descriptionLabel": "Description (facultative)",
+      "stepEssentials": "L'essentiel",
+      "stepDetails": "Ce qui donne envie"
     },
     "interest": "Intéressé"
   },

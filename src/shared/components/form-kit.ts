@@ -15,14 +15,24 @@ export const FILLED_TEXTAREA =
 
 /** Filtre segmenté (périodes, états) : le choix actif est une pastille blanche. */
 export const SEGMENTED =
-  "flex w-fit max-w-full gap-1 overflow-x-auto rounded-lg bg-muted p-1 [scrollbar-width:none]";
+  "flex w-fit max-w-full gap-1 overflow-x-auto rounded-xl bg-muted p-1 [scrollbar-width:none]";
 export const SEGMENT =
-  "flex shrink-0 items-center gap-1.5 rounded-md px-3 py-1.5 text-sm text-muted-foreground outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 aria-[current=page]:bg-card aria-[current=page]:font-semibold aria-[current=page]:text-foreground aria-[current=page]:shadow-xs";
+  "flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm text-muted-foreground outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 aria-[current=page]:bg-card aria-[current=page]:font-semibold aria-[current=page]:text-foreground aria-[current=page]:shadow-xs";
 
 /**
- * Action principale d'un écran (Publier, Enregistrer) : la seule en fuchsia,
- * même hauteur partout ; désactivée, elle passe en gris lisible plutôt
+ * Deux arrondis seulement : 12 px (rounded-xl) pour les surfaces (champs,
+ * blocs, feuilles), 10 px (rounded-lg) pour les commandes (boutons, segments).
+ * Une seule hauteur de bouton : 44 px.
+ */
+export const ACTION = "h-11 rounded-lg px-4 text-[15px]";
+
+/** Bouton icône carré, même hauteur que les actions. */
+export const ICON_ACTION = "size-11 rounded-lg";
+
+/**
+ * Action principale d'un écran (Publier, Enregistrer) : la seule en fuchsia
+ * de l'écran (la navigation active est en encre), même hauteur partout ; désactivée, elle passe en gris lisible plutôt
  * qu'en rose pâle.
  */
 export const PRIMARY_ACTION =
-  "h-11 w-full px-5 text-[15px] disabled:bg-muted disabled:text-muted-foreground disabled:opacity-100 sm:w-auto sm:min-w-40";
+  "h-11 w-full rounded-lg px-5 text-[15px] disabled:bg-muted disabled:text-muted-foreground disabled:opacity-100 sm:w-auto sm:min-w-40";

@@ -107,7 +107,13 @@ export function EventForm({
   event,
   action,
   createAction,
+  showPage = true,
 }: {
+  /**
+   * Rappel de la page en tête du formulaire ; masqué quand l'écran la nomme
+   * déjà (espace organisateur).
+   */
+  showPage?: boolean;
   /** Titre affiché en tête (dans le modal ; la page a déjà le sien). */
   title?: string;
   /** Page au nom de laquelle publier, choisie avant le formulaire. */
@@ -276,13 +282,7 @@ export function EventForm({
     return !first;
   }
 
-  const essentialsReady = filled.name && !!startDate && filled.location;
-  const ready =
-    stepped && step === 0
-      ? essentialsReady
-      : filled.categories && (stepped || essentialsReady);
-
-  // Pied : bouton sur toute la largeur, grisé tant que l'étape n'est pas remplie
+  // Pied : l'action de l'étape, toujours active ; ce qui manque s'affiche sous les champs
   const navigation = (
     <div className="flex items-center gap-2">
       {stepped && step > 0 && (
@@ -301,7 +301,8 @@ export function EventForm({
       <Button
         type="submit"
         size="lg"
-        disabled={!ready || enCours || photo.uploading}
+        // Toujours actif : un toucher montre ce qui manque, sous les champs
+        disabled={enCours || photo.uploading}
         className={cn(PRIMARY_ACTION, "flex-1 sm:flex-none")}
       >
         {event
@@ -329,6 +330,17 @@ export function EventForm({
           if (validateEssentials()) setStep(1);
           return;
         }
+        // Dernière étape (ou modification) : l'essentiel puis une catégorie
+        if (!stepped && !validateEssentials()) {
+          e.preventDefault();
+          return;
+        }
+        if (!filled.categories) {
+          e.preventDefault();
+          setMissing({ categories: "categoryRequired" });
+          setFocusTarget({ field: "categories" });
+          return;
+        }
         onSubmit(e);
       }}
       noValidate
@@ -344,7 +356,7 @@ export function EventForm({
         {/* ——— Étape 1 : l'essentiel (nom, quand, où) ——— */}
         <div hidden={!shown(0)} className="grid gap-4">
           {/* Page organisatrice, choisie avant le formulaire */}
-          <div className="flex items-center gap-2">
+          <div hidden={!showPage} className="flex items-center gap-2">
             <span className="inline-flex items-center gap-2 rounded-lg bg-muted px-2.5 py-1.5 text-sm font-medium">
               <ProfileAvatar name={page.name} photo={page.photoUrl} size="xs" />
               {page.name}
@@ -361,7 +373,7 @@ export function EventForm({
             )}
           </div>
 
-          <Field error={errorOf("name")}>
+          <Field label={t("events.name")} error={errorOf("name")}>
             <input
               name="name"
               data-field="name"
@@ -377,7 +389,10 @@ export function EventForm({
             />
           </Field>
 
-          <Field error={errorOf("startsAt") ?? errorOf("endsAt")}>
+          <Field
+            label={t("events.form.when")}
+            error={errorOf("startsAt") ?? errorOf("endsAt")}
+          >
             <div className="grid gap-2 rounded-xl bg-muted p-2">
               <DateRow label={t("events.form.start")} filled>
                 <DateTimeField
@@ -427,7 +442,7 @@ export function EventForm({
             </div>
           </Field>
 
-          <Field error={errorOf("location")}>
+          <Field label={t("events.location")} error={errorOf("location")}>
             <Row icon={<MapPinIcon />} invalid={!!fieldErrors.location}>
               <input
                 name="location"
@@ -445,14 +460,9 @@ export function EventForm({
 
         {/* ——— Étape 2 : ce qui donne envie (affiche, description, catégories) ——— */}
         <div hidden={!shown(1)} className="grid gap-4">
-          {stepped && (
-            <p className="text-center text-sm text-muted-foreground">
-              {t("events.form.optionalHint")}
-            </p>
-          )}
-
           {/* Affiche : zone d'ajout claire, ou aperçu (défilement au-delà de 340 px) */}
           <Field
+            label={t("events.form.posterLabel")}
             error={
               errorOf("photo") ??
               errorOf("photoUrl") ??
@@ -539,7 +549,10 @@ export function EventForm({
             </p>
           </Field>
 
-          <Field error={errorOf("description")}>
+          <Field
+            label={t("events.form.descriptionLabel")}
+            error={errorOf("description")}
+          >
             <Row
               icon={<TextAlignLeftIcon />}
               alignTop
@@ -612,26 +625,17 @@ export function EventForm({
   );
 }
 
-/** Deux points : l'étape en cours, plus large. */
+/** L'étape en toutes lettres : « Étape 1 sur 2 · L'essentiel ». */
 function StepDots({ step }: { step: Step }) {
   const t = useTranslations("events.form");
   return (
-    <div className="flex justify-center gap-1.5">
-      {[0, 1].map((i) => (
-        <span
-          key={i}
-          aria-hidden
-          className={cn(
-            "h-1.5 rounded-full transition-all duration-300",
-            i === step ? "w-5 bg-primary" : "w-1.5",
-            i < step ? "bg-primary/50" : i > step && "bg-muted-foreground/25",
-          )}
-        />
-      ))}
-      <span className="sr-only" aria-live="polite">
+    <p aria-live="polite" className="text-sm text-muted-foreground">
+      <span className="font-semibold text-foreground">
         {t("stepOf", { step: step + 1, total: 2 })}
       </span>
-    </div>
+      {" · "}
+      {t(step === 0 ? "stepEssentials" : "stepDetails")}
+    </p>
   );
 }
 
@@ -695,16 +699,23 @@ function Row({
   );
 }
 
-/** Un champ et, dessous, son erreur. */
+/** Un champ, son libellé au-dessus (toujours visible) et, dessous, son erreur. */
 function Field({
+  label,
   error,
   children,
 }: {
+  label?: string;
   error?: string | null;
   children: ReactNode;
 }) {
   return (
     <div className="grid gap-1.5">
+      {label && (
+        <p aria-hidden className="text-sm font-medium">
+          {label}
+        </p>
+      )}
       {children}
       <FieldError message={error} />
     </div>

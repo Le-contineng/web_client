@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import type { MemberPage } from "@/modules/pages";
 import { ArrowSquareOutIcon, PlusIcon } from "@/shared/components/icons";
+import { ACTION, ICON_ACTION } from "@/shared/components/form-kit";
 import { cn } from "@/shared/lib/utils";
 import { buttonVariants } from "@/shared/ui/button";
 import { PageSwitcher } from "@/spaces/organizer/components/PageSwitcher";
@@ -10,7 +11,8 @@ export type StudioSection = "events" | "audience" | "team" | "page";
 
 /**
  * En-tête de l'espace organisateur : la page gérée (et le passage à une
- * autre), la seule action fuchsia de l'écran, « Publier », puis les
+ * autre), « Publier » sur la rubrique Événements (la seule action fuchsia
+ * de l'écran), puis les
  * rubriques de l'espace, communes à toutes ses adresses.
  */
 export async function StudioHeader({
@@ -52,16 +54,24 @@ export async function StudioHeader({
           href={`/p/${slug}`}
           aria-label={t("viewPublic")}
           title={t("viewPublic")}
-          className={buttonVariants({ variant: "ghost", size: "icon" })}
+          className={buttonVariants({
+            variant: "ghost",
+            size: "icon",
+            className: ICON_ACTION,
+          })}
         >
-          <ArrowSquareOutIcon />
+          <ArrowSquareOutIcon className="size-5" />
         </Link>
-        <Link
-          href={`/studio/${slug}/evenements/nouveau`}
-          className={buttonVariants({ className: "shrink-0" })}
-        >
-          <PlusIcon weight="bold" /> {t("publish")}
-        </Link>
+        {/* Seul fuchsia de l'écran, et seulement là où l'on publie : sur les
+            autres rubriques, l'action de l'écran est la leur */}
+        {section === "events" && (
+          <Link
+            href={`/studio/${slug}/evenements/nouveau`}
+            className={buttonVariants({ className: cn(ACTION, "shrink-0") })}
+          >
+            <PlusIcon weight="bold" /> {t("publish")}
+          </Link>
+        )}
       </div>
       <nav
         aria-label={t("sectionsLabel")}

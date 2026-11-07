@@ -348,7 +348,12 @@
       "leaveDescription": "What you entered will be lost.",
       "leaveConfirm": "Discard",
       "leaveCancel": "Keep editing",
-      "previewUnavailable": "Preview unavailable for this format. Prefer a JPEG, PNG or WebP photo."
+      "previewUnavailable": "Preview unavailable for this format. Prefer a JPEG, PNG or WebP photo.",
+      "when": "When",
+      "posterLabel": "Poster (optional)",
+      "descriptionLabel": "Description (optional)",
+      "stepEssentials": "The essentials",
+      "stepDetails": "What makes people come"
     },
     "interest": "Interested"
   },
