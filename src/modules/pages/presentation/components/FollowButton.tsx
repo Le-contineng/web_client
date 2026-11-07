@@ -107,7 +107,7 @@ export function FollowButton({
         onClick={toggle}
         className={cn(
           "shrink-0 rounded-sm text-sm font-semibold outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50",
-          shown ? "text-muted-foreground" : "text-brand",
+          shown ? "text-muted-foreground" : "text-foreground",
           className,
         )}
       >

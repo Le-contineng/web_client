@@ -12,8 +12,8 @@ import { cn } from "@/shared/lib/utils";
 /**
  * Tuile « Posts » (ADR 0023), petit papier à côté de la tuile de date : elle
  * ouvre le fil de l'événement. Tant qu'il y a du nouveau depuis la dernière
- * visite, elle passe aux couleurs de la marque, porte une pastille et
- * s'anime doucement pour se faire remarquer.
+ * visite, elle porte un petit point fuchsia et s'anime doucement (halo)
+ * pour se faire remarquer, sans se remplir de fuchsia.
  */
 export function PostTile({
   event,
@@ -34,15 +34,23 @@ export function PostTile({
       aria-label={`${t("tileLabel", { count })}${fresh ? ` · ${t("new")}` : ""}`}
       className={cn(
         "relative grid w-12 place-items-center content-center gap-1 rounded-[4px] border px-1 py-1.5 text-[9px] font-bold tracking-wide uppercase shadow-xs transition-transform outline-none focus-visible:ring-3 focus-visible:ring-ring/50 active:scale-95",
-        fresh
-          ? "border-brand bg-brand text-white motion-safe:animate-beckon"
-          : "bg-card text-brand",
+        // Papier blanc et encre, comme le jour de la tuile de date : sur la
+        // carte, le fuchsia reste à la bande du mois
+        "bg-card text-foreground",
+        fresh && "motion-safe:animate-beckon",
         className,
       )}
     >
       {/* Duotone : un trait et une face teintée, comme le papier plié de la charte */}
       <ImagesIcon className="size-5" weight="duotone" />
       {t("tile")}
+      {/* Du nouveau : un petit point fuchsia dans le coin, pas de remplissage */}
+      {fresh && (
+        <span
+          aria-hidden
+          className="absolute -top-1 -left-1 size-2.5 rounded-full bg-brand ring-2 ring-background"
+        />
+      )}
       <span
         aria-hidden
         className={cn(
