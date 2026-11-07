@@ -45,7 +45,7 @@ export function NavLink({
         aria-current={active ? "page" : undefined}
         className={cn(
           "grid flex-1 place-items-center py-3 [&_svg]:size-6",
-          active ? "text-foreground" : "text-foreground/70",
+          active ? "text-brand" : "text-foreground/80",
         )}
       >
         {shownIcon}
