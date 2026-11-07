@@ -2,7 +2,6 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import type { MemberPage } from "@/modules/pages";
 import { ArrowSquareOutIcon, PlusIcon } from "@/shared/components/icons";
-import { ACTION, ICON_ACTION } from "@/shared/components/form-kit";
 import { cn } from "@/shared/lib/utils";
 import { buttonVariants } from "@/shared/ui/button";
 import { PageSwitcher } from "@/spaces/organizer/components/PageSwitcher";
@@ -54,20 +53,16 @@ export async function StudioHeader({
           href={`/p/${slug}`}
           aria-label={t("viewPublic")}
           title={t("viewPublic")}
-          className={buttonVariants({
-            variant: "ghost",
-            size: "icon",
-            className: ICON_ACTION,
-          })}
+          className={buttonVariants({ variant: "ghost", size: "icon" })}
         >
-          <ArrowSquareOutIcon className="size-5" />
+          <ArrowSquareOutIcon />
         </Link>
         {/* Seul fuchsia de l'écran, et seulement là où l'on publie : sur les
             autres rubriques, l'action de l'écran est la leur */}
         {section === "events" && (
           <Link
             href={`/studio/${slug}/evenements/nouveau`}
-            className={buttonVariants({ className: cn(ACTION, "shrink-0") })}
+            className={buttonVariants({ className: "shrink-0" })}
           >
             <PlusIcon weight="bold" /> {t("publish")}
           </Link>

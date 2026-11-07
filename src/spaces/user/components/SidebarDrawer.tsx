@@ -98,6 +98,6 @@ export function SidebarDrawer({
 export function drawerTriggerClass(open: boolean) {
   return cn(
     "flex h-11 w-full items-center gap-3 rounded-lg px-3 text-base transition-colors outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 [&_svg]:size-6 [&_svg]:shrink-0",
-    open && "font-semibold text-foreground",
+    open && "font-semibold text-brand",
   );
 }

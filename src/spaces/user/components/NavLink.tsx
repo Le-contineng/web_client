@@ -59,7 +59,7 @@ export function NavLink({
       aria-current={active ? "page" : undefined}
       className={cn(
         "flex h-11 items-center gap-3 rounded-lg px-3 text-base transition-colors hover:bg-muted [&_svg]:size-6 [&_svg]:shrink-0",
-        active && "font-semibold text-foreground",
+        active && "font-semibold text-brand",
       )}
     >
       {shownIcon}
