@@ -635,5 +635,54 @@
     "details": "Détails",
     "notFound": "Cette annonce n'est plus disponible",
     "backToList": "Voir les événements"
+  },
+  "stories": {
+    "tiles": "Contenus de l'événement",
+    "open": "Ouvrir : {title}",
+    "more": "{count, plural, one {# autre contenu} other {# autres contenus}}",
+    "close": "Fermer",
+    "previous": "Contenu précédent",
+    "next": "Contenu suivant",
+    "tile": {
+      "poll": "Vote",
+      "ticket": "Billets",
+      "registration": "Inscription",
+      "announcement": "Info",
+      "result": "Résultats",
+      "program": "Programme",
+      "map": "Plan",
+      "photos": "Photos"
+    },
+    "kind": {
+      "poll": "Sondage",
+      "ticket": "Billetterie",
+      "registration": "Inscriptions",
+      "announcement": "Annonce",
+      "result": "Résultats",
+      "program": "Programme",
+      "map": "Plan",
+      "photos": "Photos"
+    },
+    "action": {
+      "ticket": "Réserver ma place",
+      "registration": "M'inscrire",
+      "announcement": "En savoir plus",
+      "result": "Voir les résultats",
+      "program": "Voir le programme",
+      "map": "Ouvrir l'itinéraire",
+      "photos": "Voir les photos",
+      "poll": "Voir l'événement"
+    },
+    "poll": {
+      "live": "En direct",
+      "votes": "{count, plural, one {# vote} other {# votes}}",
+      "opensOn": "Ouvre le {date}",
+      "closed": "Sondage fermé",
+      "voteFor": "Voter pour {label}",
+      "yourVote": "votre vote",
+      "hint": "Touchez une colonne pour voter",
+      "changeHint": "Vous pouvez changer d'avis jusqu'à la fermeture",
+      "rank": "{rank}ᵉ"
+    }
   }
 }

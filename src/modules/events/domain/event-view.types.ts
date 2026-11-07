@@ -1,4 +1,5 @@
 import type { Event, Period } from "@/modules/events/domain/event";
+import type { EventStory } from "@/modules/events/domain/event-story";
 
 /** Projection d'un événement pour l'affichage : page organisatrice et période jointes. */
 export type PageSummary = {
@@ -28,6 +29,8 @@ export type EventView = Event & {
    * elle suit la page organisatrice (ADR 0024 du backend).
    */
   viewer?: { interested: boolean; followingOrganizer?: boolean } | null;
+  /** Contenus de l'événement, dans l'ordre des tuiles (ADR 0023). */
+  stories?: EventStory[];
 };
 
 /** Intérêt pour un événement, tel que renvoyé après l'avoir changé. */

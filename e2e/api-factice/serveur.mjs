@@ -163,6 +163,64 @@ const evenements = [
   ),
 ];
 
+// Contenus de la Journée d'intégration (ADR 0023 du client) : un sondage en
+// direct dont les votes montent à chaque lecture, et quelques statuts simples.
+const sondage = {
+  id: "ecoles",
+  question: "Quelle école partenaire attendez-vous le plus ?",
+  opensAt: null,
+  closesAt: iso(maintenant + 2 * JOUR),
+  options: [
+    ["inp", "INP Toulouse", 1079],
+    ["skema", "SKEMA Business", 1032],
+    ["efrei", "EFREI Paris", 933],
+    ["essca", "ESSCA", 925],
+    ["estp", "ESTP", 907],
+    ["isep", "ISEP", 904],
+  ].map(([id, label, votes]) => ({ id, label, imageUrl: null, votes })),
+};
+const vueSondage = () => ({
+  ...sondage,
+  totalVotes: sondage.options.reduce((n, o) => n + o.votes, 0),
+});
+/** Quelques votes arrivent entre deux lectures, sur des options au hasard. */
+function voterAuHasard() {
+  for (const o of sondage.options)
+    if (Math.random() < 0.5) o.votes += Math.floor(Math.random() * 9);
+}
+const statuts = {
+  integ2026: [
+    {
+      id: "integ-annonce",
+      kind: "announcement",
+      title: "Rendez-vous à 14 h dans la cour",
+      detail: "Pensez à votre carte étudiante pour le parcours.",
+      actionUrl: null,
+    },
+    {
+      id: "integ-sondage",
+      kind: "poll",
+      title: sondage.question,
+      detail: null,
+      actionUrl: null,
+    },
+    {
+      id: "integ-plan",
+      kind: "map",
+      title: "Plan du campus",
+      detail: "Les stands sont autour de la cour principale.",
+      actionUrl: "https://www.openstreetmap.org",
+    },
+    {
+      id: "integ-billets",
+      kind: "ticket",
+      title: "Soirée de clôture",
+      detail: "Places limitées, gratuites pour les nouveaux.",
+      actionUrl: "https://example.org/billets",
+    },
+  ],
+};
+
 /** Période calculée comme l'API : sans fin, l'événement dure jusqu'à minuit UTC. */
 function periode(e, instant = Date.now()) {
   const debut = Date.parse(e.startsAt);
@@ -179,6 +237,9 @@ const reponse = (e) => {
     ...e,
     period: periode(e),
     organizer: { id: p.id, slug: p.slug, name: p.name, photoUrl: p.photoUrl },
+    stories: (statuts[e.id] ?? []).map((s) =>
+      s.kind === "poll" ? { ...s, poll: vueSondage() } : s,
+    ),
   };
 };
 
@@ -256,6 +317,13 @@ createServer((req, res) => {
     return e
       ? envoyer(res, 200, reponse(e))
       : probleme(res, 404, "eventNotFound");
+  }
+  if (
+    req.method === "GET" &&
+    chemin === `/api/v1/events/integ2026/polls/${sondage.id}`
+  ) {
+    voterAuHasard();
+    return envoyer(res, 200, vueSondage());
   }
   if (req.method === "GET" && chemin === "/api/v1/pages")
     return envoyer(res, 200, pages);

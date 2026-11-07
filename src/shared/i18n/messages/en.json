@@ -635,5 +635,54 @@
     "details": "Details",
     "notFound": "This announcement is no longer available",
     "backToList": "See events"
+  },
+  "stories": {
+    "tiles": "Event content",
+    "open": "Open: {title}",
+    "more": "{count, plural, one {# more item} other {# more items}}",
+    "close": "Close",
+    "previous": "Previous item",
+    "next": "Next item",
+    "tile": {
+      "poll": "Vote",
+      "ticket": "Tickets",
+      "registration": "Sign up",
+      "announcement": "Info",
+      "result": "Results",
+      "program": "Schedule",
+      "map": "Map",
+      "photos": "Photos"
+    },
+    "kind": {
+      "poll": "Poll",
+      "ticket": "Tickets",
+      "registration": "Registration",
+      "announcement": "Announcement",
+      "result": "Results",
+      "program": "Schedule",
+      "map": "Map",
+      "photos": "Photos"
+    },
+    "action": {
+      "ticket": "Book my spot",
+      "registration": "Sign me up",
+      "announcement": "Learn more",
+      "result": "See the results",
+      "program": "See the schedule",
+      "map": "Get directions",
+      "photos": "See the photos",
+      "poll": "See the event"
+    },
+    "poll": {
+      "live": "Live",
+      "votes": "{count, plural, one {# vote} other {# votes}}",
+      "opensOn": "Opens on {date}",
+      "closed": "Poll closed",
+      "voteFor": "Vote for {label}",
+      "yourVote": "your vote",
+      "hint": "Tap a column to vote",
+      "changeHint": "You can change your mind until the poll closes",
+      "rank": "#{rank}"
+    }
   }
 }

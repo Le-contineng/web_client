@@ -6,6 +6,7 @@ import type {
   EventView,
   InterestState,
 } from "@/modules/events/domain/event-view.types";
+import type { Poll } from "@/modules/events/domain/event-story";
 
 /** Corps d'un événement envoyé à l'API (publication et modification). */
 export type EventPayload = {
@@ -68,6 +69,21 @@ export const eventsApi = {
       api<InterestState>(`/api/v1/events/${encodeURIComponent(id)}/interest`, {
         method: interested ? "PUT" : "DELETE",
       }),
+    ),
+  /** Sondage d'un événement, avec ses votes à l'instant (ADR 0023). */
+  getPoll: (eventId: string, pollId: string) =>
+    withTranslatedErrors(() =>
+      api<Poll>(
+        `/api/v1/events/${encodeURIComponent(eventId)}/polls/${encodeURIComponent(pollId)}`,
+      ),
+    ),
+  /** Vote, ou changement d'avis jusqu'à la fermeture : on envoie l'option voulue. */
+  vote: (eventId: string, pollId: string, optionId: string) =>
+    withTranslatedErrors(() =>
+      api<Poll>(
+        `/api/v1/events/${encodeURIComponent(eventId)}/polls/${encodeURIComponent(pollId)}/vote`,
+        { method: "PUT", body: { optionId } },
+      ),
     ),
   /** Épinglage éditorial en tête du fil, réservé aux admins (ADR 0020 du backend). */
   pin: (id: string, until: string) =>

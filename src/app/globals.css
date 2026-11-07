@@ -226,6 +226,17 @@ body:has([data-slot="dialog-content"][data-relay])
   --ease-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
   --animate-rise: rise 320ms var(--ease-soft) both;
   --animate-shake: shake 320ms ease-in-out;
+  /* Remplissage de la barre d'un statut ; la durée est donnée par le composant */
+  --animate-story: story-progress linear forwards;
+
+  @keyframes story-progress {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
 
   @keyframes rise {
     from {
