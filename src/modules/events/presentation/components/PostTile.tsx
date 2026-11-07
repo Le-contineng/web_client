@@ -40,7 +40,8 @@ export function PostTile({
         className,
       )}
     >
-      <ImagesIcon className="size-5" weight={fresh ? "fill" : "bold"} />
+      {/* Duotone : un trait et une face teintée, comme le papier plié de la charte */}
+      <ImagesIcon className="size-5" weight="duotone" />
       {t("tile")}
       <span
         aria-hidden
