@@ -1,59 +1,83 @@
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import type { EventView } from "@/modules/events/domain/event-view.types";
-import { EventDate } from "@/modules/events/presentation/components/EventDate";
-import { CalendarDotsIcon } from "@/shared/components/icons";
+import type {
+  EventView,
+  ParentEvent,
+} from "@/modules/events/domain/event-view.types";
+import { CalendarDotsIcon, CaretRightIcon } from "@/shared/components/icons";
 import { cn } from "@/shared/lib/utils";
 
 /**
- * Lien d'un événement avec sa famille (ADR 0030 du backend) : sur un
- * événement principal, son prochain rendez-vous (option C : il fait remonter
- * la carte dans le fil) ; sur un sous-événement, l'événement dont il fait
- * partie.
+ * Famille d'un sous-événement (ADR 0030 du backend), au-dessus de son titre :
+ * le nom de son événement principal, cliquable, et sa place dans le
+ * programme (« 2 sur 3 »). Sur la carte du fil comme sur la fiche.
+ */
+export function SubEventFamily({
+  parent,
+  className,
+}: {
+  parent: ParentEvent;
+  className?: string;
+}) {
+  const t = useTranslations("subEvents");
+  return (
+    <p
+      className={cn(
+        "flex min-w-0 items-center gap-1.5 text-[13px] text-muted-foreground",
+        className,
+      )}
+    >
+      <Link
+        href={`/e/${encodeURIComponent(parent.id)}`}
+        aria-label={t("partOfName", { name: parent.name })}
+        className="flex min-w-0 items-center gap-0.5 font-semibold text-foreground hover:underline"
+      >
+        <span className="truncate">{parent.name}</span>
+        <CaretRightIcon
+          aria-hidden
+          className="size-3.5 shrink-0"
+          weight="bold"
+        />
+      </Link>
+      {parent.position > 0 && (
+        <>
+          <span aria-hidden>·</span>
+          <span className="shrink-0 tabular-nums">
+            {t("position", { position: parent.position, total: parent.total })}
+          </span>
+        </>
+      )}
+    </p>
+  );
+}
+
+/**
+ * Sur la carte d'un événement principal : son programme (« Programme · 3
+ * rendez-vous »), puisque chaque rendez-vous a déjà sa propre carte dans le
+ * fil.
  */
 export function SubEventLinks({
   event,
   className,
 }: {
-  event: Pick<EventView, "parent" | "subEvents">;
+  event: Pick<EventView, "id" | "subEvents">;
   className?: string;
 }) {
   const t = useTranslations("subEvents");
-  const next = event.subEvents?.next;
-  if (next) {
-    return (
-      // Deux lignes : quand (et le libellé), puis le nom entier du rendez-vous
-      <Link
-        href={`/e/${encodeURIComponent(next.id)}`}
-        className={cn(
-          "group mt-1 grid gap-0.5 rounded-xl bg-muted px-3 py-2 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
-          className,
-        )}
-      >
-        <span className="flex min-w-0 items-center gap-1.5 text-muted-foreground">
-          <CalendarDotsIcon aria-hidden className="size-4 shrink-0" />
-          <span className="shrink-0">{t("nextUp")}</span>
-          <span aria-hidden>·</span>
-          <EventDate iso={next.startsAt} className="truncate" />
-        </span>
-        <span className="truncate font-semibold group-hover:underline">
-          {next.name}
-        </span>
-      </Link>
-    );
-  }
-  if (event.parent) {
-    return (
-      <p className={cn("min-w-0 truncate text-sm", className)}>
-        <span className="text-muted-foreground">{t("partOf")} </span>
-        <Link
-          href={`/e/${encodeURIComponent(event.parent.id)}`}
-          className="font-medium hover:underline"
-        >
-          {event.parent.name}
-        </Link>
-      </p>
-    );
-  }
-  return null;
+  const count = event.subEvents?.count ?? 0;
+  if (count === 0) return null;
+  return (
+    <Link
+      href={`/e/${encodeURIComponent(event.id)}#programme`}
+      className={cn(
+        "flex w-fit items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground hover:underline",
+        className,
+      )}
+    >
+      <CalendarDotsIcon aria-hidden className="size-4 shrink-0" />
+      <span className="font-medium text-foreground">{t("programme")}</span>
+      <span aria-hidden>·</span>
+      <span>{t("programmeCount", { count })}</span>
+    </Link>
+  );
 }

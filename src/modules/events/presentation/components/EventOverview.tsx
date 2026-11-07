@@ -8,9 +8,12 @@ import { MoreActions } from "@/shared/components/MoreActions";
 import { ProgressiveImage } from "@/shared/components/ProgressiveImage";
 import { useNow } from "@/shared/hooks/useNow";
 import { cn } from "@/shared/lib/utils";
-import { SubEventLinks } from "@/modules/events/presentation/components/SubEventLinks";
+import { SubEventFamily } from "@/modules/events/presentation/components/SubEventLinks";
 import { Button } from "@/shared/ui/button";
-import { eventImage } from "@/modules/events/domain/event-image";
+import {
+  eventImage,
+  withInheritedPhoto,
+} from "@/modules/events/domain/event-image";
 import type { EventView } from "@/modules/events/domain/event-view.types";
 import { EventBadges } from "@/modules/events/presentation/components/EventBadges";
 import { layoutProps } from "@/modules/events/presentation/components/EventCard";
@@ -44,7 +47,7 @@ type TitleProps = { className: string; children: ReactNode };
  * colonne de droite défile.
  */
 export function EventOverview({
-  event,
+  event: given,
   layout = "sheet",
   title = (props) => <h1 {...props} />,
   share,
@@ -62,6 +65,8 @@ export function EventOverview({
   /** Nombre de vues, réservé aux membres de la page. */
   views?: ReactNode;
 }) {
+  // Sans affiche, un sous-événement montre celle de son principal
+  const event = withInheritedPhoto(given);
   const t = useTranslations("events.sheet");
   const cancelled = event.status === "cancelled";
   const page = layout === "page";
@@ -153,7 +158,7 @@ export function EventOverview({
           })}
           <EventOrganizerLine event={event} />
           {/* Sous-événement : l'événement principal dont il fait partie */}
-          {event.parent && <SubEventLinks event={{ parent: event.parent }} />}
+          {event.parent && <SubEventFamily parent={event.parent} />}
         </header>
 
         {/* 3. Alertes */}

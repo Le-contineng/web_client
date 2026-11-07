@@ -6,6 +6,7 @@ import {
   eventImage,
   eventImageLayout,
   feedImageRatio,
+  withInheritedPhoto,
 } from "@/modules/events/domain/event-image";
 import type { EventView } from "@/modules/events/domain/event-view.types";
 import { FollowButton } from "@/modules/pages";
@@ -13,7 +14,10 @@ import { EventBadges } from "@/modules/events/presentation/components/EventBadge
 import { InterestButton } from "@/modules/events/presentation/components/InterestButton";
 import { DateTile } from "@/modules/events/presentation/components/DateTile";
 import { PostTile } from "@/modules/events/presentation/components/PostTile";
-import { SubEventLinks } from "@/modules/events/presentation/components/SubEventLinks";
+import {
+  SubEventFamily,
+  SubEventLinks,
+} from "@/modules/events/presentation/components/SubEventLinks";
 import { EventTime } from "@/modules/events/presentation/components/EventTime";
 import { PublicationDate } from "@/modules/events/presentation/components/PublicationDate";
 import { ShareIconButton } from "@/modules/events/presentation/components/ShareButton";
@@ -37,7 +41,7 @@ export const DEFAULT_IMAGE = "/demo/defaut.svg";
  * centre ; la fiche complète la montre en entier.
  */
 export function EventCard({
-  event,
+  event: given,
   priority = false,
   onOpen,
   onShare,
@@ -53,6 +57,8 @@ export function EventCard({
    */
   onOpen?: (eventId: string) => void;
 }) {
+  // Sans affiche, un sous-événement montre celle de son principal
+  const event = withInheritedPhoto(given);
   const t = useTranslations();
   const cancelled = event.status === "cancelled";
   const layout = eventImageLayout(event);
@@ -168,6 +174,8 @@ export function EventCard({
       </div>
 
       <div className="grid gap-1 px-4 sm:px-0">
+        {/* Sous-événement : sa famille au-dessus du titre, et sa place dans le programme */}
+        {event.parent && <SubEventFamily parent={event.parent} />}
         <h2
           className={cn(
             "truncate text-base leading-snug font-semibold",

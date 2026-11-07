@@ -6,6 +6,7 @@ import {
   FEED_MIN_RATIO,
   feedImageRatio,
   PUBLIC_IMAGE_HOST,
+  withInheritedPhoto,
 } from "./event-image";
 
 describe("eventImage", () => {
@@ -73,5 +74,27 @@ describe("feedImageRatio", () => {
 
   it("prend un cadre carré quand les dimensions sont inconnues", () => {
     expect(feedImageRatio(null)).toBe(1);
+  });
+});
+
+describe("photos d'une famille d'événements", () => {
+  it("un sous-événement sans affiche reprend celle de son principal", () => {
+    const sub = {
+      id: "sub1",
+      photoUrl: null,
+      photo: null,
+      parent: { photoUrl: "/p.jpg", photo: null },
+    };
+    expect(withInheritedPhoto(sub).photoUrl).toBe("/p.jpg");
+    expect(withInheritedPhoto({ ...sub, photoUrl: "/own.jpg" }).photoUrl).toBe(
+      "/own.jpg",
+    );
+  });
+
+  it("sans affiche des deux côtés, il tire la même photo par défaut", () => {
+    const base = { photoUrl: null, categories: ["culture" as const] };
+    expect(eventImage({ ...base, id: "sub1", parent: { id: "main" } })).toBe(
+      eventImage({ ...base, id: "main" }),
+    );
   });
 });

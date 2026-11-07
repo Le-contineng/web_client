@@ -5,6 +5,7 @@ import type { EventView } from "@/modules/events/domain/event-view.types";
 import {
   eventImage,
   eventImageLayout,
+  withInheritedPhoto,
 } from "@/modules/events/domain/event-image";
 import { ProgressiveImage } from "@/shared/components/ProgressiveImage";
 
@@ -37,7 +38,7 @@ export function EventGrid({
         className,
       )}
     >
-      {events.map((e, i) => (
+      {events.map(withInheritedPhoto).map((e, i) => (
         <li key={e.id}>
           <Link
             href={`/e/${e.id}`}

@@ -756,6 +756,8 @@
     "newSubEvent": "Nouveau sous-événement",
     "within": "Pendant {name}",
     "fromSubEvent": "Publié sur {name}",
-    "noneYet": "Aucun rendez-vous pour l'instant."
+    "noneYet": "Aucun rendez-vous pour l'instant.",
+    "position": "{position} sur {total}",
+    "partOfName": "Fait partie de {name}"
   }
 }

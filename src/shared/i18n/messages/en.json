@@ -756,6 +756,8 @@
     "newSubEvent": "New sub-event",
     "within": "During {name}",
     "fromSubEvent": "Posted on {name}",
-    "noneYet": "No sessions yet."
+    "noneYet": "No sessions yet.",
+    "position": "{position} of {total}",
+    "partOfName": "Part of {name}"
   }
 }

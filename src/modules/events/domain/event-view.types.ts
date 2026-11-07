@@ -30,11 +30,23 @@ export type EventView = Event & {
    */
   viewer?: { interested: boolean; followingOrganizer?: boolean } | null;
   /** Événement principal d'un sous-événement (ADR 0030 du backend). */
-  parent?: { id: string; name: string } | null;
+  parent?: ParentEvent | null;
   /** Sous-événements d'un événement principal : leur nombre et le prochain rendez-vous. */
   subEvents?: SubEventsSummary | null;
   /** Posts de l'événement, résumés pour la tuile (ADR 0023). */
   posts?: EventPostSummary | null;
+};
+
+/** Événement principal d'un sous-événement, pour le relier à lui (ADR 0030 du backend). */
+export type ParentEvent = {
+  id: string;
+  name: string;
+  /** Affiche du principal, reprise par un sous-événement qui n'a pas la sienne. */
+  photoUrl: string | null;
+  photo?: PhotoLayout | null;
+  /** Place dans le programme (1 pour le plus tôt), sur `total`. */
+  position: number;
+  total: number;
 };
 
 export type SubEventsSummary = {
