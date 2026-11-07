@@ -188,7 +188,7 @@ export function CampaignForm({
             name="accentColor"
             type="color"
             className="h-9 w-20 p-1"
-            defaultValue={campaign?.accentColor ?? "#d63c3c"}
+            defaultValue={campaign?.accentColor ?? "#db2777"}
           />
         </FormField>
       </div>
