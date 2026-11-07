@@ -94,7 +94,13 @@
     "duplicatePhoto": "La même photo apparaît deux fois.",
     "captionTooLong": "La légende dépasse 2 200 caractères.",
     "altTooLong": "Le texte alternatif dépasse 500 caractères.",
-    "postNotFound": "Ce post n'existe plus."
+    "postNotFound": "Ce post n'existe plus.",
+    "outsideParent": "Le sous-événement doit avoir lieu pendant l'événement principal.",
+    "subEventsOutside": "Des sous-événements sortiraient de ces dates : déplacez-les d'abord.",
+    "parentNotFound": "L'événement principal n'existe plus.",
+    "parentOtherPage": "L'événement principal appartient à une autre page.",
+    "parentIsSubEvent": "Un sous-événement ne peut pas avoir de sous-événements.",
+    "parentNotEditable": "L'événement principal est passé ou annulé."
   },
   "nav": {
     "home": "Accueil",
@@ -714,7 +720,8 @@
     "stats": {
       "interested": "{count, plural, one {intéressé} other {intéressés}}",
       "views": "{count, plural, one {vue} other {vues}}",
-      "posts": "{count, plural, one {post} other {posts}}"
+      "posts": "{count, plural, one {post} other {posts}}",
+      "subEvents": "{count, plural, one {rendez-vous} other {rendez-vous}}"
     },
     "actions": {
       "menu": "Actions pour {name}",
@@ -722,7 +729,8 @@
       "posts": "Voir les posts",
       "edit": "Modifier",
       "newPost": "Nouveau post",
-      "cancel": "Annuler l'événement"
+      "cancel": "Annuler l'événement",
+      "addSubEvent": "Ajouter un sous-événement"
     },
     "empty": {
       "upcoming": "Aucun événement à venir. Publiez le prochain : il apparaîtra dans le fil de toute l'école.",
@@ -737,5 +745,17 @@
       "editEvent": "Modifier l'événement"
     },
     "ownerOnlyTeam": "Seul le propriétaire de la page gère son équipe."
+  },
+  "subEvents": {
+    "programme": "Programme",
+    "programmeCount": "{count, plural, one {# rendez-vous} other {# rendez-vous}}",
+    "partOf": "Fait partie de",
+    "nextUp": "Prochain rendez-vous",
+    "addSubEvent": "Ajouter un sous-événement",
+    "subEventOf": "Sous-événement de {name}",
+    "newSubEvent": "Nouveau sous-événement",
+    "within": "Pendant {name}",
+    "fromSubEvent": "Publié sur {name}",
+    "noneYet": "Aucun rendez-vous pour l'instant."
   }
 }

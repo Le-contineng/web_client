@@ -21,6 +21,8 @@ export type EventPayload = {
   categories: Category[];
   description: string;
   photoUrl: string | null;
+  /** Événement principal, pour publier un sous-événement (ADR 0030 du backend). */
+  parentEventId?: string | null;
 };
 
 /** Une tranche du fil, avec la position de la suivante. */
@@ -42,6 +44,11 @@ export const eventsApi = {
   getById: (id: string) =>
     withTranslatedErrors(() =>
       apiOrNull<EventView>(`/api/v1/events/${encodeURIComponent(id)}`),
+    ),
+  /** Programme d'un événement principal : ses sous-événements, du plus tôt au plus tard. */
+  listSubEvents: (id: string) =>
+    withTranslatedErrors(() =>
+      api<EventView[]>(`/api/v1/events/${encodeURIComponent(id)}/sub-events`),
     ),
   listByPage: (slug: string) =>
     withTranslatedErrors(() =>

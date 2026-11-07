@@ -105,6 +105,7 @@ async function EventRow({
   const t = await getTranslations();
   const cancelled = event.status === "cancelled";
   const posts = event.posts?.count ?? 0;
+  const subCount = event.subEvents?.count ?? 0;
   return (
     <li className="relative flex items-center gap-3 py-3 pr-2 pl-4 sm:pl-6">
       {/* Le geste origami de l'écran : le coin plié de l'événement en cours */}
@@ -130,6 +131,11 @@ async function EventRow({
         >
           {event.name}
         </Link>
+        {event.parent && (
+          <p className="truncate text-[12px] text-muted-foreground">
+            {t("subEvents.subEventOf", { name: event.parent.name })}
+          </p>
+        )}
         <p className="flex min-w-0 items-center gap-1.5 text-[13px] text-muted-foreground">
           {ongoing && (
             <span className="shrink-0 rounded-full bg-ink px-1.5 py-px text-[11px] font-semibold text-ink-foreground">
@@ -162,6 +168,15 @@ async function EventRow({
             value={posts}
             label={t("studio.stats.posts", { count: posts })}
           />
+          {subCount > 0 && (
+            <>
+              <span aria-hidden> · </span>
+              <Stat
+                value={subCount}
+                label={t("studio.stats.subEvents", { count: subCount })}
+              />
+            </>
+          )}
         </p>
       </div>
       <EventRowActions
@@ -169,6 +184,7 @@ async function EventRow({
         eventId={event.id}
         name={event.name}
         editable={editable}
+        canAddSubEvent={editable && !event.parent}
       />
     </li>
   );

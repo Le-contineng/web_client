@@ -16,6 +16,7 @@ export {
 } from "@/modules/events/infrastructure/event-queries";
 
 export const getEventById = cache((id: string) => eventsApi.getById(id));
+export const getSubEvents = cache((id: string) => eventsApi.listSubEvents(id));
 export const getPageEvents = cache((slug: string) =>
   eventsApi.listByPage(slug),
 );

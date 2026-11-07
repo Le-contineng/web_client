@@ -8,6 +8,7 @@ import { MoreActions } from "@/shared/components/MoreActions";
 import { ProgressiveImage } from "@/shared/components/ProgressiveImage";
 import { useNow } from "@/shared/hooks/useNow";
 import { cn } from "@/shared/lib/utils";
+import { SubEventLinks } from "@/modules/events/presentation/components/SubEventLinks";
 import { Button } from "@/shared/ui/button";
 import { eventImage } from "@/modules/events/domain/event-image";
 import type { EventView } from "@/modules/events/domain/event-view.types";
@@ -151,6 +152,8 @@ export function EventOverview({
             children: event.name,
           })}
           <EventOrganizerLine event={event} />
+          {/* Sous-événement : l'événement principal dont il fait partie */}
+          {event.parent && <SubEventLinks event={{ parent: event.parent }} />}
         </header>
 
         {/* 3. Alertes */}

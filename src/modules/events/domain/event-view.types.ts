@@ -29,8 +29,24 @@ export type EventView = Event & {
    * elle suit la page organisatrice (ADR 0024 du backend).
    */
   viewer?: { interested: boolean; followingOrganizer?: boolean } | null;
+  /** Événement principal d'un sous-événement (ADR 0030 du backend). */
+  parent?: { id: string; name: string } | null;
+  /** Sous-événements d'un événement principal : leur nombre et le prochain rendez-vous. */
+  subEvents?: SubEventsSummary | null;
   /** Posts de l'événement, résumés pour la tuile (ADR 0023). */
   posts?: EventPostSummary | null;
+};
+
+export type SubEventsSummary = {
+  count: number;
+  /** Prochain sous-événement ni passé ni annulé, s'il y en a un. */
+  next: {
+    id: string;
+    name: string;
+    startsAt: string;
+    endsAt: string | null;
+    location: string;
+  } | null;
 };
 
 /** Intérêt pour un événement, tel que renvoyé après l'avoir changé. */

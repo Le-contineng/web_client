@@ -6,6 +6,7 @@ import { type ReactNode, useState } from "react";
 import { CancelEventDialog } from "@/modules/events";
 import { cancelEventAction } from "@/modules/events/application/events.actions";
 import {
+  CalendarPlusIcon,
   DotsThreeIcon,
   EyeIcon,
   ImagesIcon,
@@ -51,7 +52,10 @@ export function EventRowActions({
   eventId,
   name,
   editable,
+  canAddSubEvent = false,
 }: {
+  /** Événement principal encore modifiable : on peut lui ajouter un sous-événement. */
+  canAddSubEvent?: boolean;
   /** Page gérée : les tâches s'ouvrent dans son espace. */
   slug: string;
   eventId: string;
@@ -89,6 +93,16 @@ export function EventRowActions({
             icon: <PlusSquareIcon />,
             href: `/studio/${encodeURIComponent(slug)}/evenements/${id}/post`,
           },
+          ...(canAddSubEvent
+            ? [
+                {
+                  id: "subEvent",
+                  label: t("addSubEvent"),
+                  icon: <CalendarPlusIcon />,
+                  href: `/studio/${encodeURIComponent(slug)}/evenements/nouveau?parent=${id}`,
+                },
+              ]
+            : []),
           {
             id: "cancel",
             label: t("cancel"),

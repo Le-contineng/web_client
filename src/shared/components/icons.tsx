@@ -32,6 +32,7 @@ export const BellRingingIcon = icon(P.BellRingingIcon);
 export const BellSlashIcon = icon(P.BellSlashIcon);
 export const CalendarBlankIcon = icon(P.CalendarBlankIcon);
 export const CalendarDotsIcon = icon(P.CalendarDotsIcon);
+export const CalendarPlusIcon = icon(P.CalendarPlusIcon);
 export const CalendarXIcon = icon(P.CalendarXIcon);
 export const CameraIcon = icon(P.CameraIcon);
 export const CaretDoubleRightIcon = icon(P.CaretDoubleRightIcon);

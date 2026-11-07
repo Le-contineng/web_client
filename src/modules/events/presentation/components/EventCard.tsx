@@ -13,6 +13,7 @@ import { EventBadges } from "@/modules/events/presentation/components/EventBadge
 import { InterestButton } from "@/modules/events/presentation/components/InterestButton";
 import { DateTile } from "@/modules/events/presentation/components/DateTile";
 import { PostTile } from "@/modules/events/presentation/components/PostTile";
+import { SubEventLinks } from "@/modules/events/presentation/components/SubEventLinks";
 import { EventTime } from "@/modules/events/presentation/components/EventTime";
 import { PublicationDate } from "@/modules/events/presentation/components/PublicationDate";
 import { ShareIconButton } from "@/modules/events/presentation/components/ShareButton";
@@ -196,6 +197,8 @@ export function EventCard({
           <MapPinIcon aria-hidden className="size-4 shrink-0" />
           <span className="truncate">{event.location}</span>
         </p>
+        {/* Principal : son prochain rendez-vous ; sous-événement : son principal */}
+        <SubEventLinks event={event} />
       </div>
     </article>
   );
