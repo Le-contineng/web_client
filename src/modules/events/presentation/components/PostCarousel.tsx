@@ -45,7 +45,7 @@ export function PostCarousel({
             const el = e.currentTarget;
             setIndex(Math.round(el.scrollLeft / Math.max(1, el.clientWidth)));
           }}
-          className="flex max-h-[80svh] snap-x snap-mandatory [scrollbar-width:none] overflow-x-auto overscroll-x-contain bg-muted sm:rounded-lg"
+          className="flex max-h-[70svh] snap-x snap-mandatory [scrollbar-width:none] overflow-x-auto overscroll-x-contain bg-muted sm:rounded-lg"
           style={{ aspectRatio: carouselRatio(images) }}
         >
           {images.map((image, i) => (

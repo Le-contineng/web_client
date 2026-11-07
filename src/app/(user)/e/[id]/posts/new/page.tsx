@@ -33,7 +33,7 @@ async function NewPostPage({ params }: PageProps<"/e/[id]/posts/new">) {
       : null;
 
   return (
-    <div className="mx-auto w-full max-w-xl px-4 pb-10 sm:px-0 md:pt-8">
+    <div className="mx-auto w-full max-w-[470px] px-4 pb-10 md:pt-8">
       <BackBar
         title={t("posts.composer.title")}
         fallback={`/e/${event.id}/posts`}

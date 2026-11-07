@@ -48,7 +48,7 @@ async function EventPostsPage({ params }: PageProps<"/e/[id]/posts">) {
   const canPublish = isOrganizer && isEditable(event, new Date());
 
   return (
-    <div className="mx-auto w-full max-w-xl pb-10 md:pt-8">
+    <div className="mx-auto w-full max-w-[470px] pb-10 sm:px-4 md:pt-8">
       <BackBar title={t("posts.title")} fallback={`/e/${event.id}`} />
       <MarkPostsSeen
         eventId={event.id}
