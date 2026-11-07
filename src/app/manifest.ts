@@ -9,7 +9,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     id: "/",
     name: "Le Contineng",
-    short_name: "Contineng",
+    short_name: "Le Contineng",
     description: "Le réseau social des événements.",
     lang: "fr",
     dir: "ltr",

@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   // Application ajoutée à l'écran d'accueil d'un iPhone : plein écran, nom court
   appleWebApp: {
     capable: true,
-    title: "Contineng",
+    title: "Le Contineng",
     statusBarStyle: "default",
   },
 };
