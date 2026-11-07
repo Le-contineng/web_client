@@ -47,8 +47,9 @@ async function EventPostsPage({ params }: PageProps<"/e/[id]/posts">) {
   const isOrganizer = (await getMyPageById(event.organizerPageId)) !== null;
   const canPublish = isOrganizer && isEditable(event, new Date());
 
+  // Même colonne que le fil d'accueil : décalée à gauche du centre sur ordinateur
   return (
-    <div className="mx-auto w-full max-w-[470px] pb-10 sm:px-4 md:pt-8">
+    <div className="mx-auto w-full max-w-[470px] pb-10 sm:px-4 md:pt-8 lg:mr-auto lg:ml-[max(2rem,calc(50%-235px-10rem))]">
       <BackBar title={t("posts.title")} fallback={`/e/${event.id}`} />
       <MarkPostsSeen
         eventId={event.id}
