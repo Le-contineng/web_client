@@ -47,10 +47,13 @@ type Action = {
  * sur un événement ni passé ni annulé ; l'API revérifie chaque action.
  */
 export function EventRowActions({
+  slug,
   eventId,
   name,
   editable,
 }: {
+  /** Page gérée : les tâches s'ouvrent dans son espace. */
+  slug: string;
   eventId: string;
   name: string;
   editable: boolean;
@@ -78,13 +81,13 @@ export function EventRowActions({
             id: "edit",
             label: t("edit"),
             icon: <PencilSimpleIcon />,
-            href: `/e/${id}/edit`,
+            href: `/studio/${encodeURIComponent(slug)}/evenements/${id}/modifier`,
           },
           {
             id: "post",
             label: t("newPost"),
             icon: <PlusSquareIcon />,
-            href: `/e/${id}/posts/new`,
+            href: `/studio/${encodeURIComponent(slug)}/evenements/${id}/post`,
           },
           {
             id: "cancel",

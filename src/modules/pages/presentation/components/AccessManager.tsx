@@ -21,6 +21,8 @@ import {
 import { Badge } from "@/shared/ui/badge";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
+import { FILLED_FIELD } from "@/shared/components/form-kit";
+import { cn } from "@/shared/lib/utils";
 
 export type MemberRow = {
   accountId: string;
@@ -100,12 +102,12 @@ export function AccessManager({
           {t("pages.access.search")}
         </label>
         <div className="relative">
-          <MagnifyingGlassIcon className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
+          <MagnifyingGlassIcon className="pointer-events-none absolute top-1/2 left-3.5 size-5 -translate-y-1/2 text-muted-foreground" />
           <Input
             id="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="pl-8"
+            className={cn(FILLED_FIELD, "pl-10")}
             autoComplete="off"
           />
         </div>

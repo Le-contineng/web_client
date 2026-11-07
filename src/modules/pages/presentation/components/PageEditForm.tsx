@@ -1,16 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { ActionBar } from "@/shared/components/ActionBar";
 import { FormField } from "@/shared/components/FormField";
+import {
+  FILLED_FIELD,
+  FILLED_TEXTAREA,
+  PRIMARY_ACTION,
+} from "@/shared/components/form-kit";
+import { CameraIcon } from "@/shared/components/icons";
 import { ProfileAvatar } from "@/shared/components/ProfileAvatar";
 import { useFormAction } from "@/shared/hooks/useFormAction";
 import { useErrorMessages } from "@/shared/i18n/errors";
 import type { FormAction, FormState } from "@/shared/lib/form";
 import { Button } from "@/shared/ui/button";
-import { Checkbox } from "@/shared/ui/checkbox";
 import { Input } from "@/shared/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/ui/select";
 import { Textarea } from "@/shared/ui/textarea";
+import { cn } from "@/shared/lib/utils";
 import { usePhotoUpload } from "@/modules/medias";
 import {
   ORGANIZATION_TYPES,
@@ -39,21 +53,17 @@ export function PageEditForm({
   const c = state.fieldErrors ?? {};
   const [preview, setPreview] = useState(page.photoUrl);
   const [remove, setRemove] = useState(false);
+  const fileInput = useRef<HTMLInputElement>(null);
   // La photo part dès qu'elle est choisie ; le formulaire n'envoie que son adresse.
   const photo = usePhotoUpload();
+  const types = ORGANIZATION_TYPES.map((type) => ({
+    value: type,
+    label: t(`pages.types.${type}`),
+  }));
+  const hasPhoto = !remove && !!preview;
   return (
     <form action={send} onSubmit={onSubmit} className="grid gap-5" noValidate>
-      <div className="flex items-center gap-4 rounded-xl bg-muted/50 p-4">
-        <ProfileAvatar
-          name={page.name}
-          photo={remove ? null : preview}
-          size="lg"
-        />
-        <div className="grid min-w-0 flex-1 gap-1">
-          <p className="truncate font-semibold">{page.name}</p>
-          <p className="truncate text-sm text-muted-foreground">@{page.slug}</p>
-        </div>
-      </div>
+      {/* Photo : l'avatar et ses deux actions, à la place du sélecteur de fichier du navigateur */}
       <FormField
         id="photo"
         label={t("pages.edit.photo")}
@@ -66,29 +76,49 @@ export function PageEditForm({
       >
         <input type="hidden" name="photoUrl" value={photo.url ?? ""} />
         <input type="hidden" name="removePhoto" value={remove ? "1" : ""} />
-        <div className="grid gap-2">
-          <Input
-            id="photo"
-            type="file"
-            accept="image/*"
-            aria-invalid={!!(photo.error ?? c.photo)}
-            onChange={(e) => {
-              const f = e.target.files?.[0];
-              setPreview(f ? URL.createObjectURL(f) : page.photoUrl);
-              setRemove(false);
-              if (f) void photo.upload(f);
-              else photo.reset();
-            }}
+        <input
+          ref={fileInput}
+          id="photo"
+          type="file"
+          accept="image/*"
+          hidden
+          onChange={(e) => {
+            const f = e.target.files?.[0];
+            setPreview(f ? URL.createObjectURL(f) : page.photoUrl);
+            setRemove(false);
+            if (f) void photo.upload(f);
+            else photo.reset();
+          }}
+        />
+        <div className="flex items-center gap-4 rounded-xl bg-muted p-3">
+          <ProfileAvatar
+            name={page.name}
+            photo={hasPhoto ? preview : null}
+            size="lg"
           />
-          {page.photoUrl && (
-            <label className="flex items-center gap-2 text-sm">
-              <Checkbox
-                checked={remove}
-                onCheckedChange={(v) => setRemove(v === true)}
-              />
-              {t("common.removePhoto")}
-            </label>
-          )}
+          <div className="flex flex-wrap gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => fileInput.current?.click()}
+              aria-invalid={!!(photo.error ?? c.photo)}
+            >
+              <CameraIcon /> {t("pages.edit.changePhoto")}
+            </Button>
+            {hasPhoto && (
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={() => {
+                  setRemove(true);
+                  photo.reset();
+                  if (fileInput.current) fileInput.current.value = "";
+                }}
+              >
+                {t("common.removePhoto")}
+              </Button>
+            )}
+          </div>
         </div>
       </FormField>
       <FormField
@@ -103,6 +133,7 @@ export function PageEditForm({
           maxLength={60}
           defaultValue={page.name}
           aria-invalid={!!c.name}
+          className={FILLED_FIELD}
         />
       </FormField>
       <FormField
@@ -110,19 +141,22 @@ export function PageEditForm({
         label={t("pages.request.type")}
         error={errors(c.type)}
       >
-        <select
-          id="type"
-          name="type"
-          defaultValue={page.type}
-          aria-invalid={!!c.type}
-          className="h-8 w-full rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 aria-invalid:border-destructive"
-        >
-          {ORGANIZATION_TYPES.map((type) => (
-            <option key={type} value={type}>
-              {t(`pages.types.${type}`)}
-            </option>
-          ))}
-        </select>
+        <Select name="type" defaultValue={page.type} items={types}>
+          <SelectTrigger
+            id="type"
+            aria-invalid={!!c.type}
+            className={cn(FILLED_FIELD, "w-full pr-3")}
+          >
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {types.map((type) => (
+              <SelectItem key={type.value} value={type.value}>
+                {type.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </FormField>
       <FormField
         id="description"
@@ -136,6 +170,7 @@ export function PageEditForm({
           rows={4}
           defaultValue={page.description}
           aria-invalid={!!c.description}
+          className={FILLED_TEXTAREA}
         />
       </FormField>
       {state.error && !state.fieldErrors && (
@@ -143,13 +178,16 @@ export function PageEditForm({
           {errors(state.error)}
         </p>
       )}
-      <Button
-        type="submit"
-        disabled={enCours || photo.uploading}
-        className="justify-self-start"
-      >
-        {t("common.save")}
-      </Button>
+      <ActionBar>
+        <Button
+          type="submit"
+          size="lg"
+          disabled={enCours || photo.uploading}
+          className={PRIMARY_ACTION}
+        >
+          {t("common.save")}
+        </Button>
+      </ActionBar>
     </form>
   );
 }

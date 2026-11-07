@@ -125,13 +125,13 @@ async function EventPage({ params }: PageProps<"/e/[id]">) {
           editable && (
             <>
               <Link
-                href={`/e/${event.id}/posts/new`}
+                href={`/studio/${event.organizer.slug}/evenements/${event.id}/post`}
                 className={buttonVariants({ variant: "ghost" })}
               >
                 <PlusIcon /> {t("posts.newPost")}
               </Link>
               <Link
-                href={`/e/${event.id}/edit`}
+                href={`/studio/${event.organizer.slug}/evenements/${event.id}/modifier`}
                 className={buttonVariants({ variant: "ghost" })}
               >
                 <PencilSimpleIcon /> {t("events.edit")}

@@ -18,6 +18,8 @@ import {
   WarningIcon,
   XIcon,
 } from "@/shared/components/icons";
+import { ActionBar } from "@/shared/components/ActionBar";
+import { FILLED_TEXTAREA, PRIMARY_ACTION } from "@/shared/components/form-kit";
 import { useErrorMessages } from "@/shared/i18n/errors";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
@@ -154,7 +156,7 @@ export function PostComposer({
           {items.map((item, index) => (
             <li
               key={item.key}
-              className="relative aspect-[4/5] overflow-hidden rounded-md bg-muted"
+              className="relative aspect-[4/5] overflow-hidden rounded-xl bg-muted"
             >
               {/* eslint-disable-next-line @next/next/no-img-element -- aperçu local (blob:) */}
               <img
@@ -226,9 +228,12 @@ export function PostComposer({
               <button
                 type="button"
                 onClick={() => input.current?.click()}
-                className="grid aspect-[4/5] w-full place-items-center content-center gap-1.5 rounded-md border-2 border-dashed text-sm font-semibold text-brand outline-none hover:bg-blush/40 focus-visible:ring-3 focus-visible:ring-ring/50"
+                className="grid aspect-[4/5] w-full place-items-center content-center gap-1.5 rounded-xl bg-muted text-sm font-semibold text-foreground outline-none hover:bg-muted/70 focus-visible:ring-3 focus-visible:ring-ring/50"
               >
-                <CameraIcon className="size-7" weight="duotone" />
+                <CameraIcon
+                  className="size-7 text-muted-foreground"
+                  weight="duotone"
+                />
                 {t("addPhotos")}
               </button>
             </li>
@@ -262,6 +267,7 @@ export function PostComposer({
           rows={4}
           placeholder={t("captionPlaceholder")}
           aria-invalid={!!fieldErrors.caption}
+          className={FILLED_TEXTAREA}
         />
         <p className="text-right text-xs text-muted-foreground tabular-nums">
           {caption.length}/{MAX_CAPTION}
@@ -273,9 +279,16 @@ export function PostComposer({
         )}
       </div>
 
-      <Button type="submit" size="lg" disabled={!ready || pending}>
-        {uploading ? t("waitUploads") : t("publish")}
-      </Button>
+      <ActionBar>
+        <Button
+          type="submit"
+          size="lg"
+          disabled={!ready || pending}
+          className={PRIMARY_ACTION}
+        >
+          {uploading ? t("waitUploads") : t("publish")}
+        </Button>
+      </ActionBar>
     </form>
   );
 }

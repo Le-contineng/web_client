@@ -11,8 +11,7 @@ export type StudioSection = "events" | "audience" | "team" | "page";
 /**
  * En-tête de l'espace organisateur : la page gérée (et le passage à une
  * autre), la seule action fuchsia de l'écran, « Publier », puis les
- * rubriques de l'espace. Audience, équipe et page ouvrent encore les écrans
- * existants (lot 3).
+ * rubriques de l'espace, communes à toutes ses adresses.
  */
 export async function StudioHeader({
   page,
@@ -29,15 +28,15 @@ export async function StudioHeader({
     { id: "events", href: `/studio/${slug}`, label: t("sections.events") },
     {
       id: "audience",
-      href: `/my-pages/${slug}/followers`,
+      href: `/studio/${slug}/audience`,
       label: t("sections.audience"),
     },
-    { id: "team", href: `/my-pages/${slug}/access`, label: t("sections.team") },
+    { id: "team", href: `/studio/${slug}/equipe`, label: t("sections.team") },
     ...(page.role === "owner"
       ? [
           {
             id: "page" as const,
-            href: `/my-pages/${slug}/edit`,
+            href: `/studio/${slug}/profil`,
             label: t("sections.page"),
           },
         ]
@@ -58,7 +57,7 @@ export async function StudioHeader({
           <ArrowSquareOutIcon />
         </Link>
         <Link
-          href={`/events/new?page=${slug}`}
+          href={`/studio/${slug}/evenements/nouveau`}
           className={buttonVariants({ className: "shrink-0" })}
         >
           <PlusIcon weight="bold" /> {t("publish")}

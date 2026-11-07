@@ -230,7 +230,8 @@
       "bio": "Bio",
       "linkKept": "The link /p/{slug} stays the same, even with a new name.",
       "saved": "Page updated",
-      "ownerOnly": "Only the page owner can edit it."
+      "ownerOnly": "Only the page owner can edit it.",
+      "changePhoto": "Change photo"
     },
     "stats": {
       "events": "{n, plural, one {post} other {posts}}",
@@ -724,6 +725,12 @@
       "past": "Finished events will show here, with their numbers.",
       "cancelled": "No cancelled events.",
       "publish": "Publish an event"
-    }
+    },
+    "taskBack": "{page} · {section}",
+    "task": {
+      "newEvent": "Publish an event",
+      "editEvent": "Edit event"
+    },
+    "ownerOnlyTeam": "Only the page owner manages its team."
   }
 }

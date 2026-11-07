@@ -7,6 +7,7 @@ export async function BottomNav() {
   const { t, account, links } = await getNavigation();
   return (
     <nav
+      data-bottom-nav
       aria-label={t("nav.main")}
       className="fixed inset-x-0 bottom-0 z-30 flex border-t bg-background pb-[env(safe-area-inset-bottom)] md:hidden"
     >

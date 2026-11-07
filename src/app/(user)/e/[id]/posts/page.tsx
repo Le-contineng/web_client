@@ -66,7 +66,7 @@ async function EventPostsPage({ params }: PageProps<"/e/[id]/posts">) {
           </Link>
           {canPublish && (
             <Link
-              href={`/e/${event.id}/posts/new`}
+              href={`/studio/${event.organizer.slug}/evenements/${event.id}/post`}
               className={buttonVariants({ size: "sm" })}
             >
               <PlusIcon /> {t("posts.newPost")}

@@ -1,10 +1,7 @@
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
-/**
- * Ancienne grille des publications : la gestion des événements d'une page
- * vit désormais dans l'espace organisateur (/studio/{slug}).
- */
+/** Ancienne adresse : la gestion de la page vit désormais dans l'espace organisateur. */
 async function ToStudio({ params }: PageProps<"/my-pages/[slug]">) {
   const { slug } = await params;
   redirect(`/studio/${encodeURIComponent(slug)}`);

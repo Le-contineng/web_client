@@ -230,7 +230,8 @@
       "bio": "Bio",
       "linkKept": "Le lien /p/{slug} ne change pas, même avec un nouveau nom.",
       "saved": "Page modifiée",
-      "ownerOnly": "Seul le propriétaire de la page peut la modifier."
+      "ownerOnly": "Seul le propriétaire de la page peut la modifier.",
+      "changePhoto": "Changer la photo"
     },
     "stats": {
       "events": "{n, plural, one {publication} other {publications}}",
@@ -724,6 +725,12 @@
       "past": "Les événements terminés apparaîtront ici, avec leurs chiffres.",
       "cancelled": "Aucun événement annulé.",
       "publish": "Publier un événement"
-    }
+    },
+    "taskBack": "{page} · {section}",
+    "task": {
+      "newEvent": "Publier un événement",
+      "editEvent": "Modifier l'événement"
+    },
+    "ownerOnlyTeam": "Seul le propriétaire de la page gère son équipe."
   }
 }

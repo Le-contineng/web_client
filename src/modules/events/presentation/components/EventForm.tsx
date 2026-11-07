@@ -29,6 +29,7 @@ import { useMounted } from "@/shared/hooks/useMounted";
 import { useErrorMessages } from "@/shared/i18n/errors";
 import type { FormAction, FormState } from "@/shared/lib/form";
 import { cn } from "@/shared/lib/utils";
+import { PRIMARY_ACTION } from "@/shared/components/form-kit";
 import { Button } from "@/shared/ui/button";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { usePhotoUpload } from "@/modules/medias";
@@ -301,7 +302,7 @@ export function EventForm({
         type="submit"
         size="lg"
         disabled={!ready || enCours || photo.uploading}
-        className="h-11 flex-1 disabled:bg-muted disabled:text-muted-foreground disabled:opacity-100"
+        className={cn(PRIMARY_ACTION, "flex-1 sm:flex-none")}
       >
         {event
           ? t("common.save")

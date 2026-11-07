@@ -15,8 +15,8 @@ import {
 } from "@/shared/ui/dropdown-menu";
 
 /**
- * Page gérée, et passage d'une page à l'autre pour qui est membre de
- * plusieurs : l'espace organisateur agit toujours au nom d'une seule page.
+ * Page gérée, et passage d'une page à l'autre (ou à la liste, d'où l'on
+ * demande une nouvelle page) : l'espace agit toujours au nom d'une seule page.
  */
 export function PageSwitcher({
   current,
@@ -26,7 +26,6 @@ export function PageSwitcher({
   pages: MemberPage[];
 }) {
   const t = useTranslations();
-  const others = pages.length > 1;
   const identity = (
     <>
       <ProfileAvatar name={current.name} photo={current.photoUrl} size="md" />
@@ -40,9 +39,6 @@ export function PageSwitcher({
       </span>
     </>
   );
-  if (!others) {
-    return <div className="flex min-w-0 items-center gap-3">{identity}</div>;
-  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -77,7 +73,7 @@ export function PageSwitcher({
           );
         })}
         <DropdownMenuSeparator />
-        <DropdownMenuItem render={<Link href="/my-pages" />}>
+        <DropdownMenuItem render={<Link href="/my-pages?all" />}>
           {t("studio.allPages")}
         </DropdownMenuItem>
       </DropdownMenuContent>

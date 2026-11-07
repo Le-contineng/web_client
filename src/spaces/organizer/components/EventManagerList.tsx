@@ -76,6 +76,7 @@ export async function EventManagerList({
           {shown.map((event) => (
             <EventRow
               key={event.id}
+              slug={slug}
               event={event}
               views={views[event.id] ?? 0}
               editable={isEditable(event, now)}
@@ -89,11 +90,13 @@ export async function EventManagerList({
 }
 
 async function EventRow({
+  slug,
   event,
   views,
   editable,
   ongoing,
 }: {
+  slug: string;
   event: EventView;
   views: number;
   editable: boolean;
@@ -162,6 +165,7 @@ async function EventRow({
         </p>
       </div>
       <EventRowActions
+        slug={slug}
         eventId={event.id}
         name={event.name}
         editable={editable}
@@ -190,7 +194,7 @@ async function EmptyTab({ tab, slug }: { tab: ManagementTab; slug: string }) {
       <p className="max-w-xs text-sm text-muted-foreground">{t(tab)}</p>
       {tab === "upcoming" && (
         <Link
-          href={`/events/new?page=${encodeURIComponent(slug)}`}
+          href={`/studio/${encodeURIComponent(slug)}/evenements/nouveau`}
           className={buttonVariants({ variant: "outline", size: "sm" })}
         >
           <PlusIcon /> {t("publish")}

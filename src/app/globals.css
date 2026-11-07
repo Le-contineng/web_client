@@ -358,3 +358,11 @@ body:has([data-slot="dialog-content"][data-relay])
       transparent;
   }
 }
+
+/* Hauteur de la barre de navigation du bas, quand elle est affichée : les
+   barres d'action collées en bas se posent au-dessus (ActionBar) */
+@media (width < 48rem) {
+  body:has([data-bottom-nav]) {
+    --bottom-nav: calc(3rem + 1px + env(safe-area-inset-bottom));
+  }
+}

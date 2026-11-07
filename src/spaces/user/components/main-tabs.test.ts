@@ -3,7 +3,16 @@ import { isMainTab } from "@/spaces/user/components/main-tabs";
 
 describe("isMainTab", () => {
   it("reconnaît les onglets de la barre du bas", () => {
-    for (const path of ["/", "/search", "/my-pages", "/profile"])
+    for (const path of [
+      "/",
+      "/search",
+      "/my-pages",
+      "/profile",
+      "/studio/bde",
+      "/studio/bde/audience",
+      "/studio/bde/equipe",
+      "/studio/bde/profil",
+    ])
       expect(isMainTab(path)).toBe(true);
   });
 
@@ -14,6 +23,8 @@ describe("isMainTab", () => {
       "/p/bde",
       "/e/gala26xx",
       "/my-pages/bde",
+      "/studio/bde/evenements/nouveau",
+      "/studio/bde/evenements/gala26xx/modifier",
     ])
       expect(isMainTab(path)).toBe(false);
   });

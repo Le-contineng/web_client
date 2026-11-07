@@ -39,10 +39,12 @@ export function UserLayout({ children }: { children: ReactNode }) {
         <EmailVerificationForAccount />
       </Suspense>
       <main className="pb-20 md:pb-10">{children}</main>
-      <ShowOnMainTabs>
+      <ShowOnMainTabs studio={false}>
         <Suspense>
           <CampaignBanner />
         </Suspense>
+      </ShowOnMainTabs>
+      <ShowOnMainTabs>
         <Suspense>
           <BottomNav />
         </Suspense>
