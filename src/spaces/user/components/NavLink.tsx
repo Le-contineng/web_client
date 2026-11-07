@@ -14,8 +14,11 @@ export function NavLink({
   activeIcon,
   label,
   variant,
+  also = [],
 }: {
   href: string;
+  /** Autres débuts d'adresse qui rendent l'entrée active (l'espace organisateur pour « Mes pages »). */
+  also?: string[];
   icon: ReactNode;
   /** Icône pleine de l'onglet actif, comme sur les réseaux sociaux. */
   activeIcon?: ReactNode;
@@ -24,7 +27,10 @@ export function NavLink({
 }) {
   const path = usePathname();
   const { panel } = useSidebarPanel();
-  const onPage = href === "/" ? path === "/" : path.startsWith(href);
+  const onPage =
+    href === "/"
+      ? path === "/"
+      : [href, ...also].some((prefix) => path.startsWith(prefix));
   // Un tiroir ouvert (notifications, « Plus ») devient l'onglet actif.
   const active = onPage && !(variant === "sidebar" && panel);
   const shownIcon = active && activeIcon ? activeIcon : icon;

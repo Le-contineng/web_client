@@ -681,5 +681,49 @@
       "waitUploads": "Envoi des photos…",
       "published": "Post publié"
     }
+  },
+  "studio": {
+    "title": "Gérer {name}",
+    "switchPage": "Changer de page (actuellement {name})",
+    "allPages": "Toutes mes pages",
+    "publish": "Publier",
+    "viewPublic": "Voir la page publique",
+    "sectionsLabel": "Rubriques de l'espace organisateur",
+    "tabsLabel": "Événements par état",
+    "sections": {
+      "events": "Événements",
+      "audience": "Audience",
+      "team": "Équipe",
+      "page": "Page"
+    },
+    "tabs": {
+      "upcoming": "À venir",
+      "ongoing": "En cours",
+      "past": "Passés",
+      "cancelled": "Annulés"
+    },
+    "badges": {
+      "ongoing": "En cours"
+    },
+    "stats": {
+      "interested": "{count, plural, one {intéressé} other {intéressés}}",
+      "views": "{count, plural, one {vue} other {vues}}",
+      "posts": "{count, plural, one {post} other {posts}}"
+    },
+    "actions": {
+      "menu": "Actions pour {name}",
+      "view": "Voir l'événement",
+      "posts": "Voir les posts",
+      "edit": "Modifier",
+      "newPost": "Nouveau post",
+      "cancel": "Annuler l'événement"
+    },
+    "empty": {
+      "upcoming": "Aucun événement à venir. Publiez le prochain : il apparaîtra dans le fil de toute l'école.",
+      "ongoing": "Aucun événement en ce moment.",
+      "past": "Les événements terminés apparaîtront ici, avec leurs chiffres.",
+      "cancelled": "Aucun événement annulé.",
+      "publish": "Publier un événement"
+    }
   }
 }

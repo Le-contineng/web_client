@@ -27,7 +27,7 @@ async function MyPages() {
       ) : (
         <MemberPageList
           pages={user.pages}
-          link={(p) => `/my-pages/${encodeURIComponent(p.slug)}`}
+          link={(p) => `/studio/${encodeURIComponent(p.slug)}`}
         />
       )}
       <Link

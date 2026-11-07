@@ -53,3 +53,9 @@ next-env.d.ts
 
 # Copies de travail créées par Claude Code
 /.claude/worktrees/
+
+# Compétence de design : questions, esquisses et captures temporaires
+.impeccable/questions/
+.impeccable/mocks/
+.impeccable/review/
+.impeccable/decision-payload.json

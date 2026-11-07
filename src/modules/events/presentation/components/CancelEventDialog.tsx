@@ -22,9 +22,14 @@ import { Textarea } from "@/shared/ui/textarea";
 export function CancelEventDialog({
   eventId,
   action,
+  open,
+  onOpenChange,
 }: {
   eventId: string;
   action: FormAction;
+  /** Ouverture pilotée de l'extérieur (menu d'actions) : pas de bouton déclencheur. */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }) {
   const t = useTranslations();
   const errors = useErrorMessages();
@@ -35,10 +40,12 @@ export function CancelEventDialog({
     action: send,
   } = useFormAction<FormState>(action, {});
   return (
-    <Dialog>
-      <DialogTrigger render={<Button variant="destructive" />}>
-        <ProhibitIcon /> {t("events.cancel")}
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      {open === undefined && (
+        <DialogTrigger render={<Button variant="destructive" />}>
+          <ProhibitIcon /> {t("events.cancel")}
+        </DialogTrigger>
+      )}
       <DialogContent>
         <form
           action={send}

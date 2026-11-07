@@ -39,6 +39,7 @@ export const CaretDownIcon = icon(P.CaretDownIcon);
 export const CaretLeftIcon = icon(P.CaretLeftIcon);
 export const CaretRightIcon = icon(P.CaretRightIcon);
 export const CaretUpIcon = icon(P.CaretUpIcon);
+export const CheckIcon = icon(P.CheckIcon);
 export const CheckCircleIcon = icon(P.CheckCircleIcon);
 export const ClockIcon = icon(P.ClockIcon);
 export const CopyIcon = icon(P.CopyIcon);

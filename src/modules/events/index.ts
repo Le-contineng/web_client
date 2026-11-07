@@ -45,6 +45,15 @@ export {
   DEFAULT_IMAGE,
 } from "@/modules/events/presentation/components/EventCard";
 export { EventDate } from "@/modules/events/presentation/components/EventDate";
+export {
+  countByTab,
+  eventsOfTab,
+  MANAGEMENT_TABS,
+  type ManagementTab,
+  readManagementTab,
+} from "@/modules/events/domain/event-management";
+export { DateTile } from "@/modules/events/presentation/components/DateTile";
+export { EventTime } from "@/modules/events/presentation/components/EventTime";
 export { CancelEventDialog } from "@/modules/events/presentation/components/CancelEventDialog";
 export { EventDetails } from "@/modules/events/presentation/components/EventDetails";
 export {

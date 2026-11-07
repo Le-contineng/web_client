@@ -681,5 +681,49 @@
       "waitUploads": "Uploading photos…",
       "published": "Post published"
     }
+  },
+  "studio": {
+    "title": "Manage {name}",
+    "switchPage": "Switch page (currently {name})",
+    "allPages": "All my pages",
+    "publish": "Publish",
+    "viewPublic": "View public page",
+    "sectionsLabel": "Organizer space sections",
+    "tabsLabel": "Events by state",
+    "sections": {
+      "events": "Events",
+      "audience": "Audience",
+      "team": "Team",
+      "page": "Page"
+    },
+    "tabs": {
+      "upcoming": "Upcoming",
+      "ongoing": "Ongoing",
+      "past": "Past",
+      "cancelled": "Cancelled"
+    },
+    "badges": {
+      "ongoing": "Live"
+    },
+    "stats": {
+      "interested": "interested",
+      "views": "{count, plural, one {view} other {views}}",
+      "posts": "{count, plural, one {post} other {posts}}"
+    },
+    "actions": {
+      "menu": "Actions for {name}",
+      "view": "View event",
+      "posts": "View posts",
+      "edit": "Edit",
+      "newPost": "New post",
+      "cancel": "Cancel event"
+    },
+    "empty": {
+      "upcoming": "No upcoming events. Publish the next one: it will show in the whole school's feed.",
+      "ongoing": "Nothing happening right now.",
+      "past": "Finished events will show here, with their numbers.",
+      "cancelled": "No cancelled events.",
+      "publish": "Publish an event"
+    }
   }
 }
