@@ -1,4 +1,8 @@
-import { ClockIcon, MapPinIcon } from "@/shared/components/icons";
+import {
+  CaretRightIcon,
+  ClockIcon,
+  MapPinIcon,
+} from "@/shared/components/icons";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import type React from "react";
@@ -14,10 +18,6 @@ import { EventBadges } from "@/modules/events/presentation/components/EventBadge
 import { InterestButton } from "@/modules/events/presentation/components/InterestButton";
 import { DateTile } from "@/modules/events/presentation/components/DateTile";
 import { PostTile } from "@/modules/events/presentation/components/PostTile";
-import {
-  SubEventFamily,
-  SubEventLinks,
-} from "@/modules/events/presentation/components/SubEventLinks";
 import { EventTime } from "@/modules/events/presentation/components/EventTime";
 import { PublicationDate } from "@/modules/events/presentation/components/PublicationDate";
 import { ShareIconButton } from "@/modules/events/presentation/components/ShareButton";
@@ -71,6 +71,39 @@ export function EventCard({
         onOpen(event.id);
       }
     : undefined;
+  const poster = (
+    <Link
+      href={`/e/${event.id}`}
+      onClick={open}
+      className="block sm:overflow-hidden sm:rounded-lg"
+      // Le nom accessible doit contenir le texte visible (WCAG 2.5.3) :
+      // « Annulé » est écrit sur la photo d'un événement annulé.
+      aria-label={
+        cancelled ? `${t("statuses.cancelled")} : ${event.name}` : event.name
+      }
+    >
+      <div
+        className="relative max-h-[70svh] w-full bg-muted"
+        style={{ aspectRatio: feedImageRatio(layout) }}
+      >
+        <ProgressiveImage
+          src={eventImage(event)}
+          fallbackSrc={eventImage({ ...event, photoUrl: null })}
+          fill
+          placeholder={layout?.placeholder}
+          priority={priority}
+          imageClassName={cn(cancelled && "opacity-60 grayscale")}
+        />
+        {cancelled && (
+          <span className="absolute inset-0 grid place-items-center">
+            <span className="rounded-md bg-destructive px-3 py-1 text-sm font-semibold tracking-wide text-white uppercase">
+              {t("statuses.cancelled")}
+            </span>
+          </span>
+        )}
+      </div>
+    </Link>
+  );
   return (
     <article className="grid min-w-0 grid-cols-1 gap-2.5 border-b pb-6 sm:border-none sm:pb-0">
       {/* Avatar, puis le nom de la page et, dessous, la date de publication */}
@@ -82,11 +115,33 @@ export function EventCard({
           tabIndex={-1}
           className="shrink-0"
         >
-          <ProfileAvatar
-            name={event.organizer.name}
-            photo={event.organizer.photoUrl}
-            size="sm"
-          />
+          {event.parent ? (
+            // Sous-événement : l'affiche du principal en carré, derrière l'avatar de la page
+            <span className="relative block size-9">
+              {/* eslint-disable-next-line @next/next/no-img-element -- vignette de 28 px */}
+              <img
+                src={eventImage({
+                  id: event.parent.id,
+                  photoUrl: event.parent.photoUrl,
+                  categories: event.categories,
+                })}
+                alt=""
+                className="absolute top-0 left-0 size-7 rounded-md object-cover"
+              />
+              <ProfileAvatar
+                name={event.organizer.name}
+                photo={event.organizer.photoUrl}
+                size="sm"
+                className="absolute right-0 bottom-0 size-6 ring-2 ring-background"
+              />
+            </span>
+          ) : (
+            <ProfileAvatar
+              name={event.organizer.name}
+              photo={event.organizer.photoUrl}
+              size="sm"
+            />
+          )}
         </Link>
         <div className="grid min-w-0 leading-tight">
           <span className="flex min-w-0 items-baseline gap-1.5">
@@ -96,6 +151,24 @@ export function EventCard({
             >
               {event.organizer.name}
             </Link>
+            {/* Sous-événement : le principal, à la suite de la page */}
+            {event.parent && (
+              <>
+                <CaretRightIcon
+                  aria-hidden
+                  className="size-3 shrink-0 self-center text-muted-foreground"
+                />
+                <Link
+                  href={`/e/${encodeURIComponent(event.parent.id)}`}
+                  aria-label={t("subEvents.partOfName", {
+                    name: event.parent.name,
+                  })}
+                  className="truncate text-sm font-semibold hover:underline"
+                >
+                  {event.parent.name}
+                </Link>
+              </>
+            )}
           </span>
           <PublicationDate
             iso={event.createdAt}
@@ -111,37 +184,7 @@ export function EventCard({
         />
       </header>
 
-      <Link
-        href={`/e/${event.id}`}
-        onClick={open}
-        className="block sm:overflow-hidden sm:rounded-lg"
-        // Le nom accessible doit contenir le texte visible (WCAG 2.5.3) :
-        // « Annulé » est écrit sur la photo d'un événement annulé.
-        aria-label={
-          cancelled ? `${t("statuses.cancelled")} : ${event.name}` : event.name
-        }
-      >
-        <div
-          className="relative max-h-[70svh] w-full bg-muted"
-          style={{ aspectRatio: feedImageRatio(layout) }}
-        >
-          <ProgressiveImage
-            src={eventImage(event)}
-            fallbackSrc={eventImage({ ...event, photoUrl: null })}
-            fill
-            placeholder={layout?.placeholder}
-            priority={priority}
-            imageClassName={cn(cancelled && "opacity-60 grayscale")}
-          />
-          {cancelled && (
-            <span className="absolute inset-0 grid place-items-center">
-              <span className="rounded-md bg-destructive px-3 py-1 text-sm font-semibold tracking-wide text-white uppercase">
-                {t("statuses.cancelled")}
-              </span>
-            </span>
-          )}
-        </div>
-      </Link>
+      {poster}
 
       {/* Ligne d'actions : tuile posée sur le coin de l'affiche, actions à droite,
           alignées sur le bas de la tuile */}
@@ -174,8 +217,6 @@ export function EventCard({
       </div>
 
       <div className="grid gap-1 px-4 sm:px-0">
-        {/* Sous-événement : sa famille au-dessus du titre, et sa place dans le programme */}
-        {event.parent && <SubEventFamily parent={event.parent} />}
         <h2
           className={cn(
             "truncate text-base leading-snug font-semibold",
@@ -205,8 +246,6 @@ export function EventCard({
           <MapPinIcon aria-hidden className="size-4 shrink-0" />
           <span className="truncate">{event.location}</span>
         </p>
-        {/* Principal : son prochain rendez-vous ; sous-événement : son principal */}
-        <SubEventLinks event={event} />
       </div>
     </article>
   );

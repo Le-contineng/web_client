@@ -1,83 +1,49 @@
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import type {
-  EventView,
-  ParentEvent,
-} from "@/modules/events/domain/event-view.types";
-import { CalendarDotsIcon, CaretRightIcon } from "@/shared/components/icons";
+import { eventImage } from "@/modules/events/domain/event-image";
+import type { Category } from "@/modules/events/domain/event";
+import type { ParentEvent } from "@/modules/events/domain/event-view.types";
 import { cn } from "@/shared/lib/utils";
 
 /**
- * Famille d'un sous-événement (ADR 0030 du backend), au-dessus de son titre :
- * le nom de son événement principal, cliquable, et sa place dans le
- * programme (« 2 sur 3 »). Sur la carte du fil comme sur la fiche.
+ * D'où vient un sous-événement (ADR 0030 du backend), comme la ligne de lieu
+ * sous le nom d'un compte dans un post : la mini-affiche de son événement
+ * principal, puis « dans [principal] ». Dans l'en-tête de sa carte et sur sa
+ * fiche.
  */
-export function SubEventFamily({
+export function SubEventOrigin({
   parent,
+  categories,
   className,
 }: {
   parent: ParentEvent;
+  /** Catégories du sous-événement : la photo par défaut du principal en dépend. */
+  categories: Category[];
   className?: string;
 }) {
   const t = useTranslations("subEvents");
-  return (
-    <p
-      className={cn(
-        "flex min-w-0 items-center gap-1.5 text-[13px] text-muted-foreground",
-        className,
-      )}
-    >
-      <Link
-        href={`/e/${encodeURIComponent(parent.id)}`}
-        aria-label={t("partOfName", { name: parent.name })}
-        className="flex min-w-0 items-center gap-0.5 font-semibold text-foreground hover:underline"
-      >
-        <span className="truncate">{parent.name}</span>
-        <CaretRightIcon
-          aria-hidden
-          className="size-3.5 shrink-0"
-          weight="bold"
-        />
-      </Link>
-      {parent.position > 0 && (
-        <>
-          <span aria-hidden>·</span>
-          <span className="shrink-0 tabular-nums">
-            {t("position", { position: parent.position, total: parent.total })}
-          </span>
-        </>
-      )}
-    </p>
-  );
-}
-
-/**
- * Sur la carte d'un événement principal : son programme (« Programme · 3
- * rendez-vous »), puisque chaque rendez-vous a déjà sa propre carte dans le
- * fil.
- */
-export function SubEventLinks({
-  event,
-  className,
-}: {
-  event: Pick<EventView, "id" | "subEvents">;
-  className?: string;
-}) {
-  const t = useTranslations("subEvents");
-  const count = event.subEvents?.count ?? 0;
-  if (count === 0) return null;
   return (
     <Link
-      href={`/e/${encodeURIComponent(event.id)}#programme`}
+      href={`/e/${encodeURIComponent(parent.id)}`}
       className={cn(
-        "flex w-fit items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground hover:underline",
+        "flex w-fit max-w-full min-w-0 items-center gap-1.5 text-xs text-muted-foreground hover:underline",
         className,
       )}
     >
-      <CalendarDotsIcon aria-hidden className="size-4 shrink-0" />
-      <span className="font-medium text-foreground">{t("programme")}</span>
-      <span aria-hidden>·</span>
-      <span>{t("programmeCount", { count })}</span>
+      {/* eslint-disable-next-line @next/next/no-img-element -- vignette de 16 px */}
+      <img
+        src={eventImage({
+          id: parent.id,
+          photoUrl: parent.photoUrl,
+          categories,
+        })}
+        alt=""
+        className="size-4 shrink-0 rounded-[3px] object-cover"
+      />
+      <span className="shrink-0">{t("in")}</span>
+      <span className="truncate font-semibold text-foreground">
+        {parent.name}
+      </span>
     </Link>
   );
 }

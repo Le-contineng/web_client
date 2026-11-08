@@ -52,10 +52,7 @@ export {
   type ManagementTab,
   readManagementTab,
 } from "@/modules/events/domain/event-management";
-export {
-  SubEventFamily,
-  SubEventLinks,
-} from "@/modules/events/presentation/components/SubEventLinks";
+export { SubEventOrigin } from "@/modules/events/presentation/components/SubEventLinks";
 export { SubEventProgramme } from "@/modules/events/presentation/components/SubEventProgramme";
 export { DateTile } from "@/modules/events/presentation/components/DateTile";
 export { EventTime } from "@/modules/events/presentation/components/EventTime";

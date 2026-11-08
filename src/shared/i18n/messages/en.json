@@ -744,7 +744,25 @@
       "newEvent": "Publish an event",
       "editEvent": "Edit event"
     },
-    "ownerOnlyTeam": "Only the page owner manages its team."
+    "ownerOnlyTeam": "Only the page owner manages its team.",
+    "admin": {
+      "title": "Event info",
+      "seeAll": "See all",
+      "noPosts": "No posts yet. Share photos during the event: they will show on its page.",
+      "addSubEvent": "Add a session",
+      "subEventOf": "Part of {name}",
+      "closed": "This event is over: it can no longer be edited.",
+      "short": {
+        "post": "Post",
+        "subEvent": "Programme",
+        "view": "Preview"
+      }
+    },
+    "chat": {
+      "yesterday": "Yesterday"
+    },
+    "more": "More options",
+    "settings": "Page settings"
   },
   "subEvents": {
     "programme": "Programme",
@@ -758,6 +776,9 @@
     "fromSubEvent": "Posted on {name}",
     "noneYet": "No sessions yet.",
     "position": "{position} of {total}",
-    "partOfName": "Part of {name}"
+    "partOfName": "Part of {name}",
+    "in": "in",
+    "nextShort": "next",
+    "more": "+{count}"
   }
 }

@@ -1,4 +1,4 @@
-import type { Event, Period } from "@/modules/events/domain/event";
+import type { Event, EventStatus, Period } from "@/modules/events/domain/event";
 import type { EventPostSummary } from "@/modules/events/domain/event-post";
 
 /** Projection d'un événement pour l'affichage : page organisatrice et période jointes. */
@@ -59,6 +59,17 @@ export type SubEventsSummary = {
     endsAt: string | null;
     location: string;
   } | null;
+  /** Tous les sous-événements, du plus tôt au plus tard : la rangée de tuiles de la carte. */
+  items?: {
+    id: string;
+    name: string;
+    startsAt: string;
+    location: string;
+    /** Son affiche ; sans affiche, la carte montre celle du principal. */
+    photoUrl: string | null;
+    period: Period;
+    status: EventStatus;
+  }[];
 };
 
 /** Intérêt pour un événement, tel que renvoyé après l'avoir changé. */

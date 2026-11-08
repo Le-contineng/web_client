@@ -744,7 +744,25 @@
       "newEvent": "Publier un événement",
       "editEvent": "Modifier l'événement"
     },
-    "ownerOnlyTeam": "Seul le propriétaire de la page gère son équipe."
+    "ownerOnlyTeam": "Seul le propriétaire de la page gère son équipe.",
+    "admin": {
+      "title": "Infos de l'événement",
+      "seeAll": "Tout voir",
+      "noPosts": "Aucun post pour l'instant. Publiez des photos pendant l'événement : elles s'afficheront sur sa fiche.",
+      "addSubEvent": "Ajouter un rendez-vous",
+      "subEventOf": "Fait partie de {name}",
+      "closed": "Événement terminé : il ne se modifie plus.",
+      "short": {
+        "post": "Post",
+        "subEvent": "Programme",
+        "view": "Aperçu"
+      }
+    },
+    "chat": {
+      "yesterday": "Hier"
+    },
+    "more": "Plus d'options",
+    "settings": "Paramètres de la page"
   },
   "subEvents": {
     "programme": "Programme",
@@ -758,6 +776,9 @@
     "fromSubEvent": "Publié sur {name}",
     "noneYet": "Aucun rendez-vous pour l'instant.",
     "position": "{position} sur {total}",
-    "partOfName": "Fait partie de {name}"
+    "partOfName": "Fait partie de {name}",
+    "in": "dans",
+    "nextShort": "prochain",
+    "more": "+{count}"
   }
 }
