@@ -361,7 +361,10 @@
       "stepEssentials": "The essentials",
       "stepDetails": "What makes people come"
     },
-    "interest": "Interested"
+    "interest": "Interested",
+    "stage": {
+      "more": "See more"
+    }
   },
   "categories": {
     "match": "Match / competition",

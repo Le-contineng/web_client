@@ -12,11 +12,11 @@ import { countViews } from "@/modules/audience/server";
 import {
   CancelEventDialog,
   EventDetails,
+  EventStage,
   isEditable,
   SubEventProgramme,
 } from "@/modules/events";
 import { getEventById, getSubEvents } from "@/modules/events/server";
-import { BackBar } from "@/shared/components/layout/BackBar";
 import { UrlToast } from "@/shared/components/UrlToast";
 import { env } from "@/shared/config/env";
 import { clientEnv } from "@/shared/config/env.client";
@@ -97,10 +97,49 @@ async function EventPage({ params }: PageProps<"/e/[id]">) {
   const editable = isEditable(event, new Date());
   const subEvents = event.subEvents?.count ? await getSubEvents(event.id) : [];
 
+  const views = isOrganizer ? (
+    <ViewCount
+      className="bg-black/30 text-white backdrop-blur-sm"
+      n={
+        (await countViews(event.organizerPageId, [event.id])).get(event.id) ?? 0
+      }
+    />
+  ) : null;
+  const manage = isOrganizer && editable && (
+    <>
+      {!event.parent && (
+        <Link
+          href={`/studio/${event.organizer.slug}/evenements/nouveau?parent=${event.id}`}
+          className={buttonVariants({ variant: "ghost" })}
+        >
+          <CalendarPlusIcon /> {t("subEvents.addSubEvent")}
+        </Link>
+      )}
+      <Link
+        href={`/studio/${event.organizer.slug}/evenements/${event.id}/post`}
+        className={buttonVariants({ variant: "ghost" })}
+      >
+        <PlusIcon /> {t("posts.newPost")}
+      </Link>
+      <Link
+        href={`/studio/${event.organizer.slug}/evenements/${event.id}/modifier`}
+        className={buttonVariants({ variant: "ghost" })}
+      >
+        <PencilSimpleIcon /> {t("events.edit")}
+      </Link>
+      <CancelEventDialog eventId={event.id} action={cancelEventAction} />
+    </>
+  );
+  const share = {
+    url: `${clientEnv.NEXT_PUBLIC_SITE_URL}/e/${event.id}`,
+    onShare: trackShareClickAction.bind(null, event.id),
+  };
+  const programme = subEvents.length > 0 && (
+    <SubEventProgramme subEvents={subEvents} />
+  );
+
   return (
-    <div className="pb-10 md:px-6 md:pt-8">
-      {/* Plein écran sur téléphone : pas d'en-tête du site, ce retour à la place */}
-      <BackBar title={event.name} />
+    <>
       <UrlToast
         messages={{
           published: t("events.published"),
@@ -109,64 +148,29 @@ async function EventPage({ params }: PageProps<"/e/[id]">) {
         }}
       />
       <ViewTracker report={trackEventViewAction.bind(null, event.id)} />
-      <EventDetails
+      {/* Téléphone : plein écran, actions à droite, infos dans un panneau */}
+      <EventStage
         event={event}
-        share={{
-          url: `${clientEnv.NEXT_PUBLIC_SITE_URL}/e/${event.id}`,
-          onShare: trackShareClickAction.bind(null, event.id),
-        }}
-        views={
-          isOrganizer ? (
-            <ViewCount
-              className="bg-black/30 text-white backdrop-blur-sm"
-              n={
-                (await countViews(event.organizerPageId, [event.id])).get(
-                  event.id,
-                ) ?? 0
-              }
-            />
-          ) : null
-        }
-        manage={
-          isOrganizer &&
-          editable && (
-            <>
-              {!event.parent && (
-                <Link
-                  href={`/studio/${event.organizer.slug}/evenements/nouveau?parent=${event.id}`}
-                  className={buttonVariants({ variant: "ghost" })}
-                >
-                  <CalendarPlusIcon /> {t("subEvents.addSubEvent")}
-                </Link>
-              )}
-              <Link
-                href={`/studio/${event.organizer.slug}/evenements/${event.id}/post`}
-                className={buttonVariants({ variant: "ghost" })}
-              >
-                <PlusIcon /> {t("posts.newPost")}
-              </Link>
-              <Link
-                href={`/studio/${event.organizer.slug}/evenements/${event.id}/modifier`}
-                className={buttonVariants({ variant: "ghost" })}
-              >
-                <PencilSimpleIcon /> {t("events.edit")}
-              </Link>
-              <CancelEventDialog
-                eventId={event.id}
-                action={cancelEventAction}
-              />
-            </>
-          )
-        }
+        share={share}
+        manage={manage}
+        views={views}
+        programme={programme}
+        className="md:hidden"
       />
-      {/* Programme d'un événement principal (ADR 0030 du backend) */}
-      {subEvents.length > 0 && (
-        <SubEventProgramme
-          subEvents={subEvents}
-          className="px-4 pt-6 md:px-0"
+      {/* Ordinateur : la fiche en deux colonnes */}
+      <div className="pb-10 max-md:hidden md:px-6 md:pt-8">
+        <EventDetails
+          event={event}
+          share={share}
+          views={views}
+          manage={manage}
         />
-      )}
-    </div>
+        {/* Programme d'un événement principal (ADR 0030 du backend) */}
+        {subEvents.length > 0 && (
+          <SubEventProgramme subEvents={subEvents} className="pt-6" />
+        )}
+      </div>
+    </>
   );
 }
 

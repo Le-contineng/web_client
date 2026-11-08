@@ -58,6 +58,7 @@ export { DateTile } from "@/modules/events/presentation/components/DateTile";
 export { EventTime } from "@/modules/events/presentation/components/EventTime";
 export { CancelEventDialog } from "@/modules/events/presentation/components/CancelEventDialog";
 export { EventDetails } from "@/modules/events/presentation/components/EventDetails";
+export { EventStage } from "@/modules/events/presentation/components/EventStage";
 export {
   type LoadEvents,
   EventFeed,

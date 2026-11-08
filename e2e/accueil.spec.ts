@@ -42,7 +42,10 @@ test("la fiche s'ouvre sans compte et un lien inconnu est expliqué (US-36)", as
   await expect(
     page.getByRole("heading", { level: 1, name: "Soirée de gala" }),
   ).toBeVisible();
-  await expect(page.getByText("Modifié").first()).toBeVisible();
+  // La fiche plein écran du téléphone est dans la page, masquée sur ordinateur
+  await expect(
+    page.getByText("Modifié").filter({ visible: true }).first(),
+  ).toBeVisible();
   // Partager est une icône de la ligne d'actions ; le reste est dans « ··· »
   // (sheet sur téléphone, panneau sur ordinateur : ce dernier remplace le
   // premier une fois la page chargée, d'où la répétition)
