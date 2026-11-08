@@ -94,7 +94,13 @@
     "duplicatePhoto": "The same photo appears twice.",
     "captionTooLong": "The caption is longer than 2,200 characters.",
     "altTooLong": "The text alternative is longer than 500 characters.",
-    "postNotFound": "This post no longer exists."
+    "postNotFound": "This post no longer exists.",
+    "outsideParent": "The sub-event must take place during the main event.",
+    "subEventsOutside": "Some sub-events would fall outside these dates: move them first.",
+    "parentNotFound": "The main event no longer exists.",
+    "parentOtherPage": "The main event belongs to another page.",
+    "parentIsSubEvent": "A sub-event cannot have sub-events.",
+    "parentNotEditable": "The main event is over or cancelled."
   },
   "nav": {
     "home": "Home",
@@ -714,7 +720,8 @@
     "stats": {
       "interested": "interested",
       "views": "{count, plural, one {view} other {views}}",
-      "posts": "{count, plural, one {post} other {posts}}"
+      "posts": "{count, plural, one {post} other {posts}}",
+      "subEvents": "{count, plural, one {session} other {sessions}}"
     },
     "actions": {
       "menu": "Actions for {name}",
@@ -722,7 +729,8 @@
       "posts": "View posts",
       "edit": "Edit",
       "newPost": "New post",
-      "cancel": "Cancel event"
+      "cancel": "Cancel event",
+      "addSubEvent": "Add a sub-event"
     },
     "empty": {
       "upcoming": "No upcoming events. Publish the next one: it will show in the whole school's feed.",
@@ -736,6 +744,41 @@
       "newEvent": "Publish an event",
       "editEvent": "Edit event"
     },
-    "ownerOnlyTeam": "Only the page owner manages its team."
+    "ownerOnlyTeam": "Only the page owner manages its team.",
+    "admin": {
+      "title": "Event info",
+      "seeAll": "See all",
+      "noPosts": "No posts yet. Share photos during the event: they will show on its page.",
+      "addSubEvent": "Add a session",
+      "subEventOf": "Part of {name}",
+      "closed": "This event is over: it can no longer be edited.",
+      "short": {
+        "post": "Post",
+        "subEvent": "Programme",
+        "view": "Preview"
+      }
+    },
+    "chat": {
+      "yesterday": "Yesterday"
+    },
+    "more": "More options",
+    "settings": "Page settings"
+  },
+  "subEvents": {
+    "programme": "Programme",
+    "programmeCount": "{count, plural, one {# session} other {# sessions}}",
+    "partOf": "Part of",
+    "nextUp": "Next up",
+    "addSubEvent": "Add a sub-event",
+    "subEventOf": "Sub-event of {name}",
+    "newSubEvent": "New sub-event",
+    "within": "During {name}",
+    "fromSubEvent": "Posted on {name}",
+    "noneYet": "No sessions yet.",
+    "position": "{position} of {total}",
+    "partOfName": "Part of {name}",
+    "in": "in",
+    "nextShort": "next",
+    "more": "+{count}"
   }
 }

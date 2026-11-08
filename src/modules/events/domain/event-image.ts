@@ -46,11 +46,15 @@ function hash(text: string): number {
  * sa première catégorie, toujours la même pour un même événement.
  */
 export function eventImage(
-  event: Pick<Event, "id" | "photoUrl" | "categories">,
+  event: Pick<Event, "id" | "photoUrl" | "categories"> & {
+    parent?: { id: string } | null;
+  },
 ): string {
   if (event.photoUrl) return event.photoUrl;
   const choices = PHOTOS[event.categories[0] ?? "other"];
-  return photo(choices[hash(event.id) % choices.length]!);
+  // Un sous-événement tire la même photo que son principal (ADR 0030 du backend)
+  const seed = event.parent?.id ?? event.id;
+  return photo(choices[hash(seed) % choices.length]!);
 }
 
 /**
@@ -91,4 +95,24 @@ export function carouselRatio(
 ): number {
   const first = images[0];
   return feedImageRatio(first ? { ...first, placeholder: null } : null);
+}
+
+/**
+ * Pour l'affichage seulement : un sous-événement sans affiche reprend celle de
+ * son événement principal (ADR 0030 du backend), pour qu'on reconnaisse la
+ * famille d'un coup d'œil. Jamais pour un formulaire : l'affiche du principal
+ * n'appartient pas au sous-événement.
+ */
+export function withInheritedPhoto<
+  T extends Pick<Event, "photoUrl"> & {
+    photo?: PhotoLayout | null;
+    parent?: { photoUrl: string | null; photo?: PhotoLayout | null } | null;
+  },
+>(event: T): T {
+  if (event.photoUrl || !event.parent?.photoUrl) return event;
+  return {
+    ...event,
+    photoUrl: event.parent.photoUrl,
+    photo: event.parent.photo ?? null,
+  };
 }

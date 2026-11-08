@@ -100,6 +100,11 @@ export async function createEventAction(
   const f = parseForm(eventShape, formData);
   if (!f) return { error: "invalidInput" };
   const { photoUrl, removePhoto, ...form } = f;
+  // Sous-événement (ADR 0030 du backend) : l'API vérifie le parent (même page, période)
+  const parent = idField
+    .optional()
+    .safeParse(formData.get("parentEventId") || undefined);
+  if (!parent.success) return { error: "invalidInput" };
   const prepared = await prepareEvent(
     form,
     photoUrl,
@@ -109,7 +114,10 @@ export async function createEventAction(
   );
   if (!prepared.ok) return prepared.state;
   const result = await catchApiError(() =>
-    createEvent(page.pageId, prepared.body),
+    createEvent(page.pageId, {
+      ...prepared.body,
+      parentEventId: parent.data ?? null,
+    }),
   );
   if (!result.ok) return result.state;
   revalidatePath("/", "layout");

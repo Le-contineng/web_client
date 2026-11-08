@@ -14,6 +14,8 @@ export type PostImage = {
 
 export type EventPost = {
   id: string;
+  /** Événement où le post a été publié : un sous-événement quand il vient de l'un d'eux. */
+  eventId: string;
   caption: string | null;
   /** Au moins une image, dans l'ordre du carrousel. */
   images: PostImage[];

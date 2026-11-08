@@ -108,7 +108,13 @@ export function EventForm({
   action,
   createAction,
   showPage = true,
+  parent,
 }: {
+  /**
+   * Événement principal, pour publier un sous-événement (ADR 0030 du
+   * backend) : son lieu et ses catégories sont préremplis.
+   */
+  parent?: Pick<Event, "id" | "name" | "location" | "categories">;
   /**
    * Rappel de la page en tête du formulaire ; masqué quand l'écran la nomme
    * déjà (espace organisateur).
@@ -204,8 +210,8 @@ export function EventForm({
   // Champs obligatoires remplis : le bouton reste grisé tant qu'ils ne le sont pas
   const [filled, setFilled] = useState({
     name: !!event?.name,
-    location: !!event?.location,
-    categories: (event?.categories.length ?? 0) > 0,
+    location: !!(event ?? parent)?.location,
+    categories: ((event ?? parent)?.categories.length ?? 0) > 0,
   });
   function readFilled() {
     const form = formRef.current;
@@ -347,6 +353,7 @@ export function EventForm({
       className="flex min-h-0 flex-1 flex-col"
     >
       {event && <input type="hidden" name="id" value={event.id} />}
+      {parent && <input type="hidden" name="parentEventId" value={parent.id} />}
       <input type="hidden" name="photoUrl" value={photo.url ?? ""} />
       <input type="hidden" name="removePhoto" value={remove ? "1" : ""} />
 
@@ -355,6 +362,8 @@ export function EventForm({
 
         {/* ——— Étape 1 : l'essentiel (nom, quand, où) ——— */}
         <div hidden={!shown(0)} className="grid gap-4">
+          {/* Refus lié au principal (autre page, passé, annulé…) */}
+          <FieldError message={errorOf("parentEventId")} />
           {/* Page organisatrice, choisie avant le formulaire */}
           <div hidden={!showPage} className="flex items-center gap-2">
             <span className="inline-flex items-center gap-2 rounded-lg bg-muted px-2.5 py-1.5 text-sm font-medium">
@@ -448,7 +457,7 @@ export function EventForm({
                 name="location"
                 data-field="location"
                 maxLength={150}
-                defaultValue={event?.location}
+                defaultValue={(event ?? parent)?.location}
                 placeholder={t("events.form.locationPlaceholder")}
                 aria-label={t("events.location")}
                 aria-invalid={!!fieldErrors.location}
@@ -591,7 +600,7 @@ export function EventForm({
                     name="categories"
                     value={cat}
                     data-field={i === 0 ? "categories" : undefined}
-                    defaultChecked={event?.categories.includes(cat)}
+                    defaultChecked={(event ?? parent)?.categories.includes(cat)}
                     className="peer sr-only"
                   />
                   <span

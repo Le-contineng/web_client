@@ -28,14 +28,9 @@ export function PageSwitcher({
   const t = useTranslations();
   const identity = (
     <>
-      <ProfileAvatar name={current.name} photo={current.photoUrl} size="md" />
-      <span className="grid min-w-0 text-left leading-tight">
-        <span className="truncate text-xl font-semibold tracking-tight">
-          {current.name}
-        </span>
-        <span className="truncate text-xs text-muted-foreground">
-          {t(`pages.roles.${current.role}`)}
-        </span>
+      <ProfileAvatar name={current.name} photo={current.photoUrl} size="sm" />
+      <span className="truncate text-lg font-semibold tracking-tight">
+        {current.name}
       </span>
     </>
   );
@@ -43,7 +38,7 @@ export function PageSwitcher({
     <DropdownMenu>
       <DropdownMenuTrigger
         aria-label={t("studio.switchPage", { name: current.name })}
-        className="-ml-2 flex min-w-0 items-center gap-3 rounded-lg py-1 pr-2 pl-2 outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50"
+        className="-ml-1 flex min-w-0 items-center gap-2.5 rounded-full py-1 pr-2 pl-1 outline-none hover:bg-muted/60 focus-visible:ring-3 focus-visible:ring-ring/50"
       >
         {identity}
         <CaretDownIcon className="size-4 shrink-0 text-muted-foreground" />

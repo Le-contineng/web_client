@@ -2,14 +2,20 @@ import {
   CalendarXIcon,
   PencilSimpleIcon,
   PlusIcon,
+  CalendarPlusIcon,
 } from "@/shared/components/icons";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { ViewCount, ViewTracker } from "@/modules/audience";
 import { countViews } from "@/modules/audience/server";
-import { CancelEventDialog, isEditable, EventDetails } from "@/modules/events";
-import { getEventById } from "@/modules/events/server";
+import {
+  CancelEventDialog,
+  EventDetails,
+  isEditable,
+  SubEventProgramme,
+} from "@/modules/events";
+import { getEventById, getSubEvents } from "@/modules/events/server";
 import { BackBar } from "@/shared/components/layout/BackBar";
 import { UrlToast } from "@/shared/components/UrlToast";
 import { env } from "@/shared/config/env";
@@ -89,6 +95,7 @@ async function EventPage({ params }: PageProps<"/e/[id]">) {
   // chaque action est revérifiée par le serveur.
   const isOrganizer = (await getMyPageById(event.organizerPageId)) !== null;
   const editable = isEditable(event, new Date());
+  const subEvents = event.subEvents?.count ? await getSubEvents(event.id) : [];
 
   return (
     <div className="pb-10 md:px-6 md:pt-8">
@@ -124,6 +131,14 @@ async function EventPage({ params }: PageProps<"/e/[id]">) {
           isOrganizer &&
           editable && (
             <>
+              {!event.parent && (
+                <Link
+                  href={`/studio/${event.organizer.slug}/evenements/nouveau?parent=${event.id}`}
+                  className={buttonVariants({ variant: "ghost" })}
+                >
+                  <CalendarPlusIcon /> {t("subEvents.addSubEvent")}
+                </Link>
+              )}
               <Link
                 href={`/studio/${event.organizer.slug}/evenements/${event.id}/post`}
                 className={buttonVariants({ variant: "ghost" })}
@@ -144,6 +159,13 @@ async function EventPage({ params }: PageProps<"/e/[id]">) {
           )
         }
       />
+      {/* Programme d'un événement principal (ADR 0030 du backend) */}
+      {subEvents.length > 0 && (
+        <SubEventProgramme
+          subEvents={subEvents}
+          className="px-4 pt-6 md:px-0"
+        />
+      )}
     </div>
   );
 }
