@@ -361,7 +361,10 @@
       "stepEssentials": "L'essentiel",
       "stepDetails": "Ce qui donne envie"
     },
-    "interest": "Intéressé"
+    "interest": "Intéressé",
+    "stage": {
+      "more": "Voir plus"
+    }
   },
   "categories": {
     "match": "Match / compétition",
