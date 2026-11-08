@@ -96,18 +96,22 @@ export function EventStage({
         className,
       )}
     >
-      {/* L'affiche entre deux bandes noires : en haut le retour et l'état,
-          en bas le texte ; rien ne se pose sur l'image, sauf les actions */}
-      <div className="absolute inset-x-0 top-[calc(3.5rem+env(safe-area-inset-top))] bottom-[calc(6rem+env(safe-area-inset-bottom))] overflow-hidden">
+      {/* L'affiche entre deux bandes noires, à ses propres proportions : toute
+          la largeur, sa hauteur naturelle, centrée ; seule une affiche plus
+          haute que l'espace est recadrée au centre */}
+      <div className="absolute inset-x-0 top-[calc(3.5rem+env(safe-area-inset-top))] bottom-[calc(6rem+env(safe-area-inset-bottom))] flex items-center">
         {/* eslint-disable-next-line @next/next/no-img-element -- affiche plein écran */}
         <img
           src={image}
           alt=""
-          className={cn("size-full object-cover", cancelled && "grayscale")}
+          className={cn(
+            "h-auto max-h-full w-full object-cover",
+            cancelled && "grayscale",
+          )}
         />
-        {/* Léger voile à droite : les actions blanches restent lisibles */}
-        <div className="absolute inset-y-0 right-0 w-24 bg-linear-to-l from-black/35 to-transparent" />
       </div>
+      {/* Léger voile à droite : les actions blanches restent lisibles */}
+      <div className="absolute top-[calc(3.5rem+env(safe-area-inset-top))] right-0 bottom-[calc(6rem+env(safe-area-inset-bottom))] w-24 bg-linear-to-l from-black/35 to-transparent" />
 
       {/* Retour et état, en haut */}
       <div className="absolute inset-x-0 top-0 flex h-[calc(3.5rem+env(safe-area-inset-top))] items-center gap-2 px-3 pt-[env(safe-area-inset-top)]">
