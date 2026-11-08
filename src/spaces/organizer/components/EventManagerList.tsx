@@ -125,7 +125,7 @@ async function EventRow({
       >
         {/* L'affiche en billet, la date sur un bandeau */}
         <span
-          className="relative size-14 shrink-0 overflow-hidden rounded-lg bg-muted"
+          className="relative size-14 shrink-0 overflow-hidden bg-muted"
           style={ongoing ? foldClip(12) : undefined}
         >
           {/* eslint-disable-next-line @next/next/no-img-element -- vignette de 56 px */}
@@ -144,7 +144,7 @@ async function EventRow({
           </span>
           {ongoing && <Fold size={12} />}
         </span>
-        <div className="grid min-w-0 flex-1 gap-0.5 border-b py-3">
+        <div className="grid min-w-0 flex-1 gap-0.5 border-b py-4">
           <div className="flex items-baseline gap-2">
             <p
               className={cn(
