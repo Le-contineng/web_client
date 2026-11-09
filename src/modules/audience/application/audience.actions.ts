@@ -20,6 +20,26 @@ export async function trackEventViewAction(
   });
 }
 
+/** Au plus, par envoi : une story ne montre que les nouveautés de deux jours. */
+const VIEWS_MAX = 50;
+
+/**
+ * Écrans vus pendant une story (ADR 0025 du client) : envoyés en une seule
+ * fois à sa fermeture, au lieu d'une action par écran. Chacun compte comme
+ * l'ouverture de sa fiche.
+ */
+export async function trackEventViewsAction(eventIds: string[]): Promise<void> {
+  const ids = z.array(idField).max(VIEWS_MAX).safeParse(eventIds);
+  if (!ids.success) return;
+  await Promise.all(
+    [...new Set(ids.data)].map((id) =>
+      trackView(id, false).catch(() => {
+        // Une mesure perdue ne doit jamais gêner la lecture.
+      }),
+    ),
+  );
+}
+
 export async function trackShareClickAction(eventId: string): Promise<void> {
   const id = idField.safeParse(eventId);
   if (!id.success) return;

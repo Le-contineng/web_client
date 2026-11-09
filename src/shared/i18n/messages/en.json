@@ -793,6 +793,7 @@
     "storyOf": "New from {page}",
     "close": "Close",
     "previous": "Previous",
-    "nextScreen": "Next"
+    "nextScreen": "Next",
+    "hint": "Swipe up for details"
   }
 }

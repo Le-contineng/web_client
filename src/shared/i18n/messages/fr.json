@@ -793,6 +793,7 @@
     "storyOf": "Nouveautés de {page}",
     "close": "Fermer",
     "previous": "Précédent",
-    "nextScreen": "Suivant"
+    "nextScreen": "Suivant",
+    "hint": "Glisse vers le haut pour les détails"
   }
 }

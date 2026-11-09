@@ -241,6 +241,8 @@ body:has([data-slot="dialog-content"][data-relay])
  * par apparition : un modal qui entre n'anime pas aussi son contenu.
  * - animate-rise : entrée d'un élément (fondu + légère montée)
  * - animate-shake : erreur (léger tremblement horizontal)
+ * - animate-swipe-hand / animate-swipe-trail : main qui glisse vers le haut
+ *   (astuce de la première story), et sa traînée
  */
 @theme {
   --ease-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -248,6 +250,43 @@ body:has([data-slot="dialog-content"][data-relay])
   --animate-shake: shake 320ms ease-in-out;
   /* Tuile « Posts » avec du nouveau : halo qui respire et léger balancement */
   --animate-beckon: beckon 2.4s var(--ease-soft) infinite;
+  --animate-swipe-hand: swipe-hand 1.8s var(--ease-soft) infinite;
+  --animate-swipe-trail: swipe-trail 1.8s var(--ease-soft) infinite;
+
+  @keyframes swipe-hand {
+    0% {
+      opacity: 0;
+      transform: translateY(0);
+    }
+    15% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    55% {
+      opacity: 1;
+    }
+    70%,
+    100% {
+      opacity: 0;
+      transform: translateY(-5rem);
+    }
+  }
+  @keyframes swipe-trail {
+    0%,
+    15% {
+      opacity: 0;
+      transform: scaleY(0);
+    }
+    55% {
+      opacity: 0.7;
+      transform: scaleY(1);
+    }
+    70%,
+    100% {
+      opacity: 0;
+      transform: scaleY(1);
+    }
+  }
 
   @keyframes beckon {
     0%,
