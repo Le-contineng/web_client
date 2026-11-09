@@ -783,5 +783,16 @@
     "in": "in",
     "nextShort": "next",
     "more": "+{count}"
+  },
+  "stories": {
+    "title": "New",
+    "bubble": "{count, plural, one {# new event} other {# new events}}",
+    "seen": "seen",
+    "scrollLeft": "Previous bubbles",
+    "scrollRight": "Next bubbles",
+    "storyOf": "New from {page}",
+    "close": "Close",
+    "previous": "Previous",
+    "nextScreen": "Next"
   }
 }

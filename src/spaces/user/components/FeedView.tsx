@@ -1,12 +1,12 @@
 import { CalendarXIcon } from "@/shared/components/icons";
 import { getTranslations } from "next-intl/server";
-import { EventFeed, readUrlFilters } from "@/modules/events";
+import { EventFeed, readUrlFilters, StoryBar } from "@/modules/events";
 import {
   trackEventViewAction,
   trackShareClickAction,
 } from "@/modules/audience/application/audience.actions";
 import { loadEventsAction } from "@/modules/events/application/events.actions";
-import { listEventsFromUrl } from "@/modules/events/server";
+import { listEventsFromUrl, listStories } from "@/modules/events/server";
 import { CampaignCard } from "@/modules/campaigns";
 import { trackCampaignAction } from "@/modules/campaigns/application/campaigns.actions";
 import { getActiveCampaigns } from "@/modules/campaigns/server";
@@ -20,9 +20,11 @@ export async function FeedView() {
   const t = await getTranslations();
   // Pas de filtre sur le fil : ils sont sur la recherche (/search).
   const filters = readUrlFilters({});
-  const [{ events, nextOffset, asOf }, campaigns] = await Promise.all([
+  const [{ events, nextOffset, asOf }, campaigns, stories] = await Promise.all([
     listEventsFromUrl(filters),
     getActiveCampaigns(),
+    // Les stories ne doivent jamais empêcher le fil de s'afficher (ADR 0025)
+    listStories().catch(() => []),
   ]);
 
   const topCampaign = campaigns.FEED_TOP;
@@ -32,6 +34,10 @@ export async function FeedView() {
   return (
     <div className="mx-auto grid max-w-[470px] gap-4 pt-4 sm:px-4 md:pt-8 lg:mr-auto lg:ml-[max(2rem,calc(50%-235px-10rem))]">
       <h1 className="sr-only">{t("events.listTitle")}</h1>
+      {/* Nouveaux événements en stories ; ils restent aussi dans le fil */}
+      {stories.length > 0 && (
+        <StoryBar bubbles={stories} onView={trackEventViewAction} />
+      )}
       {/* Mise en avant hors du fil, en tête */}
       {topCampaign && (
         <CampaignCard campaign={topCampaign} track={trackCampaignAction} />

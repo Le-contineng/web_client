@@ -44,6 +44,8 @@ export {
   EventCard,
   DEFAULT_IMAGE,
 } from "@/modules/events/presentation/components/EventCard";
+export { StoryBar } from "@/modules/events/presentation/components/StoryBar";
+export type { StoryBubble } from "@/modules/events/domain/stories";
 export { EventDate } from "@/modules/events/presentation/components/EventDate";
 export {
   countByTab,

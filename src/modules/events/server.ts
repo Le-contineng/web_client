@@ -12,6 +12,7 @@ export type {
 export { listEvents } from "@/modules/events/infrastructure/list-events";
 export {
   listEventsFromUrl,
+  listStories,
   searchEvents,
 } from "@/modules/events/infrastructure/event-queries";
 

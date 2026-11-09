@@ -6,6 +6,7 @@ import {
   type Period,
 } from "@/modules/events/domain/event";
 import type { UrlFilters } from "@/modules/events/domain/url-filters";
+import { storyBubbles } from "@/modules/events/domain/stories";
 
 /** Liste filtrée par l'adresse (US-17) ; les pages y sont désignées par leur slug. */
 export function listEventsFromUrl(
@@ -39,4 +40,21 @@ export async function searchEvents(r: {
     MAX_RESULTS,
   );
   return { events, total };
+}
+
+/** Assez large pour couvrir deux jours de publications. */
+const STORY_SCAN = 100;
+
+/**
+ * Stories des nouveaux événements (ADR 0025). L'API n'a pas encore de lecture
+ * dédiée : on lit les événements en cours et à venir et on garde ceux créés
+ * il y a moins de deux jours.
+ */
+export async function listStories(now = new Date()) {
+  const { events } = await listEvents(
+    { categories: [], periods: ["ongoing", "upcoming"], pages: [] },
+    0,
+    STORY_SCAN,
+  );
+  return storyBubbles(events, now);
 }
