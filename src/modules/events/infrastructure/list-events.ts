@@ -10,7 +10,7 @@ import type { UrlFilters } from "@/modules/events/domain/url-filters";
  * même instant : ni doublon ni trou pendant le défilement (ADR 0020).
  */
 export function listEvents(
-  filters: UrlFilters & { search?: string },
+  filters: UrlFilters & { search?: string; createdAfter?: Date },
   offset = 0,
   limit = PAGE_SIZE,
   asOf?: string,
@@ -21,6 +21,8 @@ export function listEvents(
   if (filters.periods.length) p.set("period", filters.periods.join(","));
   if (filters.pages.length) p.set("page", filters.pages.join(","));
   if (filters.search) p.set("q", filters.search);
+  if (filters.createdAfter)
+    p.set("createdAfter", filters.createdAfter.toISOString());
   p.set("offset", String(offset));
   p.set("limit", String(limit));
   if (asOf) p.set("asOf", asOf);

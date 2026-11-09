@@ -4,6 +4,7 @@ import { CaretLeftIcon, CaretRightIcon } from "@/shared/components/icons";
 import { useTranslations } from "next-intl";
 import {
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -63,11 +64,12 @@ function subscribe(listener: () => void) {
  */
 export function StoryBar({
   bubbles: initial,
-  onView,
+  onViews,
   onShare,
 }: {
   bubbles: StoryBubble[];
-  onView?: (eventId: string, fromShareLink: boolean) => Promise<void>;
+  /** Écrans vus pendant une story, envoyés en une fois à sa fermeture. */
+  onViews?: (eventIds: string[]) => Promise<void>;
   onShare?: (eventId: string) => Promise<void>;
 }) {
   const t = useTranslations("stories");
@@ -85,6 +87,16 @@ export function StoryBar({
     [frozen, initial, seenSet],
   );
 
+  // Vues de la story en cours : un seul envoi à la fermeture, ou si la
+  // personne quitte l'accueil depuis la story (un lien de la fiche)
+  const viewed = useRef<string[]>([]);
+  const flushViews = useCallback(() => {
+    const ids = viewed.current;
+    viewed.current = [];
+    if (ids.length) void onViews?.(ids);
+  }, [onViews]);
+  useEffect(() => flushViews, [flushViews]);
+
   const markSeen = useCallback((eventId: string) => {
     const previous = parseSeen(readSeen());
     if (!previous.includes(eventId)) writeSeen(addSeen(previous, [eventId]));
@@ -98,9 +110,7 @@ export function StoryBar({
 
   return (
     <section aria-label={t("title")} className="relative">
-      <h2 className="mb-2 px-4 text-sm font-semibold text-muted-foreground sm:px-0">
-        {t("title")}
-      </h2>
+      <h2 className="sr-only">{t("title")}</h2>
       {bubbles.length > 0 && (
         <>
           <ul
@@ -135,7 +145,7 @@ export function StoryBar({
                       </span>
                     </span>
                     <span className="grid w-full min-w-0 text-center">
-                      <span className="truncate text-xs">
+                      <span className="truncate text-xs font-semibold">
                         {bubble.organizer.name}
                       </span>
                     </span>
@@ -173,10 +183,11 @@ export function StoryBar({
           start={opened}
           onSeen={(eventId) => {
             markSeen(eventId);
-            void onView?.(eventId, false);
+            viewed.current.push(eventId);
           }}
           onShare={onShare}
           onClose={() => {
+            flushViews();
             setOpened(null);
             setFrozen(null);
           }}

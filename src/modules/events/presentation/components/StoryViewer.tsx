@@ -1,13 +1,47 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
+import { SwipeHandIcon } from "@/shared/components/icons";
 import { createPortal } from "react-dom";
 import type { StoryBubble } from "@/modules/events/domain/stories";
 import {
   EventStage,
   SWIPE_MIN,
 } from "@/modules/events/presentation/components/EventStage";
+
+/**
+ * Astuce de la première story : glisser vers le haut ouvre les détails.
+ * Montrée une seule fois par navigateur ; sans stockage, elle reste discrète
+ * et revient simplement à la story suivante.
+ */
+const HINT_KEY = "lc:story-hint-seen";
+const hintListeners = new Set<() => void>();
+function readHintSeen(): boolean {
+  try {
+    return localStorage.getItem(HINT_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+function markHintSeen() {
+  try {
+    localStorage.setItem(HINT_KEY, "1");
+  } catch {
+    // Navigation privée : l'astuce reviendra, rien ne casse
+  }
+  hintListeners.forEach((listener) => listener());
+}
+function subscribeHint(listener: () => void) {
+  hintListeners.add(listener);
+  return () => hintListeners.delete(listener);
+}
 
 /** Durée d'un écran avant de passer au suivant. */
 export const SCREEN_MS = 5000;
@@ -39,9 +73,22 @@ export function StoryViewer({
   const [paused, setPaused] = useState(false);
   // Panneau d'informations ouvert : la story attend qu'on le referme
   const [reading, setReading] = useState(false);
+  // Côté serveur, l'astuce est « déjà vue » : rien ne s'affiche avant le navigateur
+  const hintSeen = useSyncExternalStore(
+    subscribeHint,
+    readHintSeen,
+    () => true,
+  );
+  // Montrée pendant la première story seulement : à sa fermeture, elle est vue
+  const close = useCallback(() => {
+    markHintSeen();
+    onClose();
+  }, [onClose]);
   const [elapsed, setElapsed] = useState(0);
   const pressedAt = useRef(0);
   const pressedFrom = useRef({ x: 0, y: 0 });
+  // Le toucher qui fait disparaître l'astuce ne fait pas aussi changer d'écran
+  const dismissingHint = useRef(false);
   const elapsedRef = useRef(0);
 
   const bubble = bubbles[position.bubble];
@@ -75,8 +122,8 @@ export function StoryViewer({
 
   // Après le dernier écran de la dernière bulle
   useEffect(() => {
-    if (!bubble) onClose();
-  }, [bubble, onClose]);
+    if (!bubble) close();
+  }, [bubble, close]);
 
   // Un écran affiché compte comme vu, et comme une vue de l'événement (une fois)
   const seenRef = useRef(onSeen);
@@ -89,7 +136,7 @@ export function StoryViewer({
   }, [eventId]);
 
   useEffect(() => {
-    if (paused || reading || !event) return;
+    if (paused || reading || !hintSeen || !event) return;
     const tick = 50;
     const timer = setInterval(() => {
       elapsedRef.current += tick;
@@ -97,18 +144,18 @@ export function StoryViewer({
       else setElapsed(elapsedRef.current);
     }, tick);
     return () => clearInterval(timer);
-  }, [paused, reading, event, next]);
+  }, [paused, reading, hintSeen, event, next]);
 
   useEffect(() => {
     if (reading) return; // Échap ferme alors le panneau, pas la story
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") close();
       else if (e.key === "ArrowRight") next();
       else if (e.key === "ArrowLeft") previous();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [reading, next, previous, onClose]);
+  }, [reading, next, previous, close]);
 
   // Le fil ne défile pas derrière la story
   useEffect(() => {
@@ -155,6 +202,10 @@ export function StoryViewer({
       }}
       onPointerUp={(e) => {
         setPaused(false);
+        if (dismissingHint.current) {
+          dismissingHint.current = false;
+          return;
+        }
         if (Date.now() - pressedAt.current > 250) return;
         // Un glissement (vers le haut : la fiche ouvre son panneau) n'est pas un toucher
         const moved = Math.hypot(
@@ -189,6 +240,15 @@ export function StoryViewer({
       role="dialog"
       aria-modal="true"
       aria-label={t("storyOf", { page: bubble.organizer.name })}
+      onPointerDownCapture={() => {
+        if (hintSeen) return;
+        dismissingHint.current = true;
+        markHintSeen();
+      }}
+      // Toucher fini ailleurs que sur l'affiche : rien à ignorer ensuite
+      onPointerUp={() => {
+        dismissingHint.current = false;
+      }}
       className="fixed inset-0 z-50 grid place-items-center bg-black"
     >
       <div className="relative h-full w-full max-w-[28rem] overflow-hidden sm:h-[min(92vh,52rem)] sm:rounded-lg">
@@ -199,10 +259,37 @@ export function StoryViewer({
             url: `${window.location.origin}/e/${event.id}`,
             onShare: onShare ? () => onShare(event.id) : undefined,
           }}
-          story={{ onClose, progress, touch }}
-          onOpenChange={setReading}
+          story={{ onClose: close, progress, touch }}
+          onOpenChange={(open) => {
+            setReading(open);
+            // Les détails ont été ouverts : l'astuce a servi
+            if (open) markHintSeen();
+          }}
           className="absolute"
         />
+        {/* Première story seulement, façon TikTok : une main glisse vers le
+            haut sur un voile sombre ; la story attend, et le premier toucher
+            (ou glissement) la fait disparaître pour de bon */}
+        {!hintSeen && !reading && (
+          <div
+            role="status"
+            className="pointer-events-none absolute inset-0 z-50 grid place-items-center bg-black/55"
+          >
+            <div className="grid justify-items-center gap-4 text-white">
+              <div className="relative h-36 w-16">
+                {/* Traînée, du bas vers le doigt */}
+                <span className="absolute bottom-12 left-1/2 h-20 w-1.5 origin-bottom -translate-x-1/2 animate-swipe-trail rounded-full bg-linear-to-t from-transparent to-white motion-reduce:animate-none" />
+                <SwipeHandIcon
+                  weight="bold"
+                  className="absolute bottom-0 left-0 size-16 animate-swipe-hand drop-shadow-[0_2px_6px_rgb(0_0_0/0.5)] motion-reduce:animate-none"
+                />
+              </div>
+              <p className="text-base font-semibold [text-shadow:0_1px_3px_rgb(0_0_0/0.6)]">
+                {t("hint")}
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>,
     document.body,

@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { EventFeed, readUrlFilters, StoryBar } from "@/modules/events";
 import {
   trackEventViewAction,
+  trackEventViewsAction,
   trackShareClickAction,
 } from "@/modules/audience/application/audience.actions";
 import { loadEventsAction } from "@/modules/events/application/events.actions";
@@ -36,7 +37,11 @@ export async function FeedView() {
       <h1 className="sr-only">{t("events.listTitle")}</h1>
       {/* Nouveaux événements en stories ; ils restent aussi dans le fil */}
       {stories.length > 0 && (
-        <StoryBar bubbles={stories} onView={trackEventViewAction} />
+        <StoryBar
+          bubbles={stories}
+          onViews={trackEventViewsAction}
+          onShare={trackShareClickAction}
+        />
       )}
       {/* Mise en avant hors du fil, en tête */}
       {topCampaign && (

@@ -35,6 +35,9 @@ import { FollowButton } from "@/modules/pages";
 import { PublicationDate } from "@/modules/events/presentation/components/PublicationDate";
 import { SubEventOrigin } from "@/modules/events/presentation/components/SubEventLinks";
 
+// Liens sans préchargement : la fiche défile en story, et chaque écran
+// déclencherait sinon un rendu de la page liée, même sans clic.
+
 /** Distance d'un glissement vers le haut qui ouvre le panneau, en pixels. */
 export const SWIPE_MIN = 40;
 
@@ -168,6 +171,7 @@ export function EventStage({
         // date de publication, « Suivre », puis la fermeture à droite
         <div className="absolute inset-x-0 top-0 flex h-[calc(3.5rem+env(safe-area-inset-top))] items-center gap-2.5 pt-[calc(0.5rem+env(safe-area-inset-top))] pr-1 pl-3">
           <Link
+            prefetch={false}
             href={`/p/${event.organizer.slug}`}
             className="flex min-w-0 items-center gap-2.5 rounded-full outline-none focus-visible:ring-3 focus-visible:ring-white/60"
           >
@@ -227,6 +231,7 @@ export function EventStage({
       <div className="absolute right-2 bottom-[calc(7rem+env(safe-area-inset-bottom))] z-10 flex flex-col items-center gap-4">
         {!story && (
           <Link
+            prefetch={false}
             href={`/p/${event.organizer.slug}`}
             aria-label={event.organizer.name}
             className="mb-1 rounded-full outline-none focus-visible:ring-3 focus-visible:ring-white/60"
@@ -249,6 +254,7 @@ export function EventStage({
         )}
         {posts > 0 && (
           <Link
+            prefetch={false}
             href={`/e/${event.id}/posts`}
             className="grid justify-items-center gap-0.5 outline-none focus-visible:ring-3 focus-visible:ring-white/60 [&_svg]:size-8 [&_svg]:drop-shadow-[0_1px_2px_rgb(0_0_0/0.5)]"
           >

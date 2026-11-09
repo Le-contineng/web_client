@@ -115,6 +115,7 @@ export const SignOutIcon = icon(H.Logout01Icon);
 export const SlidersHorizontalIcon = icon(H.FilterHorizontalIcon);
 export const SquaresFourIcon = icon(H.DashboardSquare01Icon);
 export const SunIcon = icon(H.Sun01Icon);
+export const SwipeHandIcon = icon(H.Tap03Icon);
 export const TagIcon = icon(H.Tag01Icon);
 export const TextAlignLeftIcon = icon(H.TextAlignLeftIcon);
 export const TranslateIcon = icon(H.TranslateIcon);
