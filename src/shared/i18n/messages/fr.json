@@ -783,5 +783,16 @@
     "in": "dans",
     "nextShort": "prochain",
     "more": "+{count}"
+  },
+  "stories": {
+    "title": "Nouveautés",
+    "bubble": "{count, plural, one {# nouvel événement} other {# nouveaux événements}}",
+    "seen": "vu",
+    "scrollLeft": "Bulles précédentes",
+    "scrollRight": "Bulles suivantes",
+    "storyOf": "Nouveautés de {page}",
+    "close": "Fermer",
+    "previous": "Précédent",
+    "nextScreen": "Suivant"
   }
 }

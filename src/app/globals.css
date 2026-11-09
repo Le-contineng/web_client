@@ -68,6 +68,15 @@
   --brand-deep: #9d174d;
   /* Blush : fonds doux (merci, bilans, infos) */
   --blush: #fce7f3;
+  /* Bleu du logo : accent de l'emblème et des anneaux de stories (ADR 0025), jamais en fond ni en texte */
+  --logo-blue: #2fa0c1;
+  /* Anneau des stories : le bleu du logo domine, le violet voisin ne vient qu'à la fin */
+  --story-violet: #7c3aed;
+  --story-ring: linear-gradient(
+    45deg in oklab,
+    var(--logo-blue) 0% 55%,
+    var(--story-violet) 100%
+  );
   --background: #ffffff;
   --foreground: #0a0a0a;
   --card: oklch(1 0 0);
