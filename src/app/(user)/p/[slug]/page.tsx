@@ -5,7 +5,13 @@ import { getTranslations } from "next-intl/server";
 import { EventGrid } from "@/modules/events";
 import { getPageEvents } from "@/modules/events/server";
 import { FollowButton, PageProfileHeader } from "@/modules/pages";
-import { getMyPage, getPageBySlug } from "@/modules/pages/server";
+import {
+  getCurrentUser,
+  getMyPage,
+  getPageBySlug,
+} from "@/modules/pages/server";
+import { SuggestionBadge } from "@/modules/suggestions";
+import { isSuggestionBoxOpen } from "@/modules/suggestions/server";
 import { buttonVariants } from "@/shared/ui/button";
 import { Separator } from "@/shared/ui/separator";
 import { BackBar } from "@/shared/components/layout/BackBar";
@@ -22,7 +28,7 @@ export async function generateMetadata({
 }
 
 /** Page publique d'une page organisatrice, façon profil Instagram. */
-async function PublicPage({ params }: PageProps<"/p/[slug]">) {
+async function PublicPage({ params, searchParams }: PageProps<"/p/[slug]">) {
   const t = await getTranslations();
   const detail = await getPageBySlug((await params).slug);
   if (!detail) {
@@ -40,6 +46,19 @@ async function PublicPage({ params }: PageProps<"/p/[slug]">) {
   const events = await getPageEvents(page.slug);
   // Ses membres retrouvent ici « Modifier la page » (propriétaire) et la gestion
   const membership = await getMyPage(page.slug);
+  // Boîte à suggestions : pour les non-membres, tant que le propriétaire la laisse ouverte
+  const signedIn = !!(await getCurrentUser());
+  const suggestionBox =
+    !membership && (await isSuggestionBoxOpen(page.id)) ? (
+      <SuggestionBadge
+        // Retour de la connexion : la pastille repart de zéro, formulaire ouvert
+        key={signedIn ? "signed-in" : "anonymous"}
+        pageId={page.id}
+        pageName={page.name}
+        signedIn={signedIn}
+        autoOpen={(await searchParams).suggest === "1"}
+      />
+    ) : null;
   const secondary = buttonVariants({ variant: "secondary", size: "sm" });
   return (
     <div className="mx-auto max-w-4xl sm:px-6 md:pt-6">
@@ -49,6 +68,7 @@ async function PublicPage({ params }: PageProps<"/p/[slug]">) {
         eventCount={events.length}
         followerCount={followerCount}
         memberCount={memberCount}
+        avatarBadge={suggestionBox}
         actions={
           <>
             {/* Ouvert à tous, membres compris ; sans session, mène à la connexion */}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import type { MemberPage } from "@/modules/pages";
+import { getUnreadSuggestionCount } from "@/modules/suggestions/server";
 import { PlusIcon } from "@/shared/components/icons";
 import { buttonVariants } from "@/shared/ui/button";
 import {
@@ -28,6 +29,7 @@ export async function StudioHeader({
 }) {
   const t = await getTranslations("studio");
   const slug = encodeURIComponent(page.slug);
+  const unreadSuggestions = await getUnreadSuggestionCount(page.id);
   return (
     <header className="bg-background">
       <div className="flex h-14 items-center gap-2 px-4 sm:px-6">
@@ -38,6 +40,7 @@ export async function StudioHeader({
           slug={slug}
           owner={page.role === "owner"}
           section={section}
+          unreadSuggestions={unreadSuggestions}
         />
         {/* Seul fuchsia de l'écran, et seulement là où l'on publie : sur les
             autres rubriques, l'action de l'écran est la leur. Sur téléphone,

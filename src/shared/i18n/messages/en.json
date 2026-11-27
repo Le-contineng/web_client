@@ -100,7 +100,13 @@
     "parentNotFound": "The main event no longer exists.",
     "parentOtherPage": "The main event belongs to another page.",
     "parentIsSubEvent": "A sub-event cannot have sub-events.",
-    "parentNotEditable": "The main event is over or cancelled."
+    "parentNotEditable": "The main event is over or cancelled.",
+    "suggestionLength": "Between 10 and 1,000 characters",
+    "answerLength": "Between 1 and 1,000 characters",
+    "ownPageSuggestion": "You are a member of this page: you cannot make it a suggestion",
+    "suggestionBoxClosed": "This page is not receiving suggestions at the moment",
+    "suggestionAlreadyAnswered": "This suggestion has already been answered",
+    "tooManySuggestions": "You already made 3 suggestions to this page in 24 hours: try again later"
   },
   "nav": {
     "home": "Home",
@@ -419,7 +425,8 @@
       "events": "Events",
       "pages": "Pages",
       "access": "Access",
-      "requests": "Requests"
+      "requests": "Requests",
+      "suggestions": "Suggestions"
     },
     "push": {
       "title": "Notifications on this device",
@@ -430,7 +437,9 @@
       "enable": "Turn on",
       "disable": "Turn off"
     },
-    "eventReminder": "{day, select, today {Today} tomorrow {Tomorrow} other {On}} at {time}: {event} · {location}"
+    "eventReminder": "{day, select, today {Today} tomorrow {Tomorrow} other {On}} at {time}: {event} · {location}",
+    "suggestionReceived": "New suggestion for {page}",
+    "suggestionAnswered": "{page} answered your suggestion"
   },
   "dates": {
     "today": "Today, {time}",
@@ -709,7 +718,8 @@
       "events": "Events",
       "audience": "Audience",
       "team": "Team",
-      "page": "Page"
+      "page": "Page",
+      "suggestions": "Suggestion box"
     },
     "tabs": {
       "upcoming": "Upcoming",
@@ -765,7 +775,9 @@
       "yesterday": "Yesterday"
     },
     "more": "More options",
-    "settings": "Page settings"
+    "settings": "Page settings",
+    "moreWithUnread": "More options ({n, plural, one {# unread suggestion} other {# unread suggestions}})",
+    "unreadSuggestions": "{n, plural, one {# unread} other {# unread}}"
   },
   "subEvents": {
     "programme": "Programme",
@@ -795,5 +807,54 @@
     "previous": "Previous",
     "nextScreen": "Next",
     "hint": "Swipe up for details"
+  },
+  "suggestions": {
+    "action": "Make a suggestion",
+    "hint": "Got an idea for us?",
+    "dialogTitle": "A suggestion for {page}",
+    "dialogDescription": "The members of the page will read your message and may answer it. They can see your name.",
+    "contentLabel": "Your suggestion",
+    "contentPlaceholder": "An event idea, an improvement…",
+    "count": "{n} / {max}",
+    "submit": "Send",
+    "sent": "Suggestion sent: you will be told when it is answered",
+    "mine": "My suggestions",
+    "mineEmpty": "You have not made any suggestion yet. Open the page of an organization and tap the bubble on its photo.",
+    "unknownPage": "Deleted page",
+    "answerFrom": "Answer from {page}",
+    "status": {
+      "new": "New",
+      "read": "Read",
+      "answered": "Answered"
+    },
+    "boxTitle": "Suggestion box",
+    "boxIntro": "Suggestions left by the visitors of the page. Opening one marks it read for the whole team.",
+    "detailTitle": "Suggestion",
+    "filter": "Filter suggestions",
+    "filters": {
+      "all": "All",
+      "new": "New",
+      "read": "Read"
+    },
+    "empty": {
+      "all": "No suggestion yet.",
+      "new": "No new suggestion.",
+      "read": "No read suggestion."
+    },
+    "receivedOn": "Received on {date}",
+    "yourAnswer": "Answer of the page",
+    "answeredOn": "Sent on {date}",
+    "answerLabel": "Answer",
+    "answerFinal": "One answer only, final",
+    "answerSubmit": "Send the answer",
+    "pagination": "List pages",
+    "previous": "Previous",
+    "next": "Next",
+    "pageOf": "Page {page} of {pages}",
+    "box": {
+      "label": "Receive suggestions",
+      "on": "Visitors can write to you.",
+      "off": "Box closed: the suggestions received stay readable."
+    }
   }
 }

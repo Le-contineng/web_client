@@ -3,6 +3,7 @@
 import {
   BellIcon,
   CaretRightIcon,
+  ChatBubbleIcon,
   DeviceMobileIcon,
   FlagIcon,
   MoonIcon,
@@ -76,6 +77,9 @@ export function MoreSections({
           <>
             <Row icon={<UserIcon />} href="/profile">
               {t("auth.myProfile")}
+            </Row>
+            <Row icon={<ChatBubbleIcon />} href="/my-suggestions">
+              {t("suggestions.mine")}
             </Row>
             <Row icon={<FlagIcon />} href="/page-request">
               {t("nav.requestPage")}

@@ -100,7 +100,13 @@
     "parentNotFound": "L'événement principal n'existe plus.",
     "parentOtherPage": "L'événement principal appartient à une autre page.",
     "parentIsSubEvent": "Un sous-événement ne peut pas avoir de sous-événements.",
-    "parentNotEditable": "L'événement principal est passé ou annulé."
+    "parentNotEditable": "L'événement principal est passé ou annulé.",
+    "suggestionLength": "Entre 10 et 1 000 caractères",
+    "answerLength": "Entre 1 et 1 000 caractères",
+    "ownPageSuggestion": "Vous êtes membre de cette page : vous ne pouvez pas lui faire de suggestion",
+    "suggestionBoxClosed": "Cette page ne reçoit plus de suggestions pour le moment",
+    "suggestionAlreadyAnswered": "Cette suggestion a déjà reçu une réponse",
+    "tooManySuggestions": "Vous avez déjà fait 3 suggestions à cette page en 24 h : réessayez plus tard"
   },
   "nav": {
     "home": "Accueil",
@@ -419,7 +425,8 @@
       "events": "Événements",
       "pages": "Pages",
       "access": "Accès",
-      "requests": "Demandes"
+      "requests": "Demandes",
+      "suggestions": "Suggestions"
     },
     "push": {
       "title": "Notifications sur cet appareil",
@@ -430,7 +437,9 @@
       "enable": "Activer",
       "disable": "Désactiver"
     },
-    "eventReminder": "{day, select, today {Aujourd’hui} tomorrow {Demain} other {Le}} à {time} : {event} · {location}"
+    "eventReminder": "{day, select, today {Aujourd’hui} tomorrow {Demain} other {Le}} à {time} : {event} · {location}",
+    "suggestionReceived": "Nouvelle suggestion pour {page}",
+    "suggestionAnswered": "{page} a répondu à votre suggestion"
   },
   "dates": {
     "today": "Aujourd'hui, {time}",
@@ -709,7 +718,8 @@
       "events": "Événements",
       "audience": "Audience",
       "team": "Équipe",
-      "page": "Page"
+      "page": "Page",
+      "suggestions": "Boîte à suggestions"
     },
     "tabs": {
       "upcoming": "À venir",
@@ -765,7 +775,9 @@
       "yesterday": "Hier"
     },
     "more": "Plus d'options",
-    "settings": "Paramètres de la page"
+    "settings": "Paramètres de la page",
+    "moreWithUnread": "Plus d'options ({n, plural, one {# suggestion non lue} other {# suggestions non lues}})",
+    "unreadSuggestions": "{n, plural, one {# non lue} other {# non lues}}"
   },
   "subEvents": {
     "programme": "Programme",
@@ -795,5 +807,54 @@
     "previous": "Précédent",
     "nextScreen": "Suivant",
     "hint": "Glisse vers le haut pour les détails"
+  },
+  "suggestions": {
+    "action": "Faire une suggestion",
+    "hint": "Une idée pour nous ?",
+    "dialogTitle": "Une suggestion pour {page}",
+    "dialogDescription": "Les membres de la page liront votre message et pourront vous répondre. Votre nom leur est visible.",
+    "contentLabel": "Votre suggestion",
+    "contentPlaceholder": "Une idée d'événement, une amélioration…",
+    "count": "{n} / {max}",
+    "submit": "Envoyer",
+    "sent": "Suggestion envoyée : vous serez prévenu de la réponse",
+    "mine": "Mes suggestions",
+    "mineEmpty": "Vous n'avez encore fait aucune suggestion. Ouvrez la page d'une organisation et touchez la bulle sur sa photo.",
+    "unknownPage": "Page supprimée",
+    "answerFrom": "Réponse de {page}",
+    "status": {
+      "new": "Nouvelle",
+      "read": "Lue",
+      "answered": "Répondue"
+    },
+    "boxTitle": "Boîte à suggestions",
+    "boxIntro": "Les suggestions laissées par les visiteurs de la page. Ouvrir une suggestion la marque lue pour toute l'équipe.",
+    "detailTitle": "Suggestion",
+    "filter": "Filtrer les suggestions",
+    "filters": {
+      "all": "Toutes",
+      "new": "Nouvelles",
+      "read": "Lues"
+    },
+    "empty": {
+      "all": "Aucune suggestion pour l'instant.",
+      "new": "Aucune nouvelle suggestion.",
+      "read": "Aucune suggestion lue."
+    },
+    "receivedOn": "Reçue le {date}",
+    "yourAnswer": "Réponse de la page",
+    "answeredOn": "Envoyée le {date}",
+    "answerLabel": "Répondre",
+    "answerFinal": "Une seule réponse, définitive",
+    "answerSubmit": "Envoyer la réponse",
+    "pagination": "Pages de la liste",
+    "previous": "Précédentes",
+    "next": "Suivantes",
+    "pageOf": "Page {page} sur {pages}",
+    "box": {
+      "label": "Recevoir des suggestions",
+      "on": "Les visiteurs peuvent vous écrire.",
+      "off": "Boîte fermée : les suggestions reçues restent lisibles."
+    }
   }
 }
