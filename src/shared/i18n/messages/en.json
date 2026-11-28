@@ -815,6 +815,7 @@
     "dialogDescription": "The members of the page will read your message and may answer it. They can see your name.",
     "contentLabel": "Your suggestion",
     "contentPlaceholder": "An event idea, an improvement…",
+    "lengthHint": "Between 10 and 1,000 characters",
     "count": "{n} / {max}",
     "submit": "Send",
     "sent": "Suggestion sent: you will be told when it is answered",

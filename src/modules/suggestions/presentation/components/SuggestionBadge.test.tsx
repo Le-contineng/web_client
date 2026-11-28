@@ -11,6 +11,11 @@ vi.mock("next/navigation", () => ({
   usePathname: () => "/p/club-echecs",
 }));
 vi.mock("sonner", () => ({ toast: { success: vi.fn(), error: vi.fn() } }));
+/** Largeur d'écran simulée : ordinateur par défaut, téléphone quand false. */
+const screenSize = vi.hoisted(() => ({ wide: true }));
+vi.mock("@/shared/hooks/useMediaQuery", () => ({
+  useMediaQuery: () => screenSize.wide,
+}));
 vi.mock("@/modules/suggestions/application/suggestions.actions", () => ({
   submitSuggestionAction: vi.fn().mockResolvedValue({ sent: true }),
 }));
@@ -59,6 +64,24 @@ describe("SuggestionBadge", () => {
       }),
     ).toBeInTheDocument();
     expect(screen.getByLabelText("Votre suggestion")).toBeInTheDocument();
+  });
+
+  it("sur téléphone, ouvre le même formulaire dans un panneau du bas", async () => {
+    screenSize.wide = false;
+    try {
+      renderBadge({ signedIn: true });
+      fireEvent.click(
+        screen.getByRole("button", { name: "Faire une suggestion" }),
+      );
+      const sheet = await screen.findByRole("dialog", {
+        name: "Une suggestion pour Club échecs",
+      });
+      expect(sheet).toBeInTheDocument();
+      expect(screen.getByLabelText("Votre suggestion")).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "Envoyer" })).toBeDisabled();
+    } finally {
+      screenSize.wide = true;
+    }
   });
 
   it("au retour de la connexion, le formulaire est déjà ouvert", async () => {
