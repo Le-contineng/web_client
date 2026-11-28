@@ -29,6 +29,7 @@ src/
 │   ├── pages/                       Pages, demandes de page, « Mes pages », accès
 │   ├── audience/                    Vues uniques par jour
 │   ├── notifications/               Cloche et notifications
+│   ├── suggestions/                 Boîte à suggestions des pages (dépôt, « Mes suggestions », réponse)
 │   ├── metrics/                     Métriques produit
 │   ├── medias/                      Photos : compression et envoi direct au stockage (ADR 0014 du backend)
 │   └── admin/                       Supervision (réservé au Super-Admin)

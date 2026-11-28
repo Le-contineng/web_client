@@ -17,6 +17,7 @@ export function PageProfileHeader({
   memberCount,
   viewCount,
   actions,
+  avatarBadge,
 }: {
   page: Page;
   eventCount: number;
@@ -26,6 +27,8 @@ export function PageProfileHeader({
   /** Total des vues, montré à ses membres seulement. */
   viewCount?: number;
   actions?: ReactNode;
+  /** Posé en bas à droite de la photo (ex. « Faire une suggestion »). */
+  avatarBadge?: ReactNode;
 }) {
   const t = useTranslations("pages");
   const stats: {
@@ -56,12 +59,15 @@ export function PageProfileHeader({
   return (
     <header className="grid gap-4 px-4 py-6 sm:flex sm:items-start sm:gap-12 sm:px-0 sm:py-8">
       <div className="flex items-center gap-6 sm:block">
-        <ProfileAvatar
-          name={page.name}
-          photo={page.photoUrl}
-          size="xl"
-          className="sm:size-36 sm:text-4xl"
-        />
+        <div className="relative w-fit shrink-0">
+          <ProfileAvatar
+            name={page.name}
+            photo={page.photoUrl}
+            size="xl"
+            className="sm:size-36 sm:text-4xl"
+          />
+          {avatarBadge}
+        </div>
         <div className="flex flex-1 sm:hidden">{statList}</div>
       </div>
       <div className="grid flex-1 gap-4">

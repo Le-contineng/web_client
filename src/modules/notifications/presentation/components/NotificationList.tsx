@@ -2,6 +2,7 @@
 
 import {
   CalendarDotsIcon,
+  ChatBubbleIcon,
   ClockIcon as AlarmClockIcon,
   FlagIcon,
   type Icon,
@@ -33,6 +34,8 @@ const ICONS: Record<NotificationType, Icon> = {
   eventReminder: AlarmClockIcon,
   newRequest: TrayIcon,
   newEvent: CalendarDotsIcon,
+  suggestionReceived: ChatBubbleIcon,
+  suggestionAnswered: ChatBubbleIcon,
 };
 
 /**

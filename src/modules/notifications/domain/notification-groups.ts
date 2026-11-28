@@ -5,7 +5,7 @@ import type {
 
 /** Filtres du panneau : « Toutes », puis une catégorie par famille de types. */
 export type NotificationCategory =
-  "all" | "events" | "pages" | "access" | "requests";
+  "all" | "events" | "pages" | "access" | "requests" | "suggestions";
 
 const CATEGORY_OF: Record<
   NotificationType,
@@ -18,6 +18,8 @@ const CATEGORY_OF: Record<
   newRequest: "requests",
   newEvent: "events",
   eventReminder: "events",
+  suggestionReceived: "suggestions",
+  suggestionAnswered: "suggestions",
 };
 
 const ORDER: Exclude<NotificationCategory, "all">[] = [
@@ -25,6 +27,7 @@ const ORDER: Exclude<NotificationCategory, "all">[] = [
   "pages",
   "access",
   "requests",
+  "suggestions",
 ];
 
 /** « Toutes » puis les seules catégories présentes, dans un ordre stable. */
