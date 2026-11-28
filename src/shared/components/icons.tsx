@@ -60,6 +60,7 @@ export const BellRingingIcon = icon(H.Notification03Icon);
 export const BellSlashIcon = icon(H.NotificationOff01Icon);
 export const CalendarBlankIcon = icon(H.Calendar01Icon);
 export const CalendarDotsIcon = icon(H.Calendar03Icon);
+export const CalendarDaysIcon = icon(H.CalendarDaysIcon);
 export const CalendarPlusIcon = icon(H.CalendarAdd01Icon);
 export const CalendarXIcon = icon(H.CalendarRemove01Icon);
 export const CameraIcon = icon(H.Camera01Icon);
