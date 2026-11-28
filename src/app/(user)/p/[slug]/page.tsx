@@ -55,6 +55,7 @@ async function PublicPage({ params, searchParams }: PageProps<"/p/[slug]">) {
         key={signedIn ? "signed-in" : "anonymous"}
         pageId={page.id}
         pageName={page.name}
+        pagePhotoUrl={page.photoUrl}
         signedIn={signedIn}
         autoOpen={(await searchParams).suggest === "1"}
       />

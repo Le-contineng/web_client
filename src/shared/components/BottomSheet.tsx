@@ -23,11 +23,17 @@ export function BottomSheet({
   onOpenChange,
   children,
   className,
+  fit = false,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   children: ReactNode;
   className?: string;
+  /**
+   * Hauteur ajustée au contenu, sans mi-hauteur (ex. un court formulaire) :
+   * le contenu défile s'il dépasse l'écran, glisser vers le bas ferme.
+   */
+  fit?: boolean;
 }) {
   const [snapPoint, setSnapPoint] = useState<Drawer.Root.SnapPoint | null>(
     HALF,
@@ -42,9 +48,11 @@ export function BottomSheet({
         if (next) setSnapPoint(HALF);
         onOpenChange(next);
       }}
-      snapPoints={SNAP_POINTS}
-      snapPoint={snapPoint}
-      onSnapPointChange={setSnapPoint}
+      {...(!fit && {
+        snapPoints: SNAP_POINTS,
+        snapPoint,
+        onSnapPointChange: setSnapPoint,
+      })}
     >
       <Drawer.Portal>
         <Drawer.Backdrop className="fixed inset-0 z-50 min-h-dvh bg-black opacity-[calc(0.4*(1-var(--drawer-swipe-progress)))] transition-opacity duration-[450ms] ease-[cubic-bezier(0.32,0.72,0,1)] data-ending-style:opacity-0 data-ending-style:duration-[calc(var(--drawer-swipe-strength)*400ms)] data-starting-style:opacity-0 data-swiping:duration-0" />
@@ -52,7 +60,10 @@ export function BottomSheet({
           <Drawer.Popup
             className={cn(
               // Monte depuis le bas à l'ouverture, suit le doigt pendant le glissement
-              "group/sheet relative flex h-[calc(100dvh-1rem)] min-h-0 w-full max-w-[28rem] [transform:translateY(calc(var(--drawer-snap-point-offset)+var(--drawer-swipe-movement-y)))] touch-none flex-col rounded-t-2xl bg-popover [padding-bottom:max(0px,calc(var(--drawer-snap-point-offset)+var(--drawer-swipe-movement-y)))] text-sm text-popover-foreground shadow-lg transition-transform duration-[450ms] ease-[cubic-bezier(0.32,0.72,0,1)] outline-none data-ending-style:[transform:translateY(calc(100%+2px))] data-ending-style:[padding-bottom:0] data-ending-style:duration-[calc(var(--drawer-swipe-strength)*400ms)] data-starting-style:[transform:translateY(calc(100%+2px))] data-starting-style:[padding-bottom:0] data-swiping:select-none",
+              "group/sheet relative flex min-h-0 w-full max-w-[28rem] touch-none flex-col rounded-t-2xl bg-popover text-sm text-popover-foreground shadow-lg transition-transform duration-[450ms] ease-[cubic-bezier(0.32,0.72,0,1)] outline-none data-ending-style:[transform:translateY(calc(100%+2px))] data-ending-style:duration-[calc(var(--drawer-swipe-strength)*400ms)] data-starting-style:[transform:translateY(calc(100%+2px))] data-swiping:select-none",
+              fit
+                ? "max-h-[calc(100dvh-1rem)] [transform:translateY(var(--drawer-swipe-movement-y))]"
+                : "h-[calc(100dvh-1rem)] [transform:translateY(calc(var(--drawer-snap-point-offset)+var(--drawer-swipe-movement-y)))] [padding-bottom:max(0px,calc(var(--drawer-snap-point-offset)+var(--drawer-swipe-movement-y)))] data-ending-style:[padding-bottom:0] data-starting-style:[padding-bottom:0]",
               className,
             )}
           >
@@ -67,6 +78,7 @@ export function BottomSheet({
                 étend le panneau. Une fois étendu, le contenu défile. */}
             <Drawer.Content
               onWheel={(e) => {
+                if (fit) return;
                 const now = Date.now();
                 if (now - lastWheelChange.current < WHEEL_PAUSE_MS) {
                   // Le même geste continue : il ne compte pas une deuxième fois
@@ -88,7 +100,12 @@ export function BottomSheet({
                   else onOpenChange(false);
                 }
               }}
-              className="min-h-0 flex-1 touch-none overflow-hidden overscroll-contain pb-[max(1.5rem,env(safe-area-inset-bottom))] group-data-expanded/sheet:touch-auto group-data-expanded/sheet:overflow-y-auto"
+              className={cn(
+                "min-h-0 flex-1 overscroll-contain pb-[max(1.5rem,env(safe-area-inset-bottom))]",
+                fit
+                  ? "touch-auto overflow-y-auto"
+                  : "touch-none overflow-hidden group-data-expanded/sheet:touch-auto group-data-expanded/sheet:overflow-y-auto",
+              )}
             >
               {children}
             </Drawer.Content>

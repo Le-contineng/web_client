@@ -2,15 +2,24 @@
 
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { toast } from "sonner";
 import { SuggestionForm } from "@/modules/suggestions/presentation/components/SuggestionForm";
+import { BottomSheet, BottomSheetTitle } from "@/shared/components/BottomSheet";
 import { ChatBubbleIcon, LightbulbIcon } from "@/shared/components/icons";
+import { ProfileAvatar } from "@/shared/components/ProfileAvatar";
+import { useMediaQuery } from "@/shared/hooks/useMediaQuery";
+import { useMounted } from "@/shared/hooks/useMounted";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
@@ -52,11 +61,13 @@ function subscribe(listener: () => void) {
 export function SuggestionBadge({
   pageId,
   pageName,
+  pagePhotoUrl = null,
   signedIn,
   autoOpen = false,
 }: {
   pageId: string;
   pageName: string;
+  pagePhotoUrl?: string | null;
   signedIn: boolean;
   /** Retour de la connexion : le formulaire s'ouvre tout de suite. */
   autoOpen?: boolean;
@@ -85,11 +96,39 @@ export function SuggestionBadge({
     setOpen(true);
   }
 
-  function change(next: boolean) {
-    setOpen(next);
-    // Le paramètre de retour de connexion ne doit pas rouvrir le formulaire au rechargement
-    if (!next && autoOpen) router.replace(pathname, { scroll: false });
-  }
+  const change = useCallback(
+    (next: boolean) => {
+      setOpen(next);
+      // Le paramètre de retour de connexion ne doit pas rouvrir le formulaire au rechargement
+      if (!next && autoOpen) router.replace(pathname, { scroll: false });
+    },
+    [autoOpen, pathname, router],
+  );
+  const sent = useCallback(() => {
+    change(false);
+    toast.success(t("sent"));
+  }, [change, t]);
+
+  // Ordinateur et tablette : dialogue centré ; téléphone : panneau qui monte du
+  // bas. Rien avant d'être dans le navigateur, qui seul connaît la largeur.
+  const mounted = useMounted();
+  const wide = useMediaQuery("(min-width: 640px)");
+  const header = (title: ReactNode, description: ReactNode) => (
+    <div className="flex items-center gap-3">
+      <ProfileAvatar name={pageName} photo={pagePhotoUrl} size="md" />
+      <div className="grid min-w-0 gap-0.5">
+        {title}
+        {description}
+      </div>
+    </div>
+  );
+  const form = (
+    <SuggestionForm
+      pageId={pageId}
+      onSent={sent}
+      onCancel={() => change(false)}
+    />
+  );
 
   return (
     <>
@@ -116,29 +155,44 @@ export function SuggestionBadge({
         </TooltipTrigger>
         <TooltipContent>{t("action")}</TooltipContent>
       </Tooltip>
-      {!seen && (
+      {!seen && !open && (
         <span
           aria-hidden
-          className="pointer-events-none absolute top-full left-1/2 mt-2 -translate-x-1/2 animate-in rounded-full bg-foreground px-3 py-1 text-xs font-semibold whitespace-nowrap text-background shadow-md fade-in-0 slide-in-from-top-1 motion-reduce:animate-none"
+          // Téléphone : à droite de la pastille, sous les compteurs, pour ne
+          // pas couvrir le nom de la page ; ordinateur : sous la photo
+          className="pointer-events-none absolute animate-in rounded-full bg-foreground px-3 py-1 text-xs font-semibold whitespace-nowrap text-background shadow-md fade-in-0 motion-reduce:animate-none max-sm:bottom-0.5 max-sm:left-full max-sm:ml-3 max-sm:slide-in-from-left-1 sm:top-full sm:left-1/2 sm:mt-2 sm:-translate-x-1/2 sm:slide-in-from-top-1"
         >
           {t("hint")}
         </span>
       )}
-      <Dialog open={open} onOpenChange={change}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{t("dialogTitle", { page: pageName })}</DialogTitle>
-            <DialogDescription>{t("dialogDescription")}</DialogDescription>
-          </DialogHeader>
-          <SuggestionForm
-            pageId={pageId}
-            onSent={() => {
-              change(false);
-              toast.success(t("sent"));
-            }}
-          />
-        </DialogContent>
-      </Dialog>
+      {mounted &&
+        (wide ? (
+          <Dialog open={open} onOpenChange={change}>
+            <DialogContent className="gap-6 p-6 sm:max-w-[35rem]">
+              {header(
+                <DialogTitle className="truncate text-lg">
+                  {t("dialogTitle", { page: pageName })}
+                </DialogTitle>,
+                <DialogDescription>{t("dialogDescription")}</DialogDescription>,
+              )}
+              {form}
+            </DialogContent>
+          </Dialog>
+        ) : (
+          <BottomSheet open={open} onOpenChange={change} fit>
+            <div className="grid gap-5 px-5 pt-2">
+              {header(
+                <BottomSheetTitle className="truncate text-lg font-semibold">
+                  {t("dialogTitle", { page: pageName })}
+                </BottomSheetTitle>,
+                <p className="text-sm text-muted-foreground">
+                  {t("dialogDescription")}
+                </p>,
+              )}
+              {form}
+            </div>
+          </BottomSheet>
+        ))}
     </>
   );
 }
