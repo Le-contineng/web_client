@@ -1,4 +1,4 @@
-import { FlagBannerIcon, GridNineIcon } from "@/shared/components/icons";
+import { CalendarDaysIcon, FlagBannerIcon } from "@/shared/components/icons";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
@@ -13,7 +13,6 @@ import {
 import { SuggestionBadge } from "@/modules/suggestions";
 import { isSuggestionBoxOpen } from "@/modules/suggestions/server";
 import { buttonVariants } from "@/shared/ui/button";
-import { Separator } from "@/shared/ui/separator";
 import { BackBar } from "@/shared/components/layout/BackBar";
 import { Suspense } from "react";
 import { ContentSkeleton } from "@/shared/components/layout/ContentSkeleton";
@@ -42,7 +41,7 @@ async function PublicPage({ params, searchParams }: PageProps<"/p/[slug]">) {
       </div>
     );
   }
-  const { page, memberCount, followerCount, viewer } = detail;
+  const { page, followerCount, viewer } = detail;
   const events = await getPageEvents(page.slug);
   // Ses membres retrouvent ici « Modifier la page » (propriétaire) et la gestion
   const membership = await getMyPage(page.slug);
@@ -68,7 +67,6 @@ async function PublicPage({ params, searchParams }: PageProps<"/p/[slug]">) {
         page={page}
         eventCount={events.length}
         followerCount={followerCount}
-        memberCount={memberCount}
         avatarBadge={suggestionBox}
         actions={
           <>
@@ -95,10 +93,18 @@ async function PublicPage({ params, searchParams }: PageProps<"/p/[slug]">) {
           </>
         }
       />
-      <Separator />
-      <h2 className="flex items-center justify-center gap-2 py-3 text-xs font-semibold tracking-widest uppercase">
-        <GridNineIcon className="size-3.5" /> {t("events.listTitle")}
-      </h2>
+      {/* Onglet unique, icône seule soulignée, façon profil de réseau social */}
+      <div className="border-b">
+        <h2 className="mx-auto flex h-12 w-full max-w-2xl justify-center">
+          <span
+            title={t("events.listTitle")}
+            className="flex w-24 items-center justify-center border-b-2 border-foreground"
+          >
+            <CalendarDaysIcon className="size-6" />
+            <span className="sr-only">{t("events.listTitle")}</span>
+          </span>
+        </h2>
+      </div>
       {events.length ? (
         <EventGrid events={events} className="lg:grid-cols-3 xl:grid-cols-3" />
       ) : (
