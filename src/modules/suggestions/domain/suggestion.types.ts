@@ -5,14 +5,19 @@ export type SuggestionStatus = (typeof SUGGESTION_STATUSES)[number];
 /** Réponse de la page, donnée une seule fois et définitive. */
 export type SuggestionAnswer = { content: string; answeredAt: string };
 
+/** Auteur d'une suggestion, tel que l'API le montre aux membres de la page. */
+export type SuggestionAuthor = { name: string; photoUrl: string | null };
+
 /**
  * Suggestion laissée à une page, telle que l'API la renvoie (dates UTC,
- * ISO 8601). Jamais anonyme pour les membres de la page (`authorId`).
+ * ISO 8601). Jamais anonyme pour les membres de la page : `author` donne
+ * son nom et sa photo (null dans « Mes suggestions », ou compte supprimé).
  */
 export type Suggestion = {
   id: string;
   pageId: string;
   authorId: string;
+  author: SuggestionAuthor | null;
   content: string;
   status: SuggestionStatus;
   submittedAt: string;

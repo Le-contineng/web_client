@@ -6,6 +6,7 @@ import type {
 } from "@/modules/suggestions/domain/suggestion.types";
 import { SuggestionPagination } from "@/modules/suggestions/presentation/components/SuggestionPagination";
 import { SuggestionStatusBadge } from "@/modules/suggestions/presentation/components/SuggestionStatusBadge";
+import { ProfileAvatar } from "@/shared/components/ProfileAvatar";
 import { cn } from "@/shared/lib/utils";
 
 const FILTERS = [null, "new", "read"] as const;
@@ -64,11 +65,19 @@ export function PageSuggestionList({
                 <span
                   aria-hidden
                   className={cn(
-                    "mt-1.5 size-2 shrink-0 rounded-full",
+                    "mt-3 size-2 shrink-0 rounded-full",
                     s.status === "new" ? "bg-primary" : "bg-transparent",
                   )}
                 />
+                <ProfileAvatar
+                  name={s.author?.name ?? "?"}
+                  photo={s.author?.photoUrl ?? null}
+                  size="sm"
+                />
                 <span className="grid min-w-0 flex-1 gap-1">
+                  <span className="truncate text-xs font-semibold text-muted-foreground">
+                    {s.author?.name ?? t("deletedAccount")}
+                  </span>
                   <span
                     className={cn(
                       "line-clamp-2 text-sm",

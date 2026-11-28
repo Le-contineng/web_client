@@ -821,6 +821,7 @@
     "mine": "My suggestions",
     "mineEmpty": "You have not made any suggestion yet. Open the page of an organization and tap the bubble on its photo.",
     "unknownPage": "Deleted page",
+    "deletedAccount": "Deleted account",
     "answerFrom": "Answer from {page}",
     "status": {
       "new": "New",

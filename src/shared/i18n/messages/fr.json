@@ -821,6 +821,7 @@
     "mine": "Mes suggestions",
     "mineEmpty": "Vous n'avez encore fait aucune suggestion. Ouvrez la page d'une organisation et touchez la bulle sur sa photo.",
     "unknownPage": "Page supprimée",
+    "deletedAccount": "Compte supprimé",
     "answerFrom": "Réponse de {page}",
     "status": {
       "new": "Nouvelle",
