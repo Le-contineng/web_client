@@ -140,16 +140,16 @@ export function SuggestionBadge({
               onClick={start}
               aria-label={t("action")}
               aria-haspopup="dialog"
-              // Pastille de 36 px, zone de clic de 44 px (after:)
-              className="absolute -right-1 -bottom-1 grid size-9 place-items-center rounded-full bg-primary text-primary-foreground shadow-md ring-3 ring-background transition-transform outline-none after:absolute after:-inset-1 after:rounded-full after:content-[''] hover:scale-105 focus-visible:ring-ring/50 motion-reduce:transition-none sm:right-1 sm:bottom-1"
+              // Pastille de 28 px, zone de clic invisible de 40 px (after:)
+              className="absolute right-0 bottom-0 grid size-7 place-items-center rounded-full bg-primary text-primary-foreground shadow-md ring-2 ring-background transition-transform outline-none after:absolute after:-inset-1.5 after:rounded-full after:content-[''] hover:scale-105 focus-visible:ring-3 focus-visible:ring-ring/50 motion-reduce:transition-none sm:right-1.5 sm:bottom-1.5"
             />
           }
         >
           <span className="relative grid place-items-center">
-            <ChatBubbleIcon className="size-5" />
+            <ChatBubbleIcon className="size-4" />
             <LightbulbIcon
               weight="bold"
-              className="absolute top-[3px] size-2.5"
+              className="absolute top-[2.5px] size-2"
             />
           </span>
         </TooltipTrigger>
